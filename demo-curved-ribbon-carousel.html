@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curved 3D Ribbon Carousel | WebGL Shader Effect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Top HUD / Controls */
+    .hud-header {
+      position: fixed;
+      top: 24px;
+      left: 28px;
+      right: 28px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .hud-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      pointer-events: auto;
+    }
+
+    .hud-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #a2e89b;
+    }
+
+    .hud-tag .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #a2e89b;
+      box-shadow: 0 0 8px #a2e89b;
+    }
+
+    .hud-title {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+    }
+
+    .hud-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .hud-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      padding: 7px 14px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+
+    .hud-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .hud-btn.active {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    /* Bottom Instructions */
+    .hud-footer {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      pointer-events: none;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hud-footer span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .kbd {
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-family: monospace;
+      color: #ffffff;
+      font-size: 0.6875rem;
+    }
+
+    /* WebGL Carousel Container */
+    .carousel-root {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000000;
+      cursor: grab;
+      touch-action: none;
+      isolation: isolate;
+    }
+
+    .carousel-root[data-dragging="true"],
+    .carousel-root[data-dragging="true"] * {
+      cursor: grabbing !important;
+    }
+
+    .carousel-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* DOM Hit Targets for Accessibility & Mouse Clicks */
+    .carousel-card-hit {
+      position: absolute;
+      display: block;
+      z-index: 1;
+      background: transparent;
+      text-decoration: none;
+      color: #ffffff;
+      will-change: transform;
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+
+    .carousel-card-hit:focus-visible {
+      outline: 1px solid rgba(255, 255, 255, 0.8);
+      outline-offset: -1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HUD Overlay -->
+  <header class="hud-header">
+    <div class="hud-brand">
+      <div class="hud-tag"><span class="dot"></span> WebGL 3D Ribbon</div>
+      <span class="hud-title">Curved Sheet Carousel</span>
+    </div>
+
+    <div class="hud-controls">
+      <button type="button" class="hud-btn active" id="btnGrid" onclick="toggleGrid()">Grid Floor</button>
+      <button type="button" class="hud-btn" id="btnVideos" onclick="toggleVideos()">Mute Videos</button>
+      <button type="button" class="hud-btn" onclick="triggerAutoScroll()">Auto Drift</button>
+    </div>
+  </header>
+
+  <!-- Instructions Footer -->
+  <footer class="hud-footer">
+    <span><span class="kbd">DRAG</span> Click &amp; move</span>
+    <span>•</span>
+    <span><span class="kbd">SCROLL</span> Wheel / Trackpad</span>
+    <span>•</span>
+    <span><span class="kbd">HOVER</span> Elastic 3D dent</span>
+  </footer>
+
+  <!-- WebGL Carousel Root -->
+  <div class="carousel-root" id="carouselRoot" role="region" aria-label="Featured projects. Scroll or drag to browse.">
+    <canvas class="carousel-canvas" id="glCanvas" aria-hidden="true"></canvas>
+    <!-- DOM hits are generated dynamically -->
+  </div>
+
+  <script>
+    /* =============================================================
+       1. FEATURED PROJECTS DATA (Mux Videos & Unsplash Posters)
+       ============================================================= */
+    const projects = [
+      {
+        title: "Nav in Motion",
+        poster: "https://image.mux.com/qmEPTzOaDQBZL5258j01i2mMBkGh3G9BI/thumbnail.jpg",
+        video: "https://stream.mux.com/qmEPTzOaDQBZL5258j01i2mMBkGh3G9BI/high.mp4",
+        link: "#nav-in-motion",
+        aspect: 2048 / 1172
+      },
+      {
+        title: "Lucent Drift",
+        poster: "https://images.unsplash.com/photo-1669295384050-a1d4357bd1d7?q=80&w=2070&auto=format&fit=crop",
+        video: "https://stream.mux.com/DrMKk9cqmTOu4Y4dJzCjEn5ny37s02001I/high.mp4",
+        link: "#lucent-drift",
+        aspect: 2048 / 1204
+      },
+      {
+        title: "Velvet Static",
+        poster: "assets/sports-racing-motion.jpg",
+        video: "https://stream.mux.com/01CbIdBLVCiUlQLMC8Ct3vq014VS02lwCaq/high.mp4",
+        link: "#velvet-static",
+        aspect: 1250 / 720
+      },
+      {
+        title: "Soft Collision",
+        poster: "assets/sports-runner-motion.jpg",
+        video: "https://stream.mux.com/e79MwNWsJkhoNzhR02UVL3LRe1wexvcA9/high.mp4",
+        link: "#soft-collision",
+        aspect: 2048 / 1114
+      },
+      {
+        title: "Phantom Layers",
+        poster: "assets/hero-motion-cyclist.jpg",
+        link: "#phantom-layers",
+        aspect: 3360 / 2200
+      },
+      {
+        title: "Liquid Echo",
+        poster: "assets/blue-court-racing.jpg",
+        video: "https://stream.mux.com/X3NsXaLph6rhK6M9kgi24PWL9vfH7SSf/high.mp4",
+        link: "#liquid-echo",
+        aspect: 1196 / 720
+      },
+      {
+        title: "Blue Mirage",
+        poster: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop",
+        link: "#blue-mirage",
+        aspect: 1372 / 1029
+      }
+    ];
+
+    /* =============================================================
+       2. MATHEMATICAL GLSL SHADERS (Exact Formulas from Framer)
+       ============================================================= */
+
+    // Card Vertex Shader: Non-linear 3D Ribbon Bend, Bank Roll & Hover Dent
+    const cardVertexShaderSource = `
+      precision highp float;
+      attribute vec2 a_position;
+      attribute vec2 a_uv;
+
+      uniform vec2 u_center;
+      uniform vec2 u_res;
+      uniform vec2 u_half;
+      uniform float u_cameraZ;
+      uniform float u_sheetD;
+      uniform float u_sheetT;
+      uniform float u_sheetC;
+      uniform float u_sheetV;
+      uniform float u_hover;
+      uniform float u_dent;
+      uniform float u_door;
+      uniform float u_mobileBulge;
+
+      varying vec2 vUv;
+      varying vec3 vFlat;
+
+      const float PI = 3.141592653589793;
+      const float SHEET_BANK = -0.16;
+      const float SHEET_SHIFT = -0.2;
+      const float SHEET_DIAG = 0.03;
+      const float SHEET_VTWIST = 1.8;
+      const float SHEET_REAR_Y = 0.1;
+      const float SHEET_REAR_Z = 0.15;
+
+      float shape(float q) {
+          float bowl = 1.0 - q * q;
+          float ess = sin(PI * q);
+          return mix(bowl, ess, u_sheetC) * exp(-q * q);
+      }
+
+      float slope(float q) {
+          float g = exp(-q * q);
+          float bowl = -2.0 * q * (2.0 - q * q);
+          float ess = PI * cos(PI * q) - 2.0 * q * sin(PI * q);
+          return mix(bowl, ess, u_sheetC) * g;
+      }
+
+      float dome(vec2 uv) {
+          vec2 q = uv * 2.0 - 1.0;
+          return (1.0 - q.x * q.x) * (1.0 - q.y * q.y);
+      }
+
+      float ramp(float s) {
+          s = clamp(s, -1.0, 1.0);
+          return s * (1.5 - 0.5 * s * s);
+      }
+
+      void main() {
+          vUv = a_uv;
+          vec3 local = vec3(a_position * u_res, 0.0);
+          local.z -= u_hover * u_dent * u_res.y * dome(a_uv);
+          vec3 w = vec3(u_center + local.xy, local.z);
+          vFlat = vec3(u_center + local.xy, 0.0);
+
+          if (u_sheetD > 0.0001) {
+              float q = w.x / max(u_half.x, 0.0001) * u_sheetT + SHEET_SHIFT;
+              float roll = SHEET_BANK * slope(q) / PI * u_sheetC;
+              float qe = w.x / max(u_half.x, 0.0001);
+              if (u_sheetV > 0.001) {
+                  roll += SHEET_VTWIST * u_sheetV * smoothstep(0.3, 0.9, abs(qe)) * sign(qe);
+              }
+              float sr = sin(roll);
+              float cr = cos(roll);
+              w.yz = vec2(w.y * cr - w.z * sr, w.y * sr + w.z * cr);
+              w.z += -u_sheetD * shape(q);
+              w.y += SHEET_DIAG * w.x;
+              if (u_sheetV > 0.001) {
+                  float rear = 1.0 - smoothstep(-1.0, 0.3, qe);
+                  w.y += SHEET_REAR_Y * u_half.x * u_sheetV * rear;
+                  w.z += SHEET_REAR_Z * u_half.x * u_sheetV * rear;
+              }
+              w.z += u_half.x * u_door * ramp(w.x / max(u_half.x, 0.0001));
+          }
+
+          if (abs(u_mobileBulge) > 0.0001) {
+              float t = clamp(w.y / max(u_half.y, 0.0001), -1.0, 1.0);
+              w.z += u_mobileBulge * (1.0 - t * t);
+          }
+
+          float perspective = u_cameraZ / max(0.01, u_cameraZ - w.z);
+          gl_Position = vec4(
+              w.x / u_half.x * perspective,
+              w.y / u_half.y * perspective,
+              clamp((u_cameraZ - w.z) / 100.0, 0.0, 1.0),
+              1.0
+          );
+      }
+    `;
+
+    // Card Fragment Shader: SDF Rounded Corners, Blinn-Phong Lighting, Text Label & Sliding Arrow Button
+    const cardFragmentShaderSource = `
+      #extension GL_OES_standard_derivatives : enable
+      precision highp float;
+
+      uniform sampler2D u_texture;
+      uniform sampler2D u_labelTexture;
+      uniform vec2 u_res;
+      uniform vec2 u_half;
+      uniform vec3 u_titleColor;
+      uniform vec4 u_labelRect;
+      uniform vec4 u_arrowRect;
+      uniform float u_cameraZ;
+      uniform float u_sheetD;
+      uniform float u_sheetT;
+      uniform float u_sheetC;
+      uniform float u_hover;
+      uniform float u_dent;
+      uniform float u_door;
+      uniform float u_corner;
+      uniform float u_scrim;
+      uniform float u_arrowHover;
+
+      varying vec2 vUv;
+      varying vec3 vFlat;
+
+      const float PI = 3.141592653589793;
+      const float SHEET_BANK = -0.16;
+      const float SHEET_SHIFT = -0.2;
+
+      float shape(float q) {
+          float bowl = 1.0 - q * q;
+          float ess = sin(PI * q);
+          return mix(bowl, ess, u_sheetC) * exp(-q * q);
+      }
+
+      float slope(float q) {
+          float g = exp(-q * q);
+          float bowl = -2.0 * q * (2.0 - q * q);
+          float ess = PI * cos(PI * q) - 2.0 * q * sin(PI * q);
+          return mix(bowl, ess, u_sheetC) * g;
+      }
+
+      float dome(vec2 uv) {
+          vec2 q = uv * 2.0 - 1.0;
+          return (1.0 - q.x * q.x) * (1.0 - q.y * q.y);
+      }
+
+      float rampSlope(float s) {
+          s = min(abs(s), 1.0);
+          return 1.5 * (1.0 - s * s);
+      }
+
+      float roundedBox(vec2 p, vec2 mid, float radius) {
+          vec2 q = abs(p - mid) - (mid - radius);
+          return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
+      }
+
+      float segmentDistance(vec2 p, vec2 a, vec2 b) {
+          vec2 pa = p - a;
+          vec2 ba = b - a;
+          float h = clamp(dot(pa, ba) / max(dot(ba, ba), 0.0001), 0.0, 1.0);
+          return length(pa - ba * h);
+      }
+
+      float arrowMark(vec2 p, float centerX, float aa) {
+          p.x -= centerX;
+          float d = segmentDistance(p, vec2(-0.38, 0.0), vec2(0.36, 0.0));
+          d = min(d, segmentDistance(p, vec2(0.08, -0.27), vec2(0.36, 0.0)));
+          d = min(d, segmentDistance(p, vec2(0.08, 0.27), vec2(0.36, 0.0)));
+          return 1.0 - smoothstep(0.055, 0.055 + aa, d);
+      }
+
+      float insideUnit(vec2 uv) {
+          return step(0.0, uv.x) * step(0.0, uv.y) * step(uv.x, 1.0) * step(uv.y, 1.0);
+      }
+
+      void main() {
+          vec4 tex = texture2D(u_texture, vUv);
+
+          if (u_sheetD > 0.0001) {
+              float q = vFlat.x / max(u_half.x, 0.0001) * u_sheetT + SHEET_SHIFT;
+              float z = -u_sheetD * shape(q);
+              float depth = clamp((u_sheetD - z) / (2.0 * u_sheetD), 0.0, 1.0);
+              depth += (u_hover * u_dent * u_res.y * dome(vUv)) / (2.0 * u_sheetD);
+              depth = clamp(depth, 0.0, 1.0);
+              tex.rgb = mix(tex.rgb, vec3(0.059), 0.8 * pow(depth, 1.0));
+
+              float dzdx = -u_sheetD * slope(q) * u_sheetT / max(u_half.x, 0.0001);
+              dzdx += u_door * rampSlope(vFlat.x / max(u_half.x, 0.0001));
+              float dzdy = 0.0;
+              if (u_hover > 0.0001) {
+                  vec2 hq = vUv * 2.0 - 1.0;
+                  float a = u_hover * u_dent;
+                  dzdx += 4.0 * a * u_res.y * hq.x * (1.0 - hq.y * hq.y) / max(u_res.x, 0.0001);
+                  dzdy += 4.0 * a * hq.y * (1.0 - hq.x * hq.x);
+              }
+              vec3 normal = normalize(vec3(-dzdx, -dzdy, 1.0));
+              float roll = SHEET_BANK * slope(q) / PI * u_sheetC;
+              normal.yz = vec2(normal.y * cos(roll) - normal.z * sin(roll), normal.y * sin(roll) + normal.z * cos(roll));
+              vec3 lightDir = normalize(vec3(-0.4, 0.5, 1.0));
+              float diffuse = dot(normal, lightDir) * 0.5 + 0.5;
+              tex.rgb *= 1.0 - 0.12 * (1.0 - diffuse);
+              vec3 point = vFlat + vec3(0.0, 0.0, z - u_hover * u_dent * u_res.y * dome(vUv));
+              vec3 viewDir = normalize(vec3(0.0, 0.0, u_cameraZ) - point);
+              vec3 halfway = normalize(lightDir + viewDir);
+              tex.rgb += pow(max(dot(normal, halfway), 0.0), 48.0) * 0.35;
+          }
+
+          if (u_scrim > 0.001) {
+              float g = 1.0 - smoothstep(0.0, 0.5, vUv.y);
+              tex.rgb = mix(tex.rgb, vec3(0.0), u_scrim * 0.65 * g * g);
+          }
+
+          // Render Text Label from Alpha Texture
+          vec2 labelUv = (vUv - u_labelRect.xy) / max(u_labelRect.zw, vec2(0.0001));
+          float labelAlpha = texture2D(u_labelTexture, clamp(labelUv, 0.0, 1.0)).a * insideUnit(labelUv);
+          tex.rgb = mix(tex.rgb, u_titleColor, labelAlpha);
+
+          // Render Pill Button with Animated Sliding Arrow via SDF
+          vec2 arrowUv = (vUv - u_arrowRect.xy) / max(u_arrowRect.zw, vec2(0.0001));
+          float arrowInside = insideUnit(arrowUv);
+          vec2 arrowP = (arrowUv - 0.5) * 2.0;
+          float arrowAA = max(fwidth(arrowP.x), fwidth(arrowP.y)) * 1.25;
+          float pill = (1.0 - smoothstep(0.92, 0.92 + arrowAA, length(arrowP))) * arrowInside;
+          tex.rgb = mix(tex.rgb, vec3(0.0), pill);
+          float outgoing = arrowMark(arrowP, u_arrowHover * 2.6, arrowAA);
+          float incoming = arrowMark(arrowP, (u_arrowHover - 1.0) * 2.6, arrowAA);
+          tex.rgb = mix(tex.rgb, vec3(1.0), max(outgoing, incoming) * pill);
+
+          // Card Outer Rounded Box SDF
+          vec2 size = vec2(u_res.x / max(u_res.y, 0.0001), 1.0);
+          vec2 mid = size * 0.5;
+          float radius = min(u_corner, min(mid.x, mid.y));
+          float d = roundedBox(vUv * size, mid, radius);
+          float aa = max(fwidth(d), 0.0008);
+          float alpha = 1.0 - smoothstep(-aa, aa, d);
+          gl_FragColor = vec4(tex.rgb, alpha);
+      }
+    `;
+
+    // Perspective Floor Grid Shaders
+    const gridVertexShaderSource = `
+      precision highp float;
+      attribute vec2 a_position;
+      varying vec2 vUv;
+      void main() {
+          vUv = a_position * 0.5 + 0.5;
+          gl_Position = vec4(a_position, 0.999, 1.0);
+      }
+    `;
+
+    const gridFragmentShaderSource = `
+      #extension GL_OES_standard_derivatives : enable
+      precision highp float;
+      varying vec2 vUv;
+      uniform float u_aspect;
+      uniform float u_horizon;
+      uniform vec3 u_color;
+
+      void main() {
+          float y = 1.0 - vUv.y;
+          float floorY = (y - u_horizon) / max(0.001, 1.0 - u_horizon);
+          if (floorY <= 0.0) discard;
+
+          float spread = max(floorY, 0.002);
+          float cell = 0.22;
+          float gx = (vUv.x - 0.5) * 4.0 / spread;
+          float depth = floorY / max(0.025, 1.0 - floorY) * 0.58;
+          float lx = abs(fract(gx / cell + 0.5) - 0.5) * cell;
+          float ly = abs(fract(depth / cell + 0.5) - 0.5) * cell;
+          float ax = max(fwidth(gx), 0.0005) * 1.1;
+          float ay = max(fwidth(depth), 0.0005) * 1.1;
+          float lineX = 1.0 - smoothstep(ax, ax * 2.0, lx);
+          float lineY = 1.0 - smoothstep(ay, ay * 2.0, ly);
+          float fade = smoothstep(0.0, 0.09, floorY) * (1.0 - smoothstep(0.9, 1.0, floorY));
+          float side = 1.0 - smoothstep(1.3, 2.2, abs(gx));
+          float alpha = max(lineX, lineY) * fade * side * 0.9;
+          gl_FragColor = vec4(u_color, alpha);
+      }
+    `;
+
+    /* =============================================================
+       3. HELPER FUNCTIONS & PROCEDURAL FALLBACKS
+       ============================================================= */
+    const FOV = 53.4;
+    const CAMERA_Z = 41.18;
+
+    function clamp(val, min, max) {
+      return Math.min(max, Math.max(min, val));
+    }
+
+    function wrap(min, max, val) {
+      const r = max - min;
+      return r ? ((val - min) % r + r) % r + min : min;
+    }
+
+    function smoothstep(e0, e1, x) {
+      const t = clamp((x - e0) / (e1 - e0), 0, 1);
+      return t * t * (3 - 2 * t);
+    }
+
+    function createShader(gl, type, source) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, source);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl.getShaderInfoLog(s));
+      }
+      return s;
+    }
+
+    function createProgram(gl, vsSource, fsSource) {
+      const p = gl.createProgram();
+      const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+      const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+      gl.attachShader(p, vs);
+      gl.attachShader(p, fs);
+      gl.linkProgram(p);
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+        console.error('Program link error:', gl.getProgramInfoLog(p));
+      }
+      return p;
+    }
+
+    // Subdivided 24x24 Quad Mesh
+    function createSubdividedQuad(gl, divisions = 24) {
+      const verts = [];
+      const indices = [];
+
+      for (let y = 0; y <= divisions; y++) {
+        for (let x = 0; x <= divisions; x++) {
+          const u = x / divisions;
+          const v = y / divisions;
+          verts.push(u - 0.5, v - 0.5, u, v);
+        }
+      }
+
+      for (let y = 0; y < divisions; y++) {
+        for (let x = 0; x < divisions; x++) {
+          const r = y * (divisions + 1) + x;
+          const i = r + 1;
+          const a = r + (divisions + 1);
+          const o = a + 1;
+          indices.push(r, i, o, r, o, a);
+        }
+      }
+
+      const vbo = gl.createBuffer();
+      const ibo = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+
+      return { vbo, ibo, count: indices.length };
+    }
+
+    // Procedural Fallback Texture (rich athletic gradients)
+    function createProceduralTexture(gl, title, index) {
+      const c = document.createElement('canvas');
+      c.width = 1024;
+      c.height = 640;
+      const ctx = c.getContext('2d');
+
+      const hues = ['#1d3226', '#142028', '#2d1822', '#26241a', '#182729'];
+      const bg = hues[index % hues.length];
+      
+      const grad = ctx.createLinearGradient(0, 0, 1024, 640);
+      grad.addColorStop(0, bg);
+      grad.addColorStop(1, '#080d0b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1024, 640);
+
+      // Subtle atmospheric curves
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.arc(512 + i * 40, 320, 180 + i * 30, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      const tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+      return tex;
+    }
+
+    // Render Title Label to WebGL Alpha Texture
+    function createLabelTexture(gl, text, fontSize = 24) {
+      const c = document.createElement('canvas');
+      const ctx = c.getContext('2d');
+      const font = `500 ${fontSize}px Inter, -apple-system, sans-serif`;
+      ctx.font = font;
+
+      const metrics = ctx.measureText(text);
+      const textWidth = Math.ceil(metrics.width + 12);
+      const textHeight = Math.ceil(fontSize * 1.5);
+
+      c.width = textWidth;
+      c.height = textHeight;
+
+      ctx.font = font;
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(text, 2, textHeight * 0.5);
+
+      const tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, gl.ALPHA, gl.UNSIGNED_BYTE, c);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+      return { texture: tex, width: textWidth, height: textHeight };
+    }
+
+    /* =============================================================
+       4. CAROUSEL ENGINE CLASS
+       ============================================================= */
+    class CurvedRibbonCarousel {
+      constructor(container) {
+        this.container = container;
+        this.canvas = container.querySelector('#glCanvas');
+        this.gl = this.canvas.getContext('webgl', {
+          alpha: true,
+          antialias: true,
+          premultipliedAlpha: true,
+          powerPreference: 'high-performance'
+        });
+
+        if (!this.gl) {
+          alert('WebGL not supported');
+          return;
+        }
+
+        this.gl.getExtension('OES_standard_derivatives');
+        this.gl.enable(this.gl.BLEND);
+        this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+        this.gl.disable(this.gl.DEPTH_TEST);
+
+        // Compile Shaders
+        this.cardProgram = createProgram(this.gl, cardVertexShaderSource, cardFragmentShaderSource);
+        this.gridProgram = createProgram(this.gl, gridVertexShaderSource, gridFragmentShaderSource);
+        this.mesh = createSubdividedQuad(this.gl, 24);
+
+        // Grid Fullscreen Quad Buffer
+        this.gridBuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gridBuffer);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), this.gl.STATIC_DRAW);
+
+        // State
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.rem = 16;
+        this.isSmall = false;
+        this.showGrid = true;
+        this.playVideos = true;
+        this.autoDrift = false;
+
+        // Physics
+        this.physics = {
+          current: 0,
+          target: 0,
+          pending: 0,
+          burst: 0
+        };
+
+        this.cardItems = [];
+        this.cardHoverState = [];
+        this.domLinks = [];
+
+        this.initItems();
+        this.initDomHits();
+        this.initEvents();
+        this.resize();
+
+        requestAnimationFrame((t) => this.renderLoop(t));
+      }
+
+      initItems() {
+        this.cardItems = projects.map((p, i) => {
+          const item = {
+            ...p,
+            texture: createProceduralTexture(this.gl, p.title, i),
+            videoEl: null,
+            videoDirty: false,
+            videoVisible: false,
+            label: createLabelTexture(this.gl, p.title, 22)
+          };
+
+          // Load Image
+          const img = new Image();
+          img.onload = () => {
+            this.gl.bindTexture(this.gl.TEXTURE_2D, item.texture);
+            this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, img);
+          };
+          img.src = p.poster;
+
+          // Video
+          if (p.video) {
+            const v = document.createElement('video');
+            v.crossOrigin = 'anonymous';
+            v.playsInline = true;
+            v.loop = true;
+            v.muted = true;
+            v.autoplay = false;
+            v.src = p.video;
+            item.videoEl = v;
+
+            v.addEventListener('playing', () => {
+              item.videoVisible = true;
+            });
+          }
+
+          this.cardHoverState.push({ value: 0, target: 0 });
+          return item;
+        });
+      }
+
+      initDomHits() {
+        this.cardItems.forEach((p, i) => {
+          const a = document.createElement('a');
+          a.className = 'carousel-card-hit';
+          a.href = p.link;
+          a.setAttribute('aria-label', p.title);
+          a.setAttribute('draggable', 'false');
+
+          a.addEventListener('mouseenter', () => {
+            this.cardHoverState[i].target = 1.0;
+          });
+          a.addEventListener('mouseleave', () => {
+            this.cardHoverState[i].target = 0.0;
+          });
+
+          this.container.appendChild(a);
+          this.domLinks.push(a);
+        });
+      }
+
+      resize() {
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.isSmall = this.width < 768;
+        this.rem = clamp(this.width / 100, 12, 18);
+
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        this.canvas.width = Math.round(this.width * dpr);
+        this.canvas.height = Math.round(this.height * dpr);
+
+        // Layout Cards along ribbon
+        const cardHeight = Math.min(this.height * 0.44, 480);
+        let x = 0;
+        const gap = this.rem * 2.5;
+
+        this.cardsLayout = this.cardItems.map((p, i) => {
+          const w = cardHeight * p.aspect;
+          const h = cardHeight;
+          const y = (this.height - h) / 2;
+          const cardObj = { ...p, x, y, w, h, index: i };
+          x += w + gap;
+          return cardObj;
+        });
+
+        this.period = Math.max(1, x);
+      }
+
+      initEvents() {
+        window.addEventListener('resize', () => this.resize());
+
+        // Mouse Drag Interaction
+        let isPointerDown = false;
+        let isDragging = false;
+        let startX = 0;
+        let lastX = 0;
+        let lastTime = 0;
+        let dragVelocity = 0;
+
+        this.container.addEventListener('pointerdown', (e) => {
+          if (e.button !== 0) return;
+          isPointerDown = true;
+          isDragging = false;
+          startX = e.clientX;
+          lastX = e.clientX;
+          dragVelocity = 0;
+        });
+
+        window.addEventListener('pointermove', (e) => {
+          if (!isPointerDown) return;
+          const dx = e.clientX - startX;
+          if (!isDragging && Math.abs(dx) > 6) {
+            isDragging = true;
+            this.container.dataset.dragging = 'true';
+          }
+          if (isDragging) {
+            e.preventDefault();
+            const delta = (lastX - e.clientX) * 1.5;
+            dragVelocity = delta;
+            lastX = e.clientX;
+            lastTime = e.timeStamp;
+            this.physics.pending += delta;
+          }
+        });
+
+        const onPointerUp = (e) => {
+          if (!isPointerDown) return;
+          isPointerDown = false;
+          if (isDragging) {
+            isDragging = false;
+            delete this.container.dataset.dragging;
+            if (e.timeStamp - lastTime < 100) {
+              this.physics.burst += dragVelocity * 10;
+            }
+          }
+        };
+
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+
+        // Wheel Scroll
+        let lastWheelTime = 0;
+        this.container.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          const delta = e.deltaY;
+          const dt = e.timeStamp - lastWheelTime;
+          lastWheelTime = e.timeStamp;
+
+          if (Math.abs(delta) > 35 && dt > 25) {
+            this.physics.burst += delta * 1.8;
+          } else {
+            this.physics.pending += delta * 1.1;
+          }
+        }, { passive: false });
+
+        // Touch Interaction
+        let touchStartY = 0;
+        let touchStartX = 0;
+        let touchLastX = 0;
+
+        this.container.addEventListener('touchstart', (e) => {
+          if (e.touches && e.touches[0]) {
+            touchStartX = e.touches[0].clientX;
+            touchLastX = touchStartX;
+          }
+        }, { passive: true });
+
+        this.container.addEventListener('touchmove', (e) => {
+          if (e.touches && e.touches[0]) {
+            const x = e.touches[0].clientX;
+            const delta = (touchLastX - x) * 2.2;
+            touchLastX = x;
+            this.physics.pending += delta;
+          }
+        }, { passive: true });
+
+        // Keyboard navigation
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') this.physics.pending += 120;
+          if (e.key === 'ArrowLeft') this.physics.pending -= 120;
+        });
+      }
+
+      // 3D Cyclic Curve Wrapping
+      getCyclePosition(card, scrollPos) {
+        const r = card.x + card.w;
+        const wrappedX = card.x - wrap(-(this.period - r), r, scrollPos);
+        return { x: wrappedX, y: card.y };
+      }
+
+      renderLoop(time) {
+        // Physics update
+        if (this.autoDrift) {
+          this.physics.pending += 1.2;
+        }
+
+        // Burst momentum absorption
+        if (Math.abs(this.physics.burst) > 0.05) {
+          const decay = this.physics.burst * 0.22;
+          this.physics.pending += decay;
+          this.physics.burst -= decay;
+        } else {
+          this.physics.burst = 0;
+        }
+
+        // Apply pending to target
+        this.physics.target += this.physics.pending;
+        this.physics.pending = 0;
+
+        // Smooth damping
+        this.physics.current += (this.physics.target - this.physics.current) * 0.12;
+
+        // Hover animation lerp
+        for (let i = 0; i < this.cardHoverState.length; i++) {
+          const h = this.cardHoverState[i];
+          h.value += (h.target - h.value) * 0.14;
+        }
+
+        // Render WebGL
+        this.drawScene();
+
+        requestAnimationFrame((t) => this.renderLoop(t));
+      }
+
+      drawScene() {
+        const gl = this.gl;
+        gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        const radFov = (FOV * Math.PI) / 180;
+        const halfH = Math.tan(radFov / 2) * CAMERA_Z;
+        const halfW = halfH * (this.width / this.height);
+        const sheetD = this.isSmall ? 0 : halfW * 0.2;
+
+        // 1. Draw Floor Grid
+        if (this.showGrid && !this.isSmall) {
+          gl.useProgram(this.gridProgram);
+          gl.bindBuffer(gl.ARRAY_BUFFER, this.gridBuffer);
+          const aPos = gl.getAttribLocation(this.gridProgram, 'a_position');
+          gl.enableVertexAttribArray(aPos);
+          gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+          gl.uniform1f(gl.getUniformLocation(this.gridProgram, 'u_aspect'), this.width / this.height);
+          const firstCard = this.cardsLayout[0];
+          const horizon = clamp((firstCard.y + firstCard.h) / this.height + 0.04, 0, 0.95);
+          gl.uniform1f(gl.getUniformLocation(this.gridProgram, 'u_horizon'), horizon);
+          gl.uniform3f(gl.getUniformLocation(this.gridProgram, 'u_color'), 0.09, 0.11, 0.1);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
+
+        // 2. Prepare Card Program & Uniforms
+        gl.useProgram(this.cardProgram);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.vbo);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.mesh.ibo);
+
+        const aPosition = gl.getAttribLocation(this.cardProgram, 'a_position');
+        const aUv = gl.getAttribLocation(this.cardProgram, 'a_uv');
+        gl.enableVertexAttribArray(aPosition);
+        gl.enableVertexAttribArray(aUv);
+        gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 16, 0);
+        gl.vertexAttribPointer(aUv, 2, gl.FLOAT, false, 16, 8);
+
+        gl.uniform2f(gl.getUniformLocation(this.cardProgram, 'u_half'), halfW, halfH);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_cameraZ'), CAMERA_Z);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_sheetD'), sheetD);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_sheetT'), 1.15);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_sheetC'), 1.0);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_sheetV'), 0.0);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_door'), -0.12);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_dent'), 0.12);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_mobileBulge'), 0.0);
+        gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_scrim'), 1.0);
+        gl.uniform3f(gl.getUniformLocation(this.cardProgram, 'u_titleColor'), 1.0, 1.0, 1.0);
+
+        gl.uniform1i(gl.getUniformLocation(this.cardProgram, 'u_texture'), 0);
+        gl.uniform1i(gl.getUniformLocation(this.cardProgram, 'u_labelTexture'), 1);
+
+        // Sort cards by X for depth rendering
+        const visibleCards = this.cardsLayout.map((card, i) => {
+          const cycle = this.getCyclePosition(card, this.physics.current);
+          return { card, index: i, cycle };
+        }).filter(({ card, cycle }) => {
+          return cycle.x + card.w > -this.width * 0.4 && cycle.x < this.width * 1.4;
+        }).sort((a, b) => {
+          // Cards towards middle/recess rendered with proper z-sort
+          return Math.abs(b.cycle.x - this.width / 2) - Math.abs(a.cycle.x - this.width / 2);
+        });
+
+        // Draw each visible card
+        for (const item of visibleCards) {
+          const { card, index, cycle } = item;
+          const cx = cycle.x + card.w / 2;
+          const cy = cycle.y + card.h / 2;
+
+          const glCenterX = ((cx - this.width / 2) / (this.width / 2)) * halfW;
+          const glCenterY = ((this.height / 2 - cy) / (this.height / 2)) * halfH;
+          const glResW = (card.w / this.width) * halfW * 2;
+          const glResH = (card.h / this.height) * halfH * 2;
+
+          gl.uniform2f(gl.getUniformLocation(this.cardProgram, 'u_center'), glCenterX, glCenterY);
+          gl.uniform2f(gl.getUniformLocation(this.cardProgram, 'u_res'), glResW, glResH);
+
+          const hover = this.cardHoverState[index].value;
+          gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_hover'), hover);
+          gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_arrowHover'), hover);
+
+          const cornerRadius = 28;
+          gl.uniform1f(gl.getUniformLocation(this.cardProgram, 'u_corner'), cornerRadius / card.h);
+
+          // Label and Arrow Rectangles
+          const pad = this.rem * 1.5;
+          const btnSize = 2.5 * this.rem;
+          const labelObj = this.cardItems[index].label;
+
+          gl.uniform4f(
+            gl.getUniformLocation(this.cardProgram, 'u_labelRect'),
+            pad / card.w,
+            this.rem / card.h,
+            labelObj.width / card.w,
+            labelObj.height / card.h
+          );
+
+          gl.uniform4f(
+            gl.getUniformLocation(this.cardProgram, 'u_arrowRect'),
+            (card.w - pad - btnSize) / card.w,
+            this.rem / card.h,
+            btnSize / card.w,
+            btnSize / card.h
+          );
+
+          // Update Video texture if active
+          const cardData = this.cardItems[index];
+          if (this.playVideos && cardData.videoEl && cardData.videoVisible && !cardData.videoEl.paused) {
+            gl.activeTexture(gl.TEXTURE0);
+            gl.bindTexture(gl.TEXTURE_2D, cardData.texture);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cardData.videoEl);
+          } else if (cardData.videoEl && cardData.videoEl.paused && this.playVideos) {
+            cardData.videoEl.play().catch(() => {});
+          }
+
+          // Bind Textures
+          gl.activeTexture(gl.TEXTURE0);
+          gl.bindTexture(gl.TEXTURE_2D, cardData.texture);
+
+          gl.activeTexture(gl.TEXTURE1);
+          gl.bindTexture(gl.TEXTURE_2D, labelObj.texture);
+
+          gl.drawElements(gl.TRIANGLES, this.mesh.count, gl.UNSIGNED_SHORT, 0);
+
+          // Synchronize DOM link position
+          const domLink = this.domLinks[index];
+          if (domLink) {
+            domLink.style.width = `${card.w}px`;
+            domLink.style.height = `${card.h}px`;
+            domLink.style.transform = `translate3d(${cycle.x}px, ${cycle.y}px, 0px)`;
+          }
+        }
+      }
+    }
+
+    // Controls
+    let carouselInstance = null;
+    window.addEventListener('DOMContentLoaded', () => {
+      carouselInstance = new CurvedRibbonCarousel(document.getElementById('carouselRoot'));
+    });
+
+    function toggleGrid() {
+      if (!carouselInstance) return;
+      carouselInstance.showGrid = !carouselInstance.showGrid;
+      document.getElementById('btnGrid').classList.toggle('active', carouselInstance.showGrid);
+    }
+
+    function toggleVideos() {
+      if (!carouselInstance) return;
+      carouselInstance.playVideos = !carouselInstance.playVideos;
+      document.getElementById('btnVideos').classList.toggle('active', !carouselInstance.playVideos);
+      carouselInstance.cardItems.forEach(item => {
+        if (item.videoEl) {
+          if (!carouselInstance.playVideos) item.videoEl.pause();
+          else item.videoEl.play().catch(() => {});
+        }
+      });
+    }
+
+    function triggerAutoScroll() {
+      if (!carouselInstance) return;
+      carouselInstance.autoDrift = !carouselInstance.autoDrift;
+      event.target.classList.toggle('active', carouselInstance.autoDrift);
+    }
+  </script>
+</body>
+</html>

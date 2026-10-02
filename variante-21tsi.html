@@ -1,0 +1,2655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JPZ Ventures | Ownership positions in sport (Design 04)</title>
+  <meta name="description" content="JPZ Ventures is a founder-led private investment firm taking ownership positions across Sports Assets and Venture & Technology.">
+
+  <!-- Fonts: Space Grotesk (Headlines), Space Mono (HUD/Tech labels), Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- GSAP & ScrollTrigger Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* =============================================================
+       JPZ VENTURES — 21TSI AVANT-GARDE SPORTS HOLDING STYLE
+       Inspired by: 21tsi.com (DEPARTMENT & type8 studio)
+       Awwwards Site of the Day / Radical Minimalist Aesthetic
+       ============================================================= */
+    :root {
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-mono: 'Space Mono', 'SF Mono', Consolas, monospace;
+      --font-body: 'Inter', -apple-system, sans-serif;
+
+      /* Deep Monochromatic Foundation */
+      --black-void: #060908;
+      --black-surface: #0c110f;
+      --black-card: #121917;
+      --black-card-hover: #18221f;
+
+      --white-pure: #ffffff;
+      --white-dim: rgba(255, 255, 255, 0.72);
+      --white-muted: rgba(255, 255, 255, 0.45);
+
+      /* JPZ Signature Green Luminous Accents */
+      --green-logo: #65896c;
+      --green-glow: #78a880;
+      --green-neon: #a2e89b;
+      --green-tag-bg: rgba(101, 137, 108, 0.16);
+      --green-border: rgba(101, 137, 108, 0.35);
+
+      /* Razor Hairlines */
+      --grid-line: rgba(255, 255, 255, 0.1);
+      --grid-line-strong: rgba(255, 255, 255, 0.2);
+
+      --container-width: 1320px;
+      --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--black-void);
+      color: var(--white-pure);
+      font-family: var(--font-body);
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--black-void);
+      color: var(--white-pure);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Subtle Grid & Scanline */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: var(--container-width);
+      padding: 0 32px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      text-transform: none;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      font-weight: 500;
+      color: var(--white-pure);
+    }
+
+    .mono-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green-glow);
+    }
+
+    /* Crosshair corner markers on technical cards */
+    .corner-plus {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--white-muted);
+      pointer-events: none;
+      line-height: 1;
+    }
+    .corner-tl { top: 12px; left: 14px; }
+    .corner-tr { top: 12px; right: 14px; }
+    .corner-bl { bottom: 12px; left: 14px; }
+    .corner-br { bottom: 12px; right: 14px; }
+
+    /* =============================================================
+       BUTTONS & BADGES (21TSI Radical Style)
+       ============================================================= */
+    .btn-21 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px 28px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      user-select: none;
+      border: 1px solid transparent;
+      border-radius: 2px;
+    }
+
+    .btn-21-white {
+      background-color: var(--white-pure);
+      color: var(--black-void);
+      font-weight: 700;
+    }
+
+    .btn-21-white:hover {
+      background-color: var(--green-neon);
+      color: var(--black-void);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(162, 232, 155, 0.3);
+    }
+
+    .btn-21-outline {
+      background: transparent;
+      border: 1px solid var(--grid-line-strong);
+      color: var(--white-pure);
+    }
+
+    .btn-21-outline:hover {
+      border-color: var(--green-glow);
+      color: var(--green-neon);
+      background: rgba(101, 137, 108, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .btn-21-pill {
+      border-radius: 9999px;
+      padding: 10px 24px;
+    }
+
+    .hud-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      background: var(--green-tag-bg);
+      border: 1px solid var(--green-border);
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--green-neon);
+      box-shadow: 0 0 10px var(--green-neon);
+      display: inline-block;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* =============================================================
+       1. NAVIGATION HEADER (Technical HUD Bar)
+       ============================================================= */
+    .header-hud {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(6, 9, 8, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--grid-line);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .header-brand img {
+      height: 56px;
+      max-height: 60px;
+      width: auto;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .header-brand:hover img {
+      transform: scale(1.03);
+    }
+
+    .header-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .header-nav-menu a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .header-nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--green-neon);
+      transition: width 0.25s ease;
+    }
+
+    .header-nav-menu a:hover {
+      color: var(--white-pure);
+    }
+
+    .header-nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    /* =============================================================
+    /* =============================================================
+       2. HERO SECTION - VIDEO CMS GALLERY BANNER (Framer Signature Style)
+       ============================================================= */
+    .hero-manifesto {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 120px 0 0;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--grid-line);
+      background: #060908;
+    }
+
+    @media (min-width: 992px) {
+      .hero-manifesto.orbit-active {
+        cursor: none;
+      }
+      .hero-manifesto.orbit-active a,
+      .hero-manifesto.orbit-active button,
+      .hero-manifesto.orbit-active .gallery-scrubber-wrap,
+      .hero-manifesto.orbit-active .gallery-ctrl-btn,
+      .hero-manifesto.orbit-active .hud-seg-item {
+        cursor: pointer;
+      }
+    }
+
+    /* Video Media Layers */
+    .gallery-media-viewport {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .gallery-slide-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.85s ease;
+      z-index: 1;
+    }
+
+    .gallery-slide-layer.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    .gallery-img-bg,
+    .gallery-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: contrast(1.1) brightness(0.72) saturate(1.1);
+      transform: scale(1.0);
+      transition: transform 9s cubic-bezier(0.25, 1, 0.5, 1);
+      display: block;
+    }
+
+    .gallery-slide-layer.active .gallery-img-bg,
+    .gallery-slide-layer.active .gallery-video-bg {
+      transform: scale(1.06);
+    }
+
+    /* Cinematic Film Shading & Grain Overlay */
+    .gallery-shade-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 65% 45%, rgba(101, 137, 108, 0.18) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(6, 9, 8, 0.6) 0%, rgba(6, 9, 8, 0.18) 40%, rgba(6, 9, 8, 0.92) 100%),
+        linear-gradient(90deg, rgba(6, 9, 8, 0.82) 0%, rgba(6, 9, 8, 0.35) 50%, rgba(6, 9, 8, 0.65) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .gallery-grain-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.7;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Inner Hero Content Container */
+    .hero-content-stage {
+      position: relative;
+      z-index: 5;
+      max-width: 1100px;
+      margin-top: auto;
+      margin-bottom: auto;
+      padding: 30px 0 20px;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .gallery-text-slide {
+      display: none;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-text-slide.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-hud-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* Top HUD Progress Segmented Bars */
+    .hud-segments-bar {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      background: rgba(12, 17, 14, 0.6);
+      padding: 6px 10px;
+      border: 1px solid var(--grid-line);
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hud-seg-item {
+      width: 44px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.16);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s ease, width 0.25s ease;
+    }
+
+    .hud-seg-item:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .hud-seg-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      background: var(--green-neon);
+      box-shadow: 0 0 8px rgba(162, 232, 155, 0.8);
+      border-radius: 2px;
+    }
+
+    .hud-seg-item.completed .hud-seg-fill {
+      width: 100% !important;
+    }
+
+    .hero-giant-title {
+      font-size: clamp(34px, 4.6vw, 64px);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+      color: var(--white-pure);
+      text-transform: none;
+      font-weight: 100;
+      font-family: var(--font-display);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hero-giant-title span.accent-slash {
+      color: var(--green-neon);
+      font-weight: 200;
+    }
+
+    .hero-lead-text {
+      font-size: clamp(15px, 1.35vw, 19px);
+      line-height: 1.55;
+      color: var(--white-dim);
+      max-width: 680px;
+      margin-bottom: 32px;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hero-cta-bar {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    /* =============================================================
+       BOTTOM HUD: TIMELINE SCRUBBER + TELEMETRY CONTROLS
+       ============================================================= */
+    .gallery-bottom-hud {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid var(--grid-line);
+      background: linear-gradient(180deg, rgba(6, 9, 8, 0.65) 0%, rgba(6, 9, 8, 0.96) 100%);
+      backdrop-filter: blur(12px);
+      padding: 18px 0 22px;
+    }
+
+    .gallery-scrubber-ctrls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+
+    /* Left controls: Counter & Play/Pause */
+    .gallery-ctrl-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .gallery-counter-badge {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      letter-spacing: 0.12em;
+      color: var(--white-muted);
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--grid-line);
+      border-radius: 4px;
+    }
+
+    .gallery-counter-badge .current-digit {
+      color: var(--green-neon);
+      font-weight: 700;
+    }
+
+    .gallery-ctrl-btn {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--grid-line);
+      border-radius: 50%;
+      color: var(--white-pure);
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .gallery-ctrl-btn:hover {
+      background: var(--green-dark);
+      border-color: var(--green-glow);
+      color: var(--green-neon);
+      transform: scale(1.06);
+    }
+
+    /* Center: Scrubber Track */
+    .gallery-scrubber-wrap {
+      flex: 1;
+      max-width: 600px;
+      position: relative;
+      padding: 8px 0;
+      user-select: none;
+    }
+
+    .scrubber-track {
+      position: relative;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .scrubber-rail {
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.16);
+      position: relative;
+      border-radius: 1px;
+    }
+
+    .scrubber-fill-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--green-neon);
+      box-shadow: 0 0 10px rgba(162, 232, 155, 0.7);
+      border-radius: 1px;
+    }
+
+    .scrubber-ticks-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .scrubber-tick {
+      width: 1px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .scrubber-tick.major {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .scrubber-handle {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--green-neon);
+      box-shadow: 0 0 12px rgba(162, 232, 155, 0.9);
+      cursor: grab;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      z-index: 4;
+    }
+
+    .scrubber-handle:active {
+      cursor: grabbing;
+      transform: translate(-50%, -50%) scale(1.35);
+      box-shadow: 0 0 18px rgba(162, 232, 155, 1);
+    }
+
+    /* Scrubber Floating Tooltip */
+    .scrubber-tooltip {
+      position: absolute;
+      bottom: 38px;
+      left: 0%;
+      transform: translateX(-50%) translateY(4px);
+      background: rgba(12, 17, 14, 0.94);
+      border: 1px solid var(--green-glow);
+      color: var(--white-pure);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      border-radius: 3px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 10;
+    }
+
+    .scrubber-tooltip.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .scrubber-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -4px;
+      border-width: 4px;
+      border-style: solid;
+      border-color: var(--green-glow) transparent transparent transparent;
+    }
+
+    /* Right controls: Arrows & Quick Pills */
+    .gallery-ctrl-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gallery-nav-arrows {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Bottom Status Strip (Integrated 21TSI Telemetry) */
+    .hero-status-strip {
+      position: relative;
+      z-index: 2;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-muted);
+    }
+
+    .hero-status-strip span.val {
+      color: var(--white-pure);
+      font-weight: 700;
+      display: block;
+      margin-top: 3px;
+      font-size: 0.8125rem;
+    }
+
+    /* =============================================================
+       ORBITAL ROTATING CURSOR (Framer Signature 'orbit' style)
+       ============================================================= */
+    .orbit-cursor-host {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 120px;
+      height: 120px;
+      margin-left: -60px;
+      margin-top: -60px;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orbit-cursor-host.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .orbit-cursor-host.hover-interactive {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+
+    .orbit-svg-ring {
+      width: 100%;
+      height: 100%;
+      animation: spinOrbit 14s linear infinite;
+    }
+
+    @keyframes spinOrbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .orbit-text-path {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      fill: var(--green-neon);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .orbit-center-icon {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(12, 17, 14, 0.85);
+      border: 1px solid var(--green-neon);
+      box-shadow: 0 0 14px rgba(162, 232, 155, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white-pure);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    @media (max-width: 991px) {
+      .orbit-cursor-host {
+        display: none !important;
+      }
+      .gallery-scrubber-ctrls {
+        flex-wrap: wrap;
+      }
+      .gallery-scrubber-wrap {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+      }
+      .hero-status-strip {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+    }
+
+    /* =============================================================
+       3. METRICS MATRIX (HUD Telemetry Grid)
+       ============================================================= */
+    .section-telemetry {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--grid-line);
+      background: var(--black-surface);
+    }
+
+    .telemetry-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--grid-line);
+      border: 1px solid var(--grid-line);
+    }
+
+    .telemetry-box {
+      background: var(--black-surface);
+      padding: 44px 32px;
+      position: relative;
+      transition: background-color 0.25s ease;
+    }
+
+    .telemetry-box:hover {
+      background: var(--black-card);
+    }
+
+    .telemetry-index {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--green-glow);
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .telemetry-val {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 4.2vw, 56px);
+      line-height: 0.95;
+      color: var(--white-pure);
+      margin-bottom: 12px;
+    }
+
+    .telemetry-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--white-pure);
+      margin-bottom: 6px;
+    }
+
+    .telemetry-sub {
+      font-size: 0.8125rem;
+      color: var(--white-muted);
+      line-height: 1.45;
+    }
+
+    /* =============================================================
+       4. SECTION: TWO SIDES OF SPORT (Disruptive Split Bento)
+       ============================================================= */
+    .section-focus-bento {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .section-header-tech {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      border-bottom: 1px solid var(--grid-line);
+      padding-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .section-title-huge {
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      max-width: 800px;
+      text-transform: none;
+    }
+
+    .bento-split-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .bento-tech-card {
+      background: var(--black-card);
+      border: 1px solid var(--grid-line);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 520px;
+      padding: 48px 40px;
+      transition: var(--transition);
+    }
+
+    .bento-tech-card:hover {
+      border-color: var(--green-border);
+      background: var(--black-card-hover);
+    }
+
+    .bento-card-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.18;
+      filter: contrast(1.1) grayscale(0.2);
+      transition: opacity 0.4s ease, transform 0.6s ease;
+      z-index: 0;
+    }
+
+    .bento-tech-card:hover .bento-card-bg-img {
+      opacity: 0.28;
+      transform: scale(1.03);
+    }
+
+    .bento-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .bento-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+    }
+
+    .bento-card-heading {
+      font-size: clamp(20px, 2.0vw, 26px);
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      text-transform: none;
+    }
+
+    .bento-card-lead {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--green-neon);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .bento-card-p {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--white-dim);
+      margin-bottom: 32px;
+      max-width: 500px;
+    }
+
+    .criteria-matrix {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 1px solid var(--grid-line);
+      padding-top: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .criteria-matrix li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white-pure);
+    }
+
+    .criteria-matrix li::before {
+      content: '+';
+      color: var(--green-neon);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* =============================================================
+       5. MANIFESTO BANNER (Radical Quote with Background Photo)
+       ============================================================= */
+    .manifesto-banner {
+      padding: 130px 0;
+      background: var(--black-surface);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+    }
+
+    .manifesto-banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      opacity: 0.65;
+      filter: contrast(1.1) brightness(0.85);
+      z-index: 0;
+      display: block;
+    }
+
+    .manifesto-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 9, 8, 0.68) 0%, rgba(6, 9, 8, 0.85) 100%);
+      z-index: 1;
+    }
+
+    .manifesto-quote-giant {
+      font-size: clamp(24px, 3.2vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--white-pure);
+      margin-bottom: 32px;
+      max-width: 1040px;
+    }
+
+    .manifesto-quote-giant span.hl {
+      color: var(--green-neon);
+    }
+
+    /* =============================================================
+       6. THE 3-PILLAR PLAYBOOK (Architectural Columns)
+       ============================================================= */
+    .section-playbook-tech {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .playbook-columns-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .playbook-tech-col {
+      background: var(--black-surface);
+      border: 1px solid var(--grid-line);
+      padding: 44px 36px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 420px;
+      transition: var(--transition);
+    }
+
+    .playbook-tech-col:hover {
+      border-color: var(--green-glow);
+      background: var(--black-card);
+      transform: translateY(-4px);
+    }
+
+    .playbook-col-num {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--green-glow);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .playbook-col-title {
+      font-size: clamp(20px, 2.0vw, 26px);
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      text-transform: none;
+    }
+
+    .playbook-col-text {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--white-dim);
+      margin-bottom: 28px;
+    }
+
+    /* =============================================================
+       7. THE FOUNDER (Radar Dossier // Justin Zayat)
+       ============================================================= */
+    .section-founder-dossier {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .dossier-frame {
+      border: 1px solid var(--grid-line);
+      background: var(--black-surface);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      position: relative;
+    }
+
+    .dossier-left {
+      padding: 64px 56px;
+      border-right: 1px solid var(--grid-line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dossier-header-tag {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .dossier-name {
+      font-size: clamp(24px, 2.6vw, 34px);
+      line-height: 1.15;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      text-transform: none;
+    }
+
+    .dossier-role {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--green-neon);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .dossier-bio {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--white-dim);
+      margin-bottom: 36px;
+      max-width: 600px;
+    }
+
+    .dossier-stats-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      border-top: 1px solid var(--grid-line);
+      padding-top: 28px;
+      margin-bottom: 36px;
+    }
+
+    .dossier-stat-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--white-pure);
+      line-height: 1;
+    }
+
+    .dossier-stat-lbl {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--white-muted);
+      text-transform: uppercase;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .dossier-right {
+      position: relative;
+      background: var(--black-card);
+      overflow: hidden;
+      min-height: 520px;
+    }
+
+    .dossier-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      filter: contrast(1.15) brightness(0.75);
+    }
+
+    .dossier-radar-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, var(--black-void) 100%);
+      pointer-events: none;
+    }
+
+    /* =============================================================
+       8. DUE DILIGENCE CRITERIA FILTER (3 Horizontal Strips)
+       ============================================================= */
+    .section-criteria-strips {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--grid-line);
+      background: var(--black-void);
+    }
+
+    .strips-table {
+      border: 1px solid var(--grid-line);
+      margin-top: 48px;
+    }
+
+    .strip-row {
+      display: grid;
+      grid-template-columns: 120px 1.2fr 2fr;
+      padding: 32px 36px;
+      border-bottom: 1px solid var(--grid-line);
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .strip-row:last-child {
+      border-bottom: none;
+    }
+
+    .strip-row:hover {
+      background: var(--black-surface);
+    }
+
+    .strip-id {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--green-glow);
+      font-weight: 700;
+    }
+
+    .strip-name {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      text-transform: none;
+      letter-spacing: -0.015em;
+      font-weight: 500;
+    }
+
+    .strip-desc {
+      font-size: 0.875rem;
+      color: var(--white-dim);
+      line-height: 1.6;
+    }
+
+    /* =============================================================
+       9. FAQ MATRIX (Technical Accordion)
+       ============================================================= */
+    .section-faq-matrix {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .faq-grid-split {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 64px;
+      align-items: flex-start;
+    }
+
+    .faq-hud-sidebar h2 {
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      margin-bottom: 20px;
+      text-transform: none;
+    }
+
+    .faq-hud-sidebar p {
+      font-size: 1rem;
+      color: var(--white-dim);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .faq-matrix-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-tech-item {
+      background: var(--black-surface);
+      border: 1px solid var(--grid-line);
+      transition: border-color 0.2s ease;
+      position: relative;
+    }
+
+    .faq-tech-item.active {
+      border-color: var(--green-glow);
+      background: var(--black-card);
+    }
+
+    .faq-tech-btn {
+      width: 100%;
+      padding: 24px 28px;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .faq-tech-q {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      text-transform: none;
+      color: var(--white-pure);
+      letter-spacing: -0.015em;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .faq-tech-symbol {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--green-neon);
+      min-width: 24px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-tech-item.active .faq-tech-symbol {
+      transform: rotate(45deg);
+    }
+
+    .faq-tech-body {
+      display: none;
+      padding: 0 28px 24px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--white-dim);
+      border-top: 1px solid var(--grid-line);
+      padding-top: 18px;
+    }
+
+    .faq-tech-item.active .faq-tech-body {
+      display: block;
+    }
+
+    /* =============================================================
+       10. START A CONVERSATION (Terminal / Portal)
+       ============================================================= */
+    .section-portal-cta {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--grid-line);
+      background: var(--black-surface);
+      position: relative;
+    }
+
+    .portal-box {
+      border: 1px solid var(--grid-line);
+      background: var(--black-card);
+      padding: 72px 56px;
+      position: relative;
+      text-align: left;
+    }
+
+    .portal-title-giant {
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      margin-bottom: 22px;
+      text-transform: none;
+    }
+
+    .portal-lead {
+      font-size: 1.15rem;
+      color: var(--white-dim);
+      max-width: 720px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .portal-audiences-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+      border-top: 1px solid var(--grid-line);
+      padding-top: 36px;
+    }
+
+    .portal-aud-col {
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--grid-line);
+    }
+
+    .portal-aud-idx {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--green-glow);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .portal-aud-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      font-weight: 500;
+      margin-bottom: 8px;
+      text-transform: none;
+    }
+
+    .portal-aud-desc {
+      font-size: 0.8125rem;
+      color: var(--white-muted);
+      line-height: 1.5;
+    }
+
+    .portal-btn-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* =============================================================
+       11. FOOTER (HUD Telemetry Terminal)
+       ============================================================= */
+    .footer-tech {
+      padding: 80px 0 40px;
+      background: var(--black-void);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-muted);
+      border-top: 1px solid var(--grid-line);
+    }
+
+    .footer-grid-4 {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .footer-brand-tech img {
+      height: 60px;
+      max-height: 68px;
+      width: auto;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .footer-col-hdr {
+      color: var(--green-neon);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .footer-tech-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-tech-list a {
+      color: var(--white-dim);
+      transition: color 0.2s ease;
+    }
+
+    .footer-tech-list a:hover {
+      color: var(--green-neon);
+    }
+
+    .footer-bottom-telemetry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Floating switcher pill */
+    .variant-preview-pill {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: rgba(6, 9, 8, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      border: 1px solid var(--green-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #ffffff;
+    }
+
+    .variant-preview-pill a {
+      color: var(--green-neon);
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+      .header-nav-menu {
+        display: none;
+      }
+      .telemetry-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bento-split-2 {
+        grid-template-columns: 1fr;
+      }
+      .playbook-columns-3 {
+        grid-template-columns: 1fr;
+      }
+      .dossier-frame {
+        grid-template-columns: 1fr;
+      }
+      .dossier-left {
+        border-right: none;
+        border-bottom: 1px solid var(--grid-line);
+        padding: 40px 28px;
+      }
+      .dossier-right {
+        min-height: 360px;
+      }
+      .strip-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 24px;
+      }
+      .faq-grid-split {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .portal-box {
+        padding: 40px 24px;
+      }
+      .portal-audiences-row {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid-4 {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .hero-status-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================================
+       1. NAVIGATION HEADER (Technical HUD Bar)
+       ============================================================= -->
+  <header class="header-hud">
+    <div class="header-left">
+      <a href="#" class="header-brand" aria-label="JPZ Ventures">
+        <img src="assets/MainLogo-Light.png" alt="JPZ Ventures">
+      </a>
+    </div>
+
+    <ul class="header-nav-menu">
+      <li><a href="#focus">Focus Areas</a></li>
+      <li><a href="#playbook">Our Playbook</a></li>
+      <li><a href="#founder">Justin Zayat</a></li>
+      <li><a href="#diligence">Diligence</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+
+    <a href="#portal" class="btn-21 btn-21-white btn-21-pill">
+      Start A Conversation +
+    </a>
+  </header>
+
+  <!-- =============================================================
+       2. HERO SECTION - VIDEO CMS GALLERY BANNER (Framer Signature Style)
+       ============================================================= -->
+  <section class="hero-manifesto" id="home">
+    
+    <!-- Background Media Layers (High-Resolution Sports Photography) -->
+    <div class="gallery-media-viewport">
+      <div class="gallery-slide-layer active" data-index="0">
+        <img class="gallery-img-bg" src="assets/sports-racing-motion.jpg" alt="Ownership Positions In Sport" loading="eager">
+      </div>
+      <div class="gallery-slide-layer" data-index="1">
+        <img class="gallery-img-bg" src="assets/sports-runner-motion.jpg" alt="Sports Assets Formation" loading="eager">
+      </div>
+      <div class="gallery-slide-layer" data-index="2">
+        <img class="gallery-img-bg" src="assets/hero-motion-cyclist.jpg" alt="Venture and Technology Ecosystem" loading="eager">
+      </div>
+      <div class="gallery-slide-layer" data-index="3">
+        <img class="gallery-img-bg" src="assets/blue-court-racing.jpg" alt="Championship Pedigree and Track Record" loading="eager">
+      </div>
+      <div class="gallery-shade-overlay"></div>
+      <div class="gallery-grain-overlay"></div>
+    </div>
+
+    <!-- Center Stage Typography Overlay -->
+    <div class="container" style="width: 100%;">
+      <div class="hero-content-stage">
+        
+        <!-- Top HUD Row with Segments Progress -->
+        <div class="hero-hud-top">
+          <span class="hud-tag"><span class="status-dot"></span> Founder-Led Private Investment</span>
+          <span class="mono-meta">[ HOLDING: SPORTS ASSETS + VENTURE TECH ]</span>
+          <div class="hud-segments-bar" id="galleryHudSegments">
+            <div class="hud-seg-item" data-goto="0"><div class="hud-seg-fill"></div></div>
+            <div class="hud-seg-item" data-goto="1"><div class="hud-seg-fill"></div></div>
+            <div class="hud-seg-item" data-goto="2"><div class="hud-seg-fill"></div></div>
+            <div class="hud-seg-item" data-goto="3"><div class="hud-seg-fill"></div></div>
+          </div>
+        </div>
+
+        <!-- Slide 01: Direct Ownership In Sport -->
+        <div class="gallery-text-slide active" data-slide="0">
+          <div class="mono-meta" style="margin-bottom: 12px; color: var(--green-neon);">[ EXHIBIT 01 // CORE MANDATE ]</div>
+          <h1 class="hero-giant-title">
+            Ownership<br>Positions<br><span class="accent-slash">In Sport.</span>
+          </h1>
+          <p class="hero-lead-text">
+            JPZ Ventures takes ownership positions across Sports Assets and Venture &amp; Technology. We back emerging teams, leagues at formation, and scalable technologies reshaping global athletics.
+          </p>
+          <div class="hero-cta-bar">
+            <a href="#playbook" class="btn-21 btn-21-white">Explore Our Approach +</a>
+            <a href="#focus" class="btn-21 btn-21-outline">View Focus Areas [01/02]</a>
+          </div>
+        </div>
+
+        <!-- Slide 02: Sports Assets Formation -->
+        <div class="gallery-text-slide" data-slide="1">
+          <div class="mono-meta" style="margin-bottom: 12px; color: var(--green-neon);">[ EXHIBIT 02 // ASSET CLASS 01 ]</div>
+          <h1 class="hero-giant-title">
+            Sports Assets<br>Formation &amp;<br><span class="accent-slash">Franchises.</span>
+          </h1>
+          <p class="hero-lead-text">
+            Direct equity in teams, emerging leagues, sports IP, and premier athletic properties. Decades of operational pedigree inside championship organizations and international syndicates.
+          </p>
+          <div class="hero-cta-bar">
+            <a href="#focus" class="btn-21 btn-21-white">Review Sports Assets +</a>
+            <a href="#playbook" class="btn-21 btn-21-outline">Read Playbook</a>
+          </div>
+        </div>
+
+        <!-- Slide 03: Venture & Technology -->
+        <div class="gallery-text-slide" data-slide="2">
+          <div class="mono-meta" style="margin-bottom: 12px; color: var(--green-neon);">[ EXHIBIT 03 // ASSET CLASS 02 ]</div>
+          <h1 class="hero-giant-title">
+            Venture &amp;<br>Technology<br><span class="accent-slash">Ecosystem.</span>
+          </h1>
+          <p class="hero-lead-text">
+            Early and growth-stage investments in sportstech, data platforms, high-performance conditioning, fan engagement, and sports entertainment infrastructure.
+          </p>
+          <div class="hero-cta-bar">
+            <a href="#focus" class="btn-21 btn-21-white">Explore Tech Verticals +</a>
+            <a href="#portal" class="btn-21 btn-21-outline">Submit Opportunity</a>
+          </div>
+        </div>
+
+        <!-- Slide 04: Justin Zayat 13 Yrs Track Record -->
+        <div class="gallery-text-slide" data-slide="3">
+          <div class="mono-meta" style="margin-bottom: 12px; color: var(--green-neon);">[ EXHIBIT 04 // LEADERSHIP ]</div>
+          <h1 class="hero-giant-title">
+            13 Years<br>Championship<br><span class="accent-slash">Pedigree.</span>
+          </h1>
+          <p class="hero-lead-text">
+            Led by Justin Zayat, former Racing &amp; Bloodstock Director of Zayat Stables, orchestrators of American Pharoah's historic Triple Crown &amp; Grand Slam victory. Over $350M+ in transacted value.
+          </p>
+          <div class="hero-cta-bar">
+            <a href="#dossier" class="btn-21 btn-21-white">Founder Dossier +</a>
+            <a href="#portal" class="btn-21 btn-21-outline">Start Conversation</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom HUD Scrubber & Telemetry Controls -->
+    <div class="gallery-bottom-hud">
+      <div class="container">
+        
+        <div class="gallery-scrubber-ctrls">
+          <!-- Counter & Play/Pause -->
+          <div class="gallery-ctrl-left">
+            <div class="gallery-counter-badge">
+              [ <span class="current-digit" id="galleryCurrentDigit">01</span> / 04 ]
+            </div>
+            <button type="button" class="gallery-ctrl-btn" id="galleryPlayPauseBtn" aria-label="Play or Pause Slideshow" title="Toggle Auto-Play">
+              <span id="playPauseIcon">❚❚</span>
+            </button>
+          </div>
+
+          <!-- Interactive Scrubber Bar -->
+          <div class="gallery-scrubber-wrap" id="galleryScrubber">
+            <div class="scrubber-tooltip" id="scrubberTooltip">01. Direct Ownership In Sport</div>
+            <div class="scrubber-track" id="scrubberTrack">
+              <div class="scrubber-rail">
+                <div class="scrubber-fill-bar" id="scrubberFill"></div>
+              </div>
+              <div class="scrubber-ticks-layer">
+                <span class="scrubber-tick major"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick major"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick major"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick"></span>
+                <span class="scrubber-tick major"></span>
+              </div>
+              <div class="scrubber-handle" id="scrubberHandle"></div>
+            </div>
+          </div>
+
+          <!-- Next / Prev Controls -->
+          <div class="gallery-ctrl-right">
+            <div class="gallery-nav-arrows">
+              <button type="button" class="gallery-ctrl-btn" id="galleryPrevBtn" aria-label="Previous Slide" title="Previous Slide">
+                ←
+              </button>
+              <button type="button" class="gallery-ctrl-btn" id="galleryNextBtn" aria-label="Next Slide" title="Next Slide">
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Telemetry Strip -->
+        <div class="hero-status-strip">
+          <div>
+            <span>// ASSET CLASS 01</span>
+            <span class="val">Sports Assets</span>
+          </div>
+          <div>
+            <span>// ASSET CLASS 02</span>
+            <span class="val">Venture &amp; Technology</span>
+          </div>
+          <div>
+            <span>// CAPITAL MODEL</span>
+            <span class="val">100% Founder-Led</span>
+          </div>
+          <div>
+            <span>// HEADQUARTERS</span>
+            <span class="val">New York, NY</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Framer Video CMS Signature Orbital Cursor -->
+  <div class="orbit-cursor-host" id="galleryOrbitCursor" aria-hidden="true">
+    <svg class="orbit-svg-ring" viewBox="0 0 120 120">
+      <defs>
+        <path id="orbitCirclePath" d="M 60, 60 m -44, 0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" />
+      </defs>
+      <text class="orbit-text-path">
+        <textPath href="#orbitCirclePath" startOffset="0%">
+          VIEW NEXT • VIEW NEXT • 
+        </textPath>
+      </text>
+    </svg>
+    <div class="orbit-center-icon">→</div>
+  </div>
+
+  <main>
+    <!-- =============================================================
+         3. METRICS MATRIX (HUD Telemetry Grid)
+         ============================================================= -->
+    <section class="section-telemetry">
+      <div class="container">
+        <div class="telemetry-grid-4">
+          
+          <div class="telemetry-box">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <span class="telemetry-index">[ METRIC 01 // TRANSACTIONS ]</span>
+            <div class="telemetry-val">$350M+</div>
+            <div class="telemetry-label">Assets Transacted</div>
+            <div class="telemetry-sub">At auction and private sale across elite sports assets.</div>
+          </div>
+
+          <div class="telemetry-box">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <span class="telemetry-index">[ METRIC 02 // GOVERNANCE ]</span>
+            <div class="telemetry-val">9 Years</div>
+            <div class="telemetry-label">Full P&amp;L Responsibility</div>
+            <div class="telemetry-sub">Racing &amp; Stallion Manager at Zayat Stables (2011–2020).</div>
+          </div>
+
+          <div class="telemetry-box">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <span class="telemetry-index">[ METRIC 03 // SCALE ]</span>
+            <div class="telemetry-val">100+</div>
+            <div class="telemetry-label">People in Operation</div>
+            <div class="telemetry-sub">Direct leadership across multiple U.S. states and facilities.</div>
+          </div>
+
+          <div class="telemetry-box">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <span class="telemetry-index">[ METRIC 04 // ALIGNMENT ]</span>
+            <div class="telemetry-val">100%</div>
+            <div class="telemetry-label">Founder-Led Capital</div>
+            <div class="telemetry-sub">Unconstrained by rigid closed-end private equity funds.</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         4. SECTION: TWO SIDES OF SPORT (Disruptive Split Bento)
+         ============================================================= -->
+    <section class="section-focus-bento" id="focus">
+      <div class="container">
+        
+        <div class="section-header-tech">
+          <div>
+            <span class="mono-meta">// 01. INVESTMENT FOCUS</span>
+            <h2 class="section-title-huge" style="margin-top: 12px;">
+              Two Sides Of Sport.<br>One Ownership Platform.
+            </h2>
+          </div>
+          <div class="hud-tag">
+            <span>PORTFOLIO ARCHITECTURE</span>
+          </div>
+        </div>
+
+        <div class="bento-split-2">
+          
+          <!-- Box 1: Sports Assets -->
+          <div class="bento-tech-card">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <span class="corner-plus corner-bl">+</span>
+            <span class="corner-plus corner-br">+</span>
+            <img src="assets/sports-racing-motion.jpg" alt="Sports Assets" class="bento-card-bg-img">
+
+            <div class="bento-card-inner">
+              <div class="bento-badge-row">
+                <span class="mono-meta">[ ASSET CLASS 01 ]</span>
+                <span class="hud-tag">Direct Ownership</span>
+              </div>
+              <h3 class="bento-card-heading">Sports Assets</h3>
+              <div class="bento-card-lead">An early position in what comes next.</div>
+              <p class="bento-card-p">
+                We invest directly in emerging teams and leagues, often at formation, when entry price, governance rights, and operating influence can still be shaped.
+              </p>
+            </div>
+
+            <ul class="criteria-matrix">
+              <li>Emerging teams &amp; leagues</li>
+              <li>Formation-stage entry</li>
+              <li>Governance &amp; operating rights</li>
+            </ul>
+          </div>
+
+          <!-- Box 2: Venture & Technology -->
+          <div class="bento-tech-card">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <span class="corner-plus corner-bl">+</span>
+            <span class="corner-plus corner-br">+</span>
+            <img src="assets/sports-runner-motion.jpg" alt="Venture Technology" class="bento-card-bg-img">
+
+            <div class="bento-card-inner">
+              <div class="bento-badge-row">
+                <span class="mono-meta">[ ASSET CLASS 02 ]</span>
+                <span class="hud-tag">Specialist Access</span>
+              </div>
+              <h3 class="bento-card-heading">Venture &amp; Technology</h3>
+              <div class="bento-card-lead">Sport is the entry point. The market can be bigger.</div>
+              <p class="bento-card-p">
+                We invest through specialist sports technology managers, co-investment rights, and direct company positions in businesses that can expand beyond sport.
+              </p>
+            </div>
+
+            <ul class="criteria-matrix">
+              <li>Specialist sports technology managers</li>
+              <li>Co-investment &amp; direct positions</li>
+              <li>Markets beyond sport</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+         5. MANIFESTO BANNER (Radical Quote with Background Photo)
+         ============================================================= -->
+    <section class="manifesto-banner">
+      <img src="assets/sports-runner-motion.jpg" alt="Operating Conviction" class="manifesto-banner-img" loading="eager">
+      <div class="manifesto-banner-overlay"></div>
+      <div class="container" style="position: relative; z-index: 2;">
+        <span class="mono-meta" style="margin-bottom: 20px; display: inline-block;">// OPERATING CONVICTION</span>
+        <blockquote class="manifesto-quote-giant">
+          “Relationships create the opening. Operating experience informs the questions. <span class="hl">Underwriting determines whether capital moves.”</span>
+        </blockquote>
+        <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+          <a href="#playbook" class="btn-21 btn-21-white">
+            Explore The 3-Pillar Playbook +
+          </a>
+          <span class="mono-meta">// RIGOROUS PRINCIPAL UNDERWRITING</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         6. THE 3-PILLAR PLAYBOOK (Architectural Columns)
+         ============================================================= -->
+    <section class="section-playbook-tech" id="playbook">
+      <div class="container">
+        
+        <div class="section-header-tech">
+          <div>
+            <span class="mono-meta">// 02. OUR APPROACH</span>
+            <h2 class="section-title-huge" style="margin-top: 12px;">
+              Access Brings It To The Desk.<br>Evidence Decides.
+            </h2>
+          </div>
+          <div class="hud-tag">
+            <span>EXECUTION PLAYBOOK</span>
+          </div>
+        </div>
+
+        <div class="playbook-columns-3">
+          
+          <!-- Pillar 01 -->
+          <div class="playbook-tech-col">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <div>
+              <div class="playbook-col-num">01 // SOURCING</div>
+              <h3 class="playbook-col-title">Relationships That Source Opportunity.</h3>
+              <p class="playbook-col-text">
+                Our network spans owners, league management, athletes, operators, specialist investors, family offices, and strategic partners. It brings opportunities that do not always reach a broad process.
+              </p>
+            </div>
+            <div class="mono-meta">[ PROPRIETARY DEALFLOW ]</div>
+          </div>
+
+          <!-- Pillar 02 -->
+          <div class="playbook-tech-col">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <div>
+              <div class="playbook-col-num">02 // EVIDENCE</div>
+              <h3 class="playbook-col-title">Evidence Behind The Position.</h3>
+              <p class="playbook-col-text">
+                For sports assets, we examine committed capital, distribution, governance, counterparties, and exit rights. For venture and technology, we evaluate the business alongside specialists.
+              </p>
+            </div>
+            <div class="mono-meta">[ INSTITUTIONAL UNDERWRITING ]</div>
+          </div>
+
+          <!-- Pillar 03 -->
+          <div class="playbook-tech-col">
+            <span class="corner-plus corner-tl">+</span>
+            <span class="corner-plus corner-tr">+</span>
+            <div>
+              <div class="playbook-col-num">03 // VALUE-ADD</div>
+              <h3 class="playbook-col-title">A Contribution After Entry.</h3>
+              <p class="playbook-col-text">
+                Commercial revenue, technology choices, and operating decisions shape an investment after closing. Justin’s experience in those decisions informs where JPZ can be useful.
+              </p>
+            </div>
+            <div class="mono-meta">[ ACTIVE POST-ENTRY SUPPORT ]</div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+         7. THE FOUNDER (Radar Dossier // Justin Zayat)
+         ============================================================= -->
+    <section class="section-founder-dossier" id="founder">
+      <div class="container">
+        
+        <div class="section-header-tech">
+          <div>
+            <span class="mono-meta">// 03. THE FOUNDER</span>
+            <h2 class="section-title-huge" style="margin-top: 12px;">
+              An Operator’s Perspective<br>On Ownership.
+            </h2>
+          </div>
+          <div class="hud-tag">
+            <span class="status-dot"></span>
+            <span>FORBES 30 UNDER 30 · SPORTS (2017)</span>
+          </div>
+        </div>
+
+        <div class="dossier-frame">
+          <span class="corner-plus corner-tl">+</span>
+          <span class="corner-plus corner-tr">+</span>
+          <span class="corner-plus corner-bl">+</span>
+          <span class="corner-plus corner-br">+</span>
+
+          <div class="dossier-left">
+            <div>
+              <div class="dossier-header-tag">
+                <span class="hud-tag">FOUNDER PROFILE</span>
+                <span class="mono-meta">[ FORBES 30 UNDER 30 // 2017 ]</span>
+              </div>
+
+              <h3 class="dossier-name">Justin Zayat</h3>
+              <div class="dossier-role">Founder &amp; Managing Partner</div>
+
+              <p class="dossier-bio">
+                Justin founded JPZ Ventures in July 2026, bringing experience in asset transactions, commercial revenue, and technology purchasing inside a live sports operation.<br><br>
+                He spent thirteen years at Zayat Stables, from 2007 to 2020, including nine years as Racing &amp; Stallion Manager, from 2011 to 2020, with full P&amp;L responsibility. He built sponsorship and partnership revenue around assets that owned no media rights and evaluated technology against real operating decisions. Those experiences shape how JPZ assesses ownership today.
+              </p>
+            </div>
+
+            <div>
+              <div class="dossier-stats-matrix">
+                <div>
+                  <div class="dossier-stat-num">$350M+</div>
+                  <div class="dossier-stat-lbl">Assets Transacted (Auction &amp; Private)</div>
+                </div>
+                <div>
+                  <div class="dossier-stat-num">9 YRS</div>
+                  <div class="dossier-stat-lbl">Full P&amp;L Responsibility</div>
+                </div>
+                <div>
+                  <div class="dossier-stat-num">100+</div>
+                  <div class="dossier-stat-lbl">Operating Personnel</div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                <a href="https://www.linkedin.com/in/justinzayat" target="_blank" rel="noopener noreferrer" class="btn-21 btn-21-white">
+                  Connect On LinkedIn +
+                </a>
+                <a href="https://www.forbes.com/profile/justin-zayat/" target="_blank" rel="noopener noreferrer" class="btn-21 btn-21-outline">
+                  Forbes Profile &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="dossier-right">
+            <img src="assets/sports-runner-motion.jpg" alt="Justin Zayat Operating Profile">
+            <div class="dossier-radar-overlay"></div>
+          </div>
+
+        </div>
+
+        <div style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--white-muted); margin-top: 18px; letter-spacing: 0.06em;">
+          * Historical operating experience at Zayat Stables; figures do not represent JPZ Ventures’ assets under management or investment performance.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+         8. DUE DILIGENCE CRITERIA FILTER (3 Horizontal Strips)
+         ============================================================= -->
+    <section class="section-criteria-strips" id="diligence">
+      <div class="container">
+        
+        <div class="section-header-tech">
+          <div>
+            <span class="mono-meta">// RADICAL DISCIPLINE</span>
+            <h2 class="section-title-huge" style="margin-top: 12px;">
+              Investment Diligence Filter.
+            </h2>
+          </div>
+          <div class="hud-tag">
+            <span>MANDATORY CRITERIA</span>
+          </div>
+        </div>
+
+        <div class="strips-table">
+          
+          <div class="strip-row">
+            <div class="strip-id">[ 01 ]</div>
+            <div class="strip-name">Capitalization &amp; Distribution</div>
+            <div class="strip-desc">
+              We audit capitalization tables, broadcast distribution, and counterparty integrity to ensure sound unit economics before deploying initial capital.
+            </div>
+          </div>
+
+          <div class="strip-row">
+            <div class="strip-id">[ 02 ]</div>
+            <div class="strip-name">Governance &amp; Board Control</div>
+            <div class="strip-desc">
+              Formation-stage entry guarantees structured voting rights, protective vetoes, and active commercial direction alongside founders and league commissioners.
+            </div>
+          </div>
+
+          <div class="strip-row">
+            <div class="strip-id">[ 03 ]</div>
+            <div class="strip-name">Liquidity &amp; Co-Investment</div>
+            <div class="strip-desc">
+              Clear pathways to compounding enterprise value, secondary trade liquidity, or syndicated expansion with Tier-1 sports tech venture managers.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+         9. FAQ MATRIX (Technical Accordion)
+         ============================================================= -->
+    <section class="section-faq-matrix" id="faq">
+      <div class="container">
+        
+        <div class="faq-grid-split">
+          
+          <div class="faq-hud-sidebar">
+            <span class="mono-meta">// FREQUENTLY ASKED</span>
+            <h2>Got Questions?<br>We Have Answers.</h2>
+            <p>
+              Detailed telemetry on our capital structure, target assets, post-investment involvement, and how we collaborate with sports founders and co-investors.
+            </p>
+            <a href="#portal" class="btn-21 btn-21-outline">
+              Ask A Specific Question +
+            </a>
+          </div>
+
+          <div class="faq-matrix-list">
+            
+            <div class="faq-tech-item active">
+              <button class="faq-tech-btn" type="button">
+                <span class="faq-tech-q">What types of sports assets does JPZ target?</span>
+                <span class="faq-tech-symbol">+</span>
+              </button>
+              <div class="faq-tech-body">
+                We invest directly in emerging teams and leagues, often at formation, when entry price, governance rights, and operating influence can still be shaped. Our focus centers on properties with clear commercial upside and structural expansion potential.
+              </div>
+            </div>
+
+            <div class="faq-tech-item">
+              <button class="faq-tech-btn" type="button">
+                <span class="faq-tech-q">How does JPZ participate in venture and technology?</span>
+                <span class="faq-tech-symbol">+</span>
+              </button>
+              <div class="faq-tech-body">
+                We invest through specialist sports technology managers, co-investment rights, and direct company positions in businesses that use sport as an initial validation vector but can expand into broader enterprise and consumer markets.
+              </div>
+            </div>
+
+            <div class="faq-tech-item">
+              <button class="faq-tech-btn" type="button">
+                <span class="faq-tech-q">Does JPZ deploy external institutional funds?</span>
+                <span class="faq-tech-symbol">+</span>
+              </button>
+              <div class="faq-tech-body">
+                JPZ Ventures is a founder-led private investment firm deploying dedicated principal capital alongside trusted family offices, sovereign partners, and strategic syndicate investors. This allows unencumbered, patient decisions without committee friction.
+              </div>
+            </div>
+
+            <div class="faq-tech-item">
+              <button class="faq-tech-btn" type="button">
+                <span class="faq-tech-q">What operating value does Justin provide after entry?</span>
+                <span class="faq-tech-symbol">+</span>
+              </button>
+              <div class="faq-tech-body">
+                Commercial revenue, technology choices, and operating decisions shape an investment after closing. With thirteen years of direct P&amp;L management and over $350M in asset transactions, Justin provides practical guidance on sponsorship agreements, vendor selection, and executive recruitment.
+              </div>
+            </div>
+
+            <div class="faq-tech-item">
+              <button class="faq-tech-btn" type="button">
+                <span class="faq-tech-q">How do founders and partners submit an opportunity?</span>
+                <span class="faq-tech-symbol">+</span>
+              </button>
+              <div class="faq-tech-body">
+                We review opportunities on an ongoing basis. You can initiate a conversation directly via our terminal portal below or connect with Justin Zayat on LinkedIn.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+         10. START A CONVERSATION (Terminal / Portal)
+         ============================================================= -->
+    <section class="section-portal-cta" id="portal">
+      <div class="container">
+        
+        <div class="portal-box">
+          <span class="corner-plus corner-tl">+</span>
+          <span class="corner-plus corner-tr">+</span>
+          <span class="corner-plus corner-bl">+</span>
+          <span class="corner-plus corner-br">+</span>
+
+          <span class="mono-meta" style="margin-bottom: 16px; display: inline-block;">// 04. START A CONVERSATION</span>
+          <h2 class="portal-title-giant">Share An Opportunity.</h2>
+          <p class="portal-lead">
+            If you are building a sports asset, developing technology with a market beyond sport, or bringing capabilities that can strengthen an ownership position, let’s talk.
+          </p>
+
+          <div class="portal-audiences-row">
+            
+            <div class="portal-aud-col">
+              <span class="portal-aud-idx">[ AUDIENCE 01 ]</span>
+              <h4 class="portal-aud-title">Founders &amp; Operators</h4>
+              <p class="portal-aud-desc">Bring the business, the ownership opportunity, and the operational decisions ahead.</p>
+            </div>
+
+            <div class="portal-aud-col">
+              <span class="portal-aud-idx">[ AUDIENCE 02 ]</span>
+              <h4 class="portal-aud-title">Family Offices &amp; Investors</h4>
+              <p class="portal-aud-desc">Explore JPZ’s approach to sourcing and evaluating co-investment positions.</p>
+            </div>
+
+            <div class="portal-aud-col">
+              <span class="portal-aud-idx">[ AUDIENCE 03 ]</span>
+              <h4 class="portal-aud-title">Regional Partners</h4>
+              <p class="portal-aud-desc">Connect opportunity access with venues, commercial relationships, and local execution.</p>
+            </div>
+
+          </div>
+
+          <div class="portal-btn-row">
+            <a href="https://www.linkedin.com/in/justinzayat" target="_blank" rel="noopener noreferrer" class="btn-21 btn-21-white">
+              Connect With Justin On LinkedIn +
+            </a>
+            <a href="mailto:contact@jpzventures.com" class="btn-21 btn-21-outline">
+              contact@jpzventures.com &rarr;
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- =============================================================
+       11. FOOTER (HUD Telemetry Terminal)
+       ============================================================= -->
+  <footer class="footer-tech">
+    <div class="container">
+      
+      <div class="footer-grid-4">
+        
+        <div class="footer-brand-tech">
+          <img src="assets/MainLogo-Light.png" alt="JPZ Ventures">
+          <p style="color: var(--white-dim); line-height: 1.6; max-width: 340px; margin-bottom: 16px;">
+            Founder-led private investment firm taking ownership positions across Sports Assets and Venture &amp; Technology.
+          </p>
+          <div style="font-size: 0.6875rem; color: var(--white-muted);">
+            NEW YORK · EST. 2026 // PRINCIPAL HOLDING FIRM
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-hdr">[ INVESTMENT FOCUS ]</div>
+          <ul class="footer-tech-list">
+            <li><a href="#focus">01 // Sports Assets</a></li>
+            <li><a href="#focus">02 // Venture &amp; Technology</a></li>
+            <li><a href="#focus">Formation-Stage Entry</a></li>
+            <li><a href="#focus">Governance &amp; Influence</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-hdr">[ FIRM &amp; APPROACH ]</div>
+          <ul class="footer-tech-list">
+            <li><a href="#playbook">01 // Sourcing Network</a></li>
+            <li><a href="#playbook">02 // Underwriting Evidence</a></li>
+            <li><a href="#playbook">03 // Post-Entry Value</a></li>
+            <li><a href="#founder">Justin Zayat Dossier</a></li>
+            <li><a href="#faq">Terminal FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-hdr">[ ACCESS &amp; TELEMETRY ]</div>
+          <ul class="footer-tech-list">
+            <li><a href="https://www.linkedin.com/in/justinzayat" target="_blank" rel="noopener noreferrer">LinkedIn Dossier &rarr;</a></li>
+            <li><a href="https://www.forbes.com/profile/justin-zayat/" target="_blank" rel="noopener noreferrer">Forbes 30 Under 30 &rarr;</a></li>
+            <li><a href="mailto:contact@jpzventures.com">contact@jpzventures.com</a></li>
+            <li style="margin-top: 10px; color: var(--green-neon);">NYC TIME: <span id="nyc-live-time">--:--:-- EST</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-telemetry">
+        <div>&copy; 2026 JPZ VENTURES. ALL RIGHTS RESERVED.</div>
+        <div>SPORTS ASSETS // VENTURE &amp; TECHNOLOGY // NEW YORK</div>
+        <div><a href="#home" style="color: var(--green-neon);">[ BACK TO TOP &uarr; ]</a></div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Floating Switcher Pill (Designs 01, 02, 03, 04) -->
+  <div class="variant-preview-pill">
+    <span>Designs:</span>
+    <a href="index.html">Design 01</a>
+    <span>|</span>
+    <a href="variante-2.html">Design 02</a>
+    <span>|</span>
+    <a href="variante-3.html">Design 03</a>
+    <span>|</span>
+    <span style="font-weight: 700; color: #ffffff;">Design 04 &bull;</span>
+  </div>
+
+  <!-- Interactive Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Live NYC Time
+      function updateNycTime() {
+        const timeEl = document.getElementById('nyc-live-time');
+        if (timeEl) {
+          const now = new Date();
+          const options = { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+          timeEl.textContent = now.toLocaleTimeString('en-US', options) + ' EST';
+        }
+      }
+      updateNycTime();
+      setInterval(updateNycTime, 1000);
+
+      // 2. FAQ Accordion
+      const faqBtns = document.querySelectorAll('.faq-tech-btn');
+      faqBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-tech-item');
+          const isActive = item.classList.contains('active');
+
+          document.querySelectorAll('.faq-tech-item').forEach(other => {
+            if (other !== item) other.classList.remove('active');
+          });
+
+          if (isActive) {
+            item.classList.remove('active');
+          } else {
+            item.classList.add('active');
+          }
+        });
+      });
+
+      // 3. GSAP Reveals with Immediate Fallback
+      const elementsToReveal = document.querySelectorAll(
+        '.telemetry-box, .bento-tech-card, .playbook-tech-col, .dossier-frame, .strip-row, .faq-tech-item'
+      );
+      elementsToReveal.forEach(el => {
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+      });
+
+      if (typeof gsap !== 'undefined') {
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        heroTl
+          .from('.header-hud', { y: -20, opacity: 0, duration: 0.6 })
+          .from('.hero-hud-top > *', { y: 15, opacity: 0, stagger: 0.08, duration: 0.5 }, '-=0.3')
+          .from('.gallery-text-slide.active .hero-giant-title', { y: 25, opacity: 0, duration: 0.7 }, '-=0.4')
+          .from('.gallery-text-slide.active .hero-lead-text', { y: 15, opacity: 0, duration: 0.5 }, '-=0.4')
+          .from('.gallery-text-slide.active .hero-cta-bar > *', { y: 15, opacity: 0, stagger: 0.1, duration: 0.5 }, '-=0.4')
+          .from('.gallery-bottom-hud', { y: 20, opacity: 0, duration: 0.6 }, '-=0.3');
+
+        if (typeof ScrollTrigger !== 'undefined') {
+          gsap.registerPlugin(ScrollTrigger);
+
+          elementsToReveal.forEach(el => {
+            gsap.fromTo(el,
+              { opacity: 0.4, y: 20 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: el,
+                  start: 'top 95%',
+                  toggleActions: 'play none none none',
+                  once: true
+                }
+              }
+            );
+          });
+        }
+      }
+      // =============================================================
+      // 4. VIDEO CMS GALLERY BANNER CONTROLLER (Framer Signature Look)
+      // =============================================================
+      const galleryBanner = document.getElementById('home');
+      const slideLayers = document.querySelectorAll('.gallery-slide-layer');
+      const textSlides = document.querySelectorAll('.gallery-text-slide');
+      const hudSegments = document.querySelectorAll('.hud-seg-item');
+      const currentDigit = document.getElementById('galleryCurrentDigit');
+      const scrubberFill = document.getElementById('scrubberFill');
+      const scrubberHandle = document.getElementById('scrubberHandle');
+      const scrubberTrack = document.getElementById('scrubberTrack');
+      const scrubberTooltip = document.getElementById('scrubberTooltip');
+      const playPauseBtn = document.getElementById('galleryPlayPauseBtn');
+      const playPauseIcon = document.getElementById('playPauseIcon');
+      const prevBtn = document.getElementById('galleryPrevBtn');
+      const nextBtn = document.getElementById('galleryNextBtn');
+      const orbitCursor = document.getElementById('galleryOrbitCursor');
+
+      const slideTitles = [
+        '01. Direct Ownership In Sport',
+        '02. Sports Assets Formation',
+        '03. Venture & Technology',
+        '04. Justin Zayat 13 Yrs Track Record'
+      ];
+
+      const totalSlides = slideLayers.length;
+      let currentSlide = 0;
+      let isPlaying = true;
+      const slideDuration = 6500; // 6.5s per slide
+      let slideStartTime = performance.now();
+      let animFrameId = null;
+
+      function updateSlideUI(idx) {
+        // 1. Media Layers
+        slideLayers.forEach((layer, i) => {
+          if (i === idx) {
+            layer.classList.add('active');
+            const vid = layer.querySelector('video');
+            if (vid) {
+              vid.currentTime = 0;
+              vid.play().catch(() => {});
+            }
+          } else {
+            layer.classList.remove('active');
+          }
+        });
+
+        // 2. Text Slides
+        textSlides.forEach((slide, i) => {
+          if (i === idx) {
+            slide.classList.add('active');
+            slide.style.display = 'block';
+            setTimeout(() => { slide.style.opacity = '1'; slide.style.transform = 'translateY(0)'; }, 20);
+          } else {
+            slide.classList.remove('active');
+            slide.style.opacity = '0';
+            slide.style.transform = 'translateY(16px)';
+            slide.style.display = 'none';
+          }
+        });
+
+        // 3. Counter Badge
+        if (currentDigit) {
+          currentDigit.textContent = `0${idx + 1}`;
+        }
+
+        // 4. HUD Segmented Progress Bars
+        hudSegments.forEach((seg, i) => {
+          const fill = seg.querySelector('.hud-seg-fill');
+          if (i < idx) {
+            seg.classList.add('completed');
+            if (fill) fill.style.width = '100%';
+          } else if (i === idx) {
+            seg.classList.remove('completed');
+            if (fill) fill.style.width = '0%';
+          } else {
+            seg.classList.remove('completed');
+            if (fill) fill.style.width = '0%';
+          }
+        });
+
+        // 5. Scrubber Static Positions
+        const targetPercent = (idx / (totalSlides - 1)) * 100;
+        if (scrubberFill) scrubberFill.style.width = `${targetPercent}%`;
+        if (scrubberHandle) scrubberHandle.style.left = `${targetPercent}%`;
+      }
+
+      function goToSlide(idx, resetTimer = true) {
+        currentSlide = (idx + totalSlides) % totalSlides;
+        updateSlideUI(currentSlide);
+        if (resetTimer) {
+          slideStartTime = performance.now();
+        }
+      }
+
+      function animateGallery(now) {
+        if (isPlaying) {
+          const elapsed = now - slideStartTime;
+          const progress = Math.min(elapsed / slideDuration, 1);
+
+          // Update active HUD segment fill
+          if (hudSegments[currentSlide]) {
+            const currentFill = hudSegments[currentSlide].querySelector('.hud-seg-fill');
+            if (currentFill) currentFill.style.width = `${progress * 100}%`;
+          }
+
+          // Smoothly interpolate scrubber handle & bar across entire track
+          const basePercent = (currentSlide / (totalSlides - 1)) * 100;
+          const nextPercent = ((currentSlide + 1) / (totalSlides - 1)) * 100;
+          const dynamicPercent = Math.min(basePercent + (nextPercent - basePercent) * progress, 100);
+
+          if (scrubberFill) scrubberFill.style.width = `${dynamicPercent}%`;
+          if (scrubberHandle) scrubberHandle.style.left = `${dynamicPercent}%`;
+
+          if (elapsed >= slideDuration) {
+            goToSlide(currentSlide + 1);
+          }
+        }
+        animFrameId = requestAnimationFrame(animateGallery);
+      }
+
+      // Initialize slide 0
+      goToSlide(0);
+      animFrameId = requestAnimationFrame(animateGallery);
+
+      // Play / Pause Toggle
+      if (playPauseBtn) {
+        playPauseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          isPlaying = !isPlaying;
+          if (playPauseIcon) playPauseIcon.textContent = isPlaying ? '❚❚' : '▶';
+          if (isPlaying) {
+            slideStartTime = performance.now();
+          }
+        });
+      }
+
+      // Next / Prev Arrows
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToSlide(currentSlide - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToSlide(currentSlide + 1);
+        });
+      }
+
+      // HUD Segment Clicks
+      hudSegments.forEach((seg, i) => {
+        seg.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToSlide(i);
+        });
+      });
+
+      // Scrubber Track Click & Hover Preview Tooltip
+      if (scrubberTrack) {
+        function handleScrub(e) {
+          const rect = scrubberTrack.getBoundingClientRect();
+          const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+          const ratio = x / rect.width;
+          const targetIndex = Math.min(Math.floor(ratio * totalSlides), totalSlides - 1);
+          goToSlide(targetIndex);
+        }
+
+        scrubberTrack.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleScrub(e);
+        });
+
+        scrubberTrack.addEventListener('mousemove', (e) => {
+          const rect = scrubberTrack.getBoundingClientRect();
+          const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+          const ratio = x / rect.width;
+          const previewIndex = Math.min(Math.floor(ratio * totalSlides), totalSlides - 1);
+
+          if (scrubberTooltip) {
+            scrubberTooltip.textContent = slideTitles[previewIndex];
+            scrubberTooltip.style.left = `${(x / rect.width) * 100}%`;
+            scrubberTooltip.classList.add('visible');
+          }
+        });
+
+        scrubberTrack.addEventListener('mouseleave', () => {
+          if (scrubberTooltip) scrubberTooltip.classList.remove('visible');
+        });
+      }
+
+      // =============================================================
+      // 5. FRAMER SIGNATURE ORBITAL CURSOR & CLICK-TO-ADVANCE
+      // =============================================================
+      if (galleryBanner && orbitCursor && window.innerWidth >= 992) {
+        galleryBanner.classList.add('orbit-active');
+
+        galleryBanner.addEventListener('mouseenter', () => {
+          orbitCursor.classList.add('visible');
+        });
+
+        galleryBanner.addEventListener('mouseleave', () => {
+          orbitCursor.classList.remove('visible');
+        });
+
+        galleryBanner.addEventListener('mousemove', (e) => {
+          orbitCursor.style.left = `${e.clientX}px`;
+          orbitCursor.style.top = `${e.clientY}px`;
+
+          // Check if hovering interactive element
+          const target = e.target;
+          const isInteractive = target.closest('a, button, input, .gallery-scrubber-wrap, .hud-seg-item, .gallery-ctrl-btn');
+          if (isInteractive) {
+            orbitCursor.classList.add('hover-interactive');
+          } else {
+            orbitCursor.classList.remove('hover-interactive');
+          }
+        });
+
+        // Click anywhere on banner (outside interactive controls) to advance slide
+        galleryBanner.addEventListener('click', (e) => {
+          const isInteractive = e.target.closest('a, button, input, .gallery-scrubber-wrap, .hud-seg-item, .gallery-ctrl-btn, .header-hud');
+          if (!isInteractive) {
+            goToSlide(currentSlide + 1);
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

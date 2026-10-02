@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Cursor Trail Reveal | Framer Effect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Container for the Pixel Cursor Trail Canvas */
+    .pixel-stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #f4743c; /* Exact signature orange from reference */
+      cursor: crosshair;
+    }
+
+    .pixel-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+    }
+
+    /* Centered Text Overlay */
+    .pixel-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .pixel-heading {
+      font-size: clamp(48px, 8vw, 108px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0d1210;
+      text-transform: uppercase;
+      line-height: 0.95;
+      mix-blend-mode: multiply;
+      opacity: 0.95;
+    }
+
+    .pixel-subtitle {
+      font-size: clamp(14px, 1.4vw, 18px);
+      color: #0d1210;
+      margin-top: 20px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    /* Floating Controls Bar */
+    .controls-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(12, 17, 14, 0.9);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 9999px;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8125rem;
+      color: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .controls-bar button {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .controls-bar button:hover,
+    .controls-bar button.active {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    .status-tag {
+      font-size: 0.6875rem;
+      font-family: monospace;
+      color: #a2e89b;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pixel-stage" id="stage">
+    <canvas class="pixel-canvas" id="canvas"></canvas>
+    
+    <div class="pixel-overlay">
+      <h1 class="pixel-heading">HOVER TO SEE</h1>
+      <p class="pixel-subtitle">Move mouse or touch to reveal image</p>
+    </div>
+  </div>
+
+  <div class="controls-bar">
+    <span style="font-weight: 600;">Theme:</span>
+    <button type="button" class="active" onclick="switchTheme('#f4743c', this)">Orange</button>
+    <button type="button" onclick="switchTheme('#65896c', this)">JPZ Green</button>
+    <button type="button" onclick="switchTheme('#0c110f', this)">Black Void</button>
+
+    <span style="font-weight: 600; margin-left: 8px;">Image:</span>
+    <button type="button" onclick="switchImage('assets/sports-runner-motion.jpg', this)">Runner</button>
+    <button type="button" onclick="switchImage('assets/sports-racing-motion.jpg', this)">Racing</button>
+    <button type="button" onclick="switchImage('assets/blue-court-racing.jpg', this)">Court</button>
+    <button type="button" onclick="triggerIntroSweep()">Replay Intro</button>
+
+    <span class="status-tag" id="statusLabel">READY</span>
+  </div>
+
+  <script>
+    // 1. Exact deterministic pseudo-random 2D hash from Framer source
+    function hash2D(x, y, seed = 1) {
+      let r = Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263) + Math.imul(seed | 0, 1274126177);
+      r = Math.imul(r ^ (r >>> 13), 1103515245);
+      r ^= r >>> 16;
+      return (r >>> 0) / 4294967296;
+    }
+
+    function clamp(val, min, max) {
+      return Math.min(max, Math.max(min, val));
+    }
+
+    // 2. Configuration Parameters
+    const config = {
+      columns: 28,            // Grid columns count
+      brush: 1.15,            // Brush radius multiplier
+      fade: 0.38,             // Decay rate per second
+      zoom: 1.08,             // Image zoom factor
+      whiteBlocks: '#FFFFFF', // Edge glitch blocks A
+      inkBlocks: '#101010',   // Edge glitch blocks B
+      currentBg: '#f4743c',
+    };
+
+    const stage = document.getElementById('stage');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const statusLabel = document.getElementById('statusLabel');
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let blockSize = 0;
+    let cols = config.columns;
+    let rows = 0;
+    let grid = new Float32Array();
+
+    let lastX = -10000;
+    let lastY = -10000;
+    let hasMoved = false;
+
+    // 3. Offscreen canvas holding the scaled underlying artwork
+    const offscreen = document.createElement('canvas');
+    const offCtx = offscreen.getContext('2d');
+    const img = new Image();
+    let imageReady = false;
+
+    // Immediate Procedural Artwork Fallback (renders before image or if local file delays)
+    function renderProceduralFallback() {
+      if (!width || !height) return;
+      offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      offCtx.clearRect(0, 0, width, height);
+
+      // Deep rich gradient
+      const grad = offCtx.createRadialGradient(width * 0.5, height * 0.45, 40, width * 0.5, height * 0.5, width * 0.6);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.2, '#78a880');
+      grad.addColorStop(0.5, '#1e382b');
+      grad.addColorStop(1, '#08100c');
+      offCtx.fillStyle = grad;
+      offCtx.fillRect(0, 0, width, height);
+
+      // Athletic silhouette graphic
+      offCtx.fillStyle = '#ffffff';
+      offCtx.font = `bold ${Math.round(width * 0.08)}px Inter, sans-serif`;
+      offCtx.textAlign = 'center';
+      offCtx.textBaseline = 'middle';
+      offCtx.fillText('JPZ VENTURES', width * 0.5, height * 0.45);
+
+      offCtx.font = `500 ${Math.round(width * 0.02)}px Inter, sans-serif`;
+      offCtx.fillStyle = '#a2e89b';
+      offCtx.fillText('OWNERSHIP POSITIONS IN SPORT', width * 0.5, height * 0.55);
+    }
+
+    function renderImageToOffscreen() {
+      if (!imageReady || !img.complete || !img.naturalWidth || !width || !height) {
+        renderProceduralFallback();
+        return;
+      }
+
+      offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      offCtx.clearRect(0, 0, width, height);
+
+      const scale = Math.max(width / img.naturalWidth, height / img.naturalHeight) * config.zoom;
+      const nw = img.naturalWidth * scale;
+      const nh = img.naturalHeight * scale;
+
+      offCtx.drawImage(img, width * 0.5 - nw * 0.5, height * 0.45 - nh * 0.45, nw, nh);
+    }
+
+    function resize() {
+      const rect = stage.getBoundingClientRect();
+      width = rect.width || window.innerWidth;
+      height = rect.height || window.innerHeight;
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      offscreen.width = canvas.width;
+      offscreen.height = canvas.height;
+
+      cols = Math.max(8, Math.round(config.columns));
+      blockSize = width / cols;
+      rows = Math.ceil(height / blockSize);
+      grid = new Float32Array(cols * rows);
+
+      renderImageToOffscreen();
+      triggerIntroSweep();
+    }
+
+    // 4. Splat Function: applies radial intensity to grid cells
+    function addSplat(cx, cy, intensity = 1.0) {
+      if (!width || !rows || !cols) return;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const bx = (c + 0.5) * blockSize;
+          const by = (r + 0.5) * blockSize;
+          const dist = Math.hypot(bx - cx, by - cy) / width;
+          const noise = hash2D(c, r, 1);
+          const falloff = clamp(1 - (dist * 5.5) / config.brush, 0, 1) * (0.75 + noise * 0.5) * intensity;
+          const idx = r * cols + c;
+          if (falloff > grid[idx]) {
+            grid[idx] = falloff;
+          }
+        }
+      }
+    }
+
+    // 5. Opening Curved Sweep (matches Framer's signature intro)
+    function triggerIntroSweep() {
+      if (!width || !height) return;
+      grid.fill(0);
+      for (let i = 0; i < 34; i++) {
+        const t = i / 33;
+        const x = width * (0.16 + 0.68 * t);
+        const y = height * (0.55 - 0.28 * t + 0.14 * Math.sin(t * Math.PI * 1.6));
+        addSplat(x, y, 0.45 + 0.55 * t);
+      }
+    }
+
+    // 6. Handle Mouse Movement with Smooth Interpolation
+    function handlePointer(x, y) {
+      if (lastX < -9000) {
+        lastX = x;
+        lastY = y;
+      }
+
+      // Interpolate between previous and current mouse pos so fast strokes are seamless
+      const dx = x - lastX;
+      const dy = y - lastY;
+      const dist = Math.hypot(dx, dy);
+      const steps = Math.max(1, Math.ceil(dist / 14));
+
+      for (let s = 1; s <= steps; s++) {
+        const ix = lastX + (dx * s) / steps;
+        const iy = lastY + (dy * s) / steps;
+        addSplat(ix, iy, 1.0);
+      }
+
+      lastX = x;
+      lastY = y;
+      hasMoved = true;
+      if (statusLabel) statusLabel.textContent = `TRAIL: (${Math.round(x)}, ${Math.round(y)})`;
+    }
+
+    // 7. Main Animation Render Loop
+    let lastTime = performance.now();
+    function animate(time) {
+      const dt = Math.min(0.05, (time - lastTime) / 1000);
+      lastTime = time;
+
+      ctx.clearRect(0, 0, width, height);
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const idx = r * cols + c;
+          let val = grid[idx];
+
+          // Decay intensity over time
+          val = Math.max(0, val - dt * config.fade);
+          grid[idx] = val;
+
+          // Threshold: if lower than 0.24, transparent (reveals background color)
+          if (val <= 0.24) continue;
+
+          const px = c * blockSize;
+          const py = r * blockSize;
+
+          if (val > 0.45) {
+            // Draw square block slice from offscreen pre-rendered image
+            ctx.drawImage(
+              offscreen,
+              px * dpr, py * dpr, blockSize * dpr, blockSize * dpr,
+              px, py, blockSize + 0.4, blockSize + 0.4
+            );
+          } else if (val > 0.33) {
+            // Draw solid white glitch block
+            ctx.fillStyle = config.whiteBlocks;
+            ctx.fillRect(px, py, blockSize + 0.4, blockSize + 0.4);
+          } else if (hash2D(c, r, 1) < 0.32) {
+            // Draw dark ink glitch block
+            ctx.fillStyle = config.inkBlocks;
+            ctx.fillRect(px, py, blockSize + 0.4, blockSize + 0.4);
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // 8. Event Listeners on window (ensures smooth tracking without misses)
+    window.addEventListener('pointermove', (e) => {
+      const rect = stage.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        handlePointer(x, y);
+      }
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        const rect = stage.getBoundingClientRect();
+        const x = e.touches[0].clientX - rect.left;
+        const y = e.touches[0].clientY - rect.top;
+        if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+          handlePointer(x, y);
+        }
+      }
+    }, { passive: true });
+
+    window.addEventListener('pointerleave', () => {
+      lastX = -10000;
+      lastY = -10000;
+    });
+
+    window.addEventListener('resize', resize);
+
+    // 9. Load Image safely without CORS flags for local files
+    function loadImage(src) {
+      imageReady = false;
+      img.onload = () => {
+        imageReady = true;
+        renderImageToOffscreen();
+        triggerIntroSweep();
+        if (statusLabel) statusLabel.textContent = 'IMAGE READY';
+      };
+      img.onerror = () => {
+        // Fallback procedural canvas already exists!
+        imageReady = false;
+        renderProceduralFallback();
+        triggerIntroSweep();
+        if (statusLabel) statusLabel.textContent = 'FALLBACK READY';
+      };
+      img.src = src;
+    }
+
+    function switchImage(src, btn) {
+      document.querySelectorAll('.controls-bar button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      loadImage(src);
+    }
+
+    function switchTheme(color, btn) {
+      config.currentBg = color;
+      stage.style.background = color;
+      document.querySelectorAll('.controls-bar button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    // Initialize
+    resize();
+    renderProceduralFallback();
+    loadImage('assets/sports-runner-motion.jpg');
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
