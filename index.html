@@ -1275,7 +1275,7 @@ section[id] {
        ============================================================= */
     .footer-site-solid {
       background-color: var(--ink);
-      color: var(--paper);
+      color: #ffffff;
       padding: 60px 0 28px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       width: 100%;
@@ -1302,7 +1302,7 @@ section[id] {
     .footer-tagline {
       font-family: var(--font-sans);
       font-size: 0.95rem;
-      color: #bcc6b7;
+      color: #ffffff;
       max-width: 320px;
       font-weight: 400;
     }
@@ -1319,7 +1319,7 @@ section[id] {
       font-weight: 500; /* Max 500 */
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--paper);
+      color: #ffffff;
       margin-bottom: 16px;
     }
 
@@ -1333,11 +1333,14 @@ section[id] {
     .footer-col-links a {
       font-family: var(--font-sans);
       font-size: 0.875rem;
-      color: #bcc6b7;
+      color: #ffffff;
+      opacity: 0.9;
       font-weight: 400;
+      transition: opacity 0.15s ease;
     }
 
     .footer-col-links a:hover {
+      opacity: 1;
       color: var(--sage);
     }
 
@@ -1350,7 +1353,7 @@ section[id] {
       padding-top: 24px;
       font-family: var(--font-sans);
       font-size: 0.75rem;
-      color: #aab6a6;
+      color: #ffffff;
       font-weight: 400;
     }
 
@@ -2020,59 +2023,242 @@ section[id] {
         });
       });
 
-      // Ensure all elements are immediately visible
-      const elementsToReveal = document.querySelectorAll(
-        '.faq-item, .bento-card, .roster-card, .section-title, .about-left-title, .bottom-cta-title, .section-header-center, .program-img-box, .bottom-cta-card, .about-stats-row > div'
-      );
-      elementsToReveal.forEach(el => {
-        el.style.opacity = '1';
-        el.style.visibility = 'visible';
-      });
-
-      // GSAP Animations with Safe Visibility Fallback
+      // GSAP SCROLL-TRIGGERED FADE-IN ANIMATIONS
       if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Hero Load Sequence (only top of page)
-        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        heroTl
-          .from('.hero-nav', { y: -15, opacity: 0, duration: 0.6 })
-          .from('.hero-title', { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
-          .from('.hero-desc', { y: 15, opacity: 0, duration: 0.5 }, '-=0.4')
-          .from('.hero-cta-group > *', { y: 12, opacity: 0, stagger: 0.08, duration: 0.5 }, '-=0.4');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // 2. Smooth reveal on scroll without initial invisible state
-        elementsToReveal.forEach(el => {
-          gsap.fromTo(el, 
-            { opacity: 0.5, y: 18 }, 
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: 'power2.out',
+        if (!prefersReducedMotion) {
+          // 1. Hero Load Sequence
+          const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+          heroTl
+            .from('.hero-nav', { y: -20, opacity: 0, duration: 0.6 })
+            .from('.hero-title', { y: 28, opacity: 0, duration: 0.75 }, '-=0.4')
+            .from('.hero-desc', { y: 20, opacity: 0, duration: 0.65 }, '-=0.5')
+            .from('.hero-cta-group > *', { y: 16, opacity: 0, stagger: 0.1, duration: 0.55 }, '-=0.4');
+
+          // 2. Section Headers Fade In on Scroll
+          gsap.utils.toArray('.section-header-center, .about-grid').forEach(header => {
+            gsap.fromTo(header,
+              { opacity: 0, y: 35 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.85,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: header,
+                  start: 'top 85%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 3. Stats Row
+          gsap.utils.toArray('.about-stats-row').forEach(row => {
+            const items = row.children;
+            gsap.fromTo(items,
+              { opacity: 0, y: 30 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.75,
+                stagger: 0.14,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: row,
+                  start: 'top 85%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 4. Partner Ticker
+          gsap.utils.toArray('.partner-ticker').forEach(ticker => {
+            gsap.fromTo(ticker,
+              { opacity: 0, y: 20 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.75,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: ticker,
+                  start: 'top 88%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 5. Programs
+          gsap.utils.toArray('.program-row').forEach(row => {
+            const imgBox = row.querySelector('.program-img-box');
+            const contentBox = row.querySelector('.program-content-box');
+
+            const tl = gsap.timeline({
               scrollTrigger: {
-                trigger: el,
-                start: 'top 95%',
-                toggleActions: 'play none none none',
+                trigger: row,
+                start: 'top 80%',
                 once: true
               }
+            });
+
+            tl.fromTo(row, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out' });
+            if (imgBox) {
+              tl.fromTo(imgBox, { opacity: 0.7, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' }, '-=0.6');
             }
-          );
-        });
-
-        window.addEventListener('load', () => {
-          ScrollTrigger.refresh();
-          elementsToReveal.forEach(el => el.style.opacity = '1');
-        });
-
-        // Fail-safe: After 400ms, force 100% visibility on all elements
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-          elementsToReveal.forEach(el => {
-            el.style.opacity = '1';
-            el.style.visibility = 'visible';
+            if (contentBox) {
+              tl.fromTo(contentBox.children,
+                { opacity: 0, y: 15 },
+                { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: 'power2.out' },
+                '-=0.5'
+              );
+            }
           });
-        }, 400);
+
+          // 6. Divider Banner
+          gsap.utils.toArray('.section-divider-banner').forEach(banner => {
+            const content = banner.querySelector('.divider-banner-content');
+            if (content) {
+              gsap.fromTo(content,
+                { opacity: 0, y: 30 },
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.85,
+                  ease: 'power3.out',
+                  scrollTrigger: {
+                    trigger: banner,
+                    start: 'top 78%',
+                    once: true
+                  }
+                }
+              );
+            }
+          });
+
+          // 7. Bento Grid Cards
+          gsap.utils.toArray('.bento-grid').forEach(grid => {
+            const cards = grid.querySelectorAll('.bento-card');
+            gsap.fromTo(cards,
+              { opacity: 0, y: 35 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.12,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: grid,
+                  start: 'top 82%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 8. Gallery Ribbon Stage
+          gsap.utils.toArray('.gallery-ribbon-stage').forEach(stage => {
+            gsap.fromTo(stage,
+              { opacity: 0, y: 40 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: stage,
+                  start: 'top 85%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 9. Testimonial Card
+          gsap.utils.toArray('.testimonial-card-split').forEach(card => {
+            gsap.fromTo(card,
+              { opacity: 0, y: 38 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.85,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 80%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 10. FAQ Items
+          gsap.utils.toArray('.faq-list').forEach(list => {
+            const items = list.querySelectorAll('.faq-item');
+            gsap.fromTo(items,
+              { opacity: 0, y: 24 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.65,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: list,
+                  start: 'top 84%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 11. Bottom CTA Card
+          gsap.utils.toArray('.bottom-cta-card').forEach(card => {
+            gsap.fromTo(card,
+              { opacity: 0, y: 40 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.85,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 80%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 12. Footer
+          gsap.utils.toArray('.footer-site-solid').forEach(footer => {
+            const targets = footer.querySelectorAll('.footer-grid > *, .footer-bottom');
+            gsap.fromTo(targets,
+              { opacity: 0, y: 22 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.75,
+                stagger: 0.12,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: footer,
+                  start: 'top 92%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          window.addEventListener('load', () => {
+            ScrollTrigger.refresh();
+          });
+        }
       }
     });
   </script>

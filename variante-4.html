@@ -1264,6 +1264,7 @@
       border-top: 1px solid var(--grid-line);
       position: relative;
       z-index: 2;
+      color: #ffffff;
     }
 
     .footer-grid {
@@ -1286,7 +1287,7 @@
       font-family: var(--font-mono);
       font-size: 0.8125rem;
       line-height: 1.6;
-      color: var(--white-muted);
+      color: #ffffff;
       letter-spacing: 0.05em;
     }
 
@@ -1301,7 +1302,7 @@
       font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--green-neon);
+      color: #ffffff;
       margin-bottom: 20px;
       font-weight: 700;
     }
@@ -1316,12 +1317,15 @@
     .footer-col-links a {
       font-family: var(--font-mono);
       font-size: 0.8125rem;
-      color: var(--white-dim);
+      color: #ffffff;
       letter-spacing: 0.04em;
+      opacity: 0.92;
+      transition: var(--transition);
     }
 
     .footer-col-links a:hover {
       color: var(--green-neon);
+      opacity: 1;
       text-decoration: underline;
     }
 
@@ -1332,10 +1336,16 @@
       padding-top: 32px;
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      color: var(--white-muted);
+      color: #ffffff;
       letter-spacing: 0.06em;
       flex-wrap: wrap;
       gap: 16px;
+    }
+
+    .footer-bottom div,
+    .footer-bottom span,
+    .footer-bottom a {
+      color: #ffffff;
     }
 
     /* Floating switcher pill */
@@ -2899,56 +2909,275 @@
       if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
     }
 
-      const elementsToReveal = document.querySelectorAll(
-        '.faq-item, .bento-card, .roster-card, .section-title, .about-left-title, .bottom-cta-title, .section-header-center, .program-img-box, .bottom-cta-card, .about-stats-row > div'
-      );
-      elementsToReveal.forEach(el => {
-        el.style.opacity = '1';
-        el.style.visibility = 'visible';
-      });
-
-      // GSAP Animations with Safe Visibility Fallback
+      // =============================================================
+      // GSAP SCROLL-TRIGGERED FADE-IN ANIMATIONS
+      // =============================================================
       if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Hero Load Sequence
-        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        heroTl
-          .from('.hero-title', { y: 20, opacity: 0, duration: 0.6 })
-          .from('.hero-desc', { y: 15, opacity: 0, duration: 0.5 }, '-=0.4')
-          .from('.hero-cta-group > *', { y: 12, opacity: 0, stagger: 0.08, duration: 0.5 }, '-=0.4');
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // 2. Smooth reveal on scroll without initial invisible state
-        elementsToReveal.forEach(el => {
-          gsap.fromTo(el, 
-            { opacity: 0.45, y: 18 }, 
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: 'power2.out',
+        if (!prefersReducedMotion) {
+          // 1. Hero Load Entrance Sequence
+          const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+          heroTl
+            .from('.hero-top-eyebrow, .hero-content .hud-tag', { y: 24, opacity: 0, duration: 0.7 })
+            .from('.hero-title', { y: 32, opacity: 0, duration: 0.8 }, '-=0.4')
+            .from('.hero-desc', { y: 22, opacity: 0, duration: 0.7 }, '-=0.5')
+            .from('.hero-cta-group > *', { y: 16, opacity: 0, stagger: 0.1, duration: 0.6 }, '-=0.4');
+
+          // 2. Generic Section Headers Fade In on Scroll
+          gsap.utils.toArray('.section-header-center, .about-grid, .press-strip-header').forEach(header => {
+            gsap.fromTo(header,
+              { opacity: 0, y: 36 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.85,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: header,
+                  start: 'top 85%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 3. Section 02 & Founder Stats Attribution Blocks (Staggered Metric Cards)
+          gsap.utils.toArray('.stats-container-block').forEach(block => {
+            const header = block.querySelector('.stats-header-bar');
+            const cards = block.querySelectorAll('.stat-metric-card');
+            const note = block.querySelector('.stat-legal-disclaimer');
+
+            const tl = gsap.timeline({
               scrollTrigger: {
-                trigger: el,
-                start: 'top 95%',
-                toggleActions: 'play none none none',
+                trigger: block,
+                start: 'top 82%',
                 once: true
               }
+            });
+
+            if (header) {
+              tl.fromTo(header, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' });
             }
-          );
-        });
-
-        window.addEventListener('load', () => {
-          ScrollTrigger.refresh();
-          elementsToReveal.forEach(el => el.style.opacity = '1');
-        });
-
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-          elementsToReveal.forEach(el => {
-            el.style.opacity = '1';
-            el.style.visibility = 'visible';
+            if (cards.length) {
+              tl.fromTo(cards,
+                { opacity: 0, y: 40 },
+                { opacity: 1, y: 0, duration: 0.8, stagger: 0.14, ease: 'power3.out' },
+                header ? '-=0.3' : 0
+              );
+            }
+            if (note) {
+              tl.fromTo(note, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+            }
           });
-        }, 400);
+
+          // 4. Partner Ticker Horizontal Bar
+          gsap.utils.toArray('.partner-ticker').forEach(ticker => {
+            gsap.fromTo(ticker,
+              { opacity: 0, y: 24 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.75,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: ticker,
+                  start: 'top 88%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 5. Press Coverage Strip Items (Staggered Fade Up)
+          gsap.utils.toArray('.press-strip-grid').forEach(grid => {
+            const items = grid.querySelectorAll('.press-strip-item');
+            gsap.fromTo(items,
+              { opacity: 0, y: 28 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                stagger: 0.12,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: grid,
+                  start: 'top 85%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 6. Programs (Section 03 - Alternating Cards)
+          gsap.utils.toArray('.program-row').forEach(row => {
+            const imgBox = row.querySelector('.program-img-box');
+            const contentBox = row.querySelector('.program-content-box');
+
+            const tl = gsap.timeline({
+              scrollTrigger: {
+                trigger: row,
+                start: 'top 80%',
+                once: true
+              }
+            });
+
+            tl.fromTo(row, { opacity: 0, y: 45 }, { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out' });
+            if (imgBox) {
+              tl.fromTo(imgBox, { opacity: 0.6, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' }, '-=0.6');
+            }
+            if (contentBox) {
+              tl.fromTo(contentBox.children,
+                { opacity: 0, y: 16 },
+                { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: 'power2.out' },
+                '-=0.5'
+              );
+            }
+          });
+
+          // 7. Divider High-Performance Sports Banner
+          gsap.utils.toArray('.section-divider-banner').forEach(banner => {
+            const content = banner.querySelector('.divider-banner-content');
+            if (content) {
+              gsap.fromTo(content,
+                { opacity: 0, y: 32 },
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.85,
+                  ease: 'power3.out',
+                  scrollTrigger: {
+                    trigger: banner,
+                    start: 'top 78%',
+                    once: true
+                  }
+                }
+              );
+            }
+          });
+
+          // 8. Track Record Bento Grid Cards (Staggered Fade In)
+          gsap.utils.toArray('.bento-grid').forEach(grid => {
+            const cards = grid.querySelectorAll('.bento-card');
+            gsap.fromTo(cards,
+              { opacity: 0, y: 36 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.12,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: grid,
+                  start: 'top 82%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 9. WebGL 3D Gallery Ribbon Stage
+          gsap.utils.toArray('.gallery-ribbon-stage').forEach(stage => {
+            gsap.fromTo(stage,
+              { opacity: 0, y: 40 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: stage,
+                  start: 'top 85%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 10. Executive Spotlight / Testimonial Split Card
+          gsap.utils.toArray('.testimonial-card-split').forEach(card => {
+            gsap.fromTo(card,
+              { opacity: 0, y: 40 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.85,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 80%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 11. FAQ Accordion Items (Staggered Fade Up)
+          gsap.utils.toArray('.faq-list').forEach(list => {
+            const items = list.querySelectorAll('.faq-item');
+            gsap.fromTo(items,
+              { opacity: 0, y: 26 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.65,
+                stagger: 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: list,
+                  start: 'top 84%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 12. Direct Communication Bottom CTA Card
+          gsap.utils.toArray('.bottom-cta-card').forEach(card => {
+            gsap.fromTo(card,
+              { opacity: 0, y: 42 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 80%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // 13. Solid Footer Content Fade In
+          gsap.utils.toArray('.footer-site-solid').forEach(footer => {
+            const targets = footer.querySelectorAll('.footer-grid > *, .footer-bottom');
+            gsap.fromTo(targets,
+              { opacity: 0, y: 24 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.75,
+                stagger: 0.12,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: footer,
+                  start: 'top 92%',
+                  once: true
+                }
+              }
+            );
+          });
+
+          // Refresh triggers on full load
+          window.addEventListener('load', () => {
+            ScrollTrigger.refresh();
+          });
+        }
       }
     });
   </script>
