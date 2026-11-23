@@ -53,6 +53,11 @@
     }
 
     html {
+  scroll-behavior: smooth;
+}
+section[id] {
+  scroll-margin-top: 90px;
+
       scroll-behavior: smooth;
       font-size: 16px;
       background-color: var(--paper);
@@ -240,18 +245,16 @@
     }
 
     .hero-bg-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-      z-index: 1;
-      transform: scale(1.02);
-      opacity: 0.32;
-      filter: saturate(0.65) brightness(0.7);
-      transition: opacity 0.5s ease;
-    }
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  z-index: 0;
+  filter: contrast(1.06) brightness(0.92) saturate(1.05);
+  display: block;
+}
 
     .hero-pixel-canvas {
       position: absolute;
@@ -277,14 +280,18 @@
 
     /* Subtle Dark Vignette & Gradient for Nav & Text Contrast */
     .hero-shade-overlay {
-      position: absolute;
-      inset: 0;
-      background: 
-        linear-gradient(180deg, rgba(14, 22, 21, 0.48) 0%, rgba(14, 22, 21, 0.12) 28%, transparent 45%),
-        linear-gradient(0deg, rgba(14, 22, 21, 0.88) 0%, rgba(14, 22, 21, 0.4) 38%, transparent 75%),
-        linear-gradient(90deg, rgba(14, 22, 21, 0.6) 0%, rgba(14, 22, 21, 0.15) 50%, transparent 80%);
-      z-index: 2;
-    }
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 9, 8, 0.3) 0%,
+    rgba(6, 9, 8, 0.08) 35%,
+    rgba(6, 9, 8, 0.45) 75%,
+    rgba(6, 9, 8, 0.82) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
 
     /* Top Navigation inside Full-Width Hero */
     .hero-nav {
@@ -737,19 +744,13 @@
     }
 
     .divider-banner-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-      display: block;
-      opacity: 0.24;
-      filter: saturate(0.6) brightness(0.65);
-      transition: opacity 0.5s ease;
-      z-index: 1;
-      pointer-events: none;
-    }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: contrast(1.05) brightness(0.92);
+  display: block;
+}
 
     .divider-pixel-canvas {
       position: absolute;
@@ -1232,14 +1233,16 @@
     }
 
     .bottom-cta-bg-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.22;
-      filter: blur(1px);
-    }
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.55;
+  filter: contrast(1.08) brightness(0.85);
+  z-index: 0;
+}
 
     .bottom-cta-content {
       position: relative;
@@ -1454,9 +1457,9 @@
   <!-- =============================================================
        1. HERO SECTION (FULL-WIDTH EDGE-TO-EDGE LIKE REFERENCE)
        ============================================================= -->
-  <section class="hero-section-fullwidth" id="hero" data-pixel-src="assets/sports-racing-motion.jpg">
+  <section class="hero-section-fullwidth" id="hero" data-pixel-src="assets/img/horse-race.jpg">
     <!-- Hero Image (Warm green/earthy sports motion) -->
-    <img src="assets/sports-racing-motion.jpg" alt="JPZ Ventures Ownership Positions in Sport" class="hero-bg-photo" loading="eager">
+    <img src="assets/img/horse-race.jpg" alt="JPZ Ventures Ownership Positions in Sport" class="hero-bg-photo" loading="eager">
     
     <!-- Hero Pixel Canvas Overlay -->
     <canvas class="hero-pixel-canvas"></canvas>
@@ -1478,10 +1481,10 @@
         <li><a href="#our-approach">Our approach</a></li>
         <li><a href="#founder">Founder</a></li>
         <li><a href="#faq">FAQ</a></li>
-        <li><a href="#start-a-conversation">Contact</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <a href="#start-a-conversation" class="nav-contact-btn">
+      <a href="#contact" class="nav-contact-btn">
         Start a conversation
       </a>
     </header>
@@ -1497,7 +1500,7 @@
       </p>
 
       <div class="hero-cta-group">
-        <a href="#start-a-conversation" class="btn-hero-primary">
+        <a href="#contact" class="btn-hero-primary">
           Start a conversation
         </a>
         <a href="#investment-focus" class="hero-text-link">
@@ -1585,7 +1588,7 @@
           <!-- Program 1: Sports Assets (Runner in green/golden environment) -->
           <div class="program-row">
             <div class="program-img-box">
-              <img src="assets/sports-runner-motion.jpg" alt="Sports Assets - Direct Ownership" loading="lazy">
+              <img src="assets/img/basketball-dunk.jpg" alt="Sports Assets - Direct Ownership" loading="lazy">
             </div>
 
             <div class="program-content-box">
@@ -1603,7 +1606,7 @@
               </ul>
 
               <div>
-                <a href="#start-a-conversation" class="btn btn-dark">
+                <a href="#contact" class="btn btn-dark">
                   Explore Positions
                 </a>
               </div>
@@ -1627,14 +1630,14 @@
               </ul>
 
               <div>
-                <a href="#start-a-conversation" class="btn btn-dark">
-                  Co-Invest With Us
+                <a href="#contact" class="btn btn-dark">
+                  Start a conversation
                 </a>
               </div>
             </div>
 
             <div class="program-img-box">
-              <img src="assets/hero-motion-cyclist.jpg" alt="Venture and Technology Positions" loading="lazy">
+              <img src="assets/img/sprinter-start.jpg" alt="Venture and Technology Positions" loading="lazy">
             </div>
           </div>
 
@@ -1647,8 +1650,8 @@
        4. DIVIDING BANNER IMAGE (FULL WIDTH)
        ============================================================= -->
     <section class="section-divider-contained">
-      <div class="divider-banner-card" data-pixel-src="assets/sports-runner-motion.jpg">
-        <img class="divider-banner-bg" src="assets/sports-runner-motion.jpg" alt="Strategic Ownership In Motion" loading="eager">
+      <div class="divider-banner-card" data-pixel-src="assets/img/ice-hockey.jpg">
+        <img class="divider-banner-bg" src="assets/img/ice-hockey.jpg" alt="Strategic Ownership In Motion" loading="eager">
         <canvas class="divider-pixel-canvas"></canvas>
       </div>
     </section>
@@ -1671,7 +1674,7 @@
           
           <!-- Bento 1: Dark Image Card -->
           <div class="bento-card bento-img-1">
-            <img src="assets/sports-runner-motion.jpg" alt="Relationships that source opportunity">
+            <img src="assets/img/football-quarterback.jpg" alt="Relationships that source opportunity">
             <div class="bento-content">
               <div class="eyebrow-tag light" style="margin-bottom: 8px;">Step 01</div>
               <h3 class="bento-card-title">Relationships that source opportunity.</h3>
@@ -1709,7 +1712,7 @@
 
           <!-- Bento 4: Dark Image Card -->
           <div class="bento-card bento-img-2">
-            <img src="assets/hero-motion-cyclist.jpg" alt="Justin's Operating Experience">
+            <img src="assets/img/baseball-pitcher.jpg" alt="Justin's Operating Experience">
             <div class="bento-content">
               <div class="eyebrow-tag light" style="margin-bottom: 8px;">Step 02 &amp; 03</div>
               <h3 class="bento-card-title">Evidence &amp; Long-Term Execution.</h3>
@@ -1741,7 +1744,7 @@
         <div class="roster-grid-3">
           
           <!-- Card 1: Justin Zayat -->
-          <div class="roster-card" data-pixel-src="assets/sports-racing-motion.jpg">
+          <div class="roster-card" data-pixel-src="assets/shadow-concept-hero-stadium.jpg">
             <img class="roster-card-bg-img" src="assets/sports-racing-motion.jpg" alt="Justin Zayat - Founder &amp; Managing Partner">
             <canvas class="roster-pixel-canvas"></canvas>
             <div class="roster-card-overlay"></div>
@@ -1755,7 +1758,7 @@
           </div>
 
           <!-- Card 2: Operating Record -->
-          <div class="roster-card" data-pixel-src="assets/sports-runner-motion.jpg">
+          <div class="roster-card" data-pixel-src="assets/shadow-concept-banner.jpg">
             <img class="roster-card-bg-img" src="assets/sports-runner-motion.jpg" alt="Operating Record">
             <canvas class="roster-pixel-canvas"></canvas>
             <div class="roster-card-overlay"></div>
@@ -1817,7 +1820,7 @@
         
         <div class="testimonial-card-split">
           <div class="testimonial-img-box">
-            <img src="assets/sports-racing-motion.jpg" alt="Justin Zayat Spotlight">
+            <img src="assets/justin-zayat.webp" alt="Justin Zayat Spotlight" loading="lazy">
           </div>
 
           <div class="testimonial-content-box">
@@ -1837,7 +1840,7 @@
     <!-- =============================================================
        9. FAQ / COLLABORATION PROFILES ACCORDION (Interactive)
        ============================================================= -->
-    <section class="section-faq" id="start-a-conversation">
+    <section class="section-faq" id="faq">
       <div class="container">
         
         <div class="section-header-center">
@@ -1868,7 +1871,7 @@
               <div class="faq-icon-btn">+</div>
             </div>
             <div class="faq-answer">
-              Explore JPZ’s approach to sourcing and evaluating positions across both investment areas, co-investment rights, and syndicate opportunities.
+              Explore JPZ’s approach to evaluating direct positions across sports assets and venture &amp; technology.
             </div>
           </div>
 
@@ -1902,10 +1905,10 @@
     <!-- =============================================================
        10. BOTTOM CTA BANNER (STANDARDIZED CONTAINER WIDTH)
        ============================================================= -->
-    <section class="section-bottom-cta-contained">
+    <section class="section-bottom-cta-contained" id="contact">
       <div class="container">
         <div class="bottom-cta-card">
-          <img src="assets/hero-motion-cyclist.jpg" alt="Start a Conversation" class="bottom-cta-bg-img">
+          <img src="assets/img/athlete-shadow-2.jpg" alt="Start a Conversation" class="bottom-cta-bg-img">
           <div class="bottom-cta-content">
             <h2 class="bottom-cta-title">
               One conversation.<br>That's where it begins.
@@ -1956,7 +1959,7 @@
             <ul class="footer-col-links">
               <li><a href="https://www.linkedin.com/in/justinzayat" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
               <li><a href="https://www.forbes.com/profile/justin-zayat/" target="_blank" rel="noopener noreferrer">Forbes Profile</a></li>
-              <li><a href="#start-a-conversation">Contact</a></li>
+              <li><a href="#contact">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -1983,7 +1986,7 @@
     <span>|</span>
     <a href="variante-3.html">Design 03</a>
     <span>|</span>
-    <a href="variante-21tsi.html">Design 04</a>
+    <a href="variante-4.html">Design 04</a>
   </div>
 
   <!-- =============================================================
@@ -2399,39 +2402,63 @@
 
       const items = [
         {
-          id: "sports-racing-motion-1.jpg",
+          id: "asset-scope-equestrian",
           title: "Thoroughbred Racing",
-          poster: galleryData["sports-racing-motion.jpg"] || "assets/sports-racing-motion.jpg",
+          poster: galleryData["horse-race.jpg"] || "assets/img/horse-race.jpg",
           aspect: 16 / 10
         },
         {
-          id: "sports-runner-motion-1.jpg",
-          title: "Track & Field Sprint",
-          poster: galleryData["sports-runner-motion.jpg"] || "assets/sports-runner-motion.jpg",
+          id: "asset-scope-basketball",
+          title: "Pro Basketball Franchises",
+          poster: galleryData["basketball-dunk.jpg"] || "assets/img/basketball-dunk.jpg",
           aspect: 16 / 10
         },
         {
-          id: "hero-motion-cyclist-1.jpg",
-          title: "Aerodynamic Cycling",
-          poster: galleryData["hero-motion-cyclist.jpg"] || "assets/hero-motion-cyclist.jpg",
+          id: "asset-scope-football",
+          title: "Gridiron Football Assets",
+          poster: galleryData["football-quarterback.jpg"] || "assets/img/football-quarterback.jpg",
           aspect: 16 / 10
         },
         {
-          id: "sports-racing-motion-2.jpg",
-          title: "Equestrian Performance",
-          poster: galleryData["sports-racing-motion.jpg"] || "assets/sports-racing-motion.jpg",
+          id: "asset-scope-jumping",
+          title: "Show Jumping & Bloodstock",
+          poster: galleryData["equestrian-jumping.jpg"] || "assets/img/equestrian-jumping.jpg",
           aspect: 16 / 10
         },
         {
-          id: "sports-runner-motion-2.jpg",
-          title: "Athletic Acceleration",
-          poster: galleryData["sports-runner-motion.jpg"] || "assets/sports-runner-motion.jpg",
+          id: "asset-scope-tennis",
+          title: "Championship Tennis",
+          poster: galleryData["tennis.jpg"] || "assets/img/tennis.jpg",
           aspect: 16 / 10
         },
         {
-          id: "hero-motion-cyclist-2.jpg",
-          title: "High-Performance Scope",
-          poster: galleryData["hero-motion-cyclist.jpg"] || "assets/hero-motion-cyclist.jpg",
+          id: "asset-scope-hockey",
+          title: "Ice Hockey & Winter Sports",
+          poster: galleryData["ice-hockey.jpg"] || "assets/img/ice-hockey.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-track",
+          title: "Track & Field Speed",
+          poster: galleryData["sprinter-start.jpg"] || "assets/img/sprinter-start.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-baseball",
+          title: "Professional Baseball",
+          poster: galleryData["baseball-batter.jpg"] || "assets/img/baseball-batter.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-golf",
+          title: "Championship Golf",
+          poster: galleryData["golf.jpg"] || "assets/img/golf.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-technology",
+          title: "Sports Scope & Technology",
+          poster: galleryData["sports-balls.jpg"] || "assets/img/sports-balls.jpg",
           aspect: 16 / 10
         }
       ];
@@ -2790,6 +2817,9 @@ void main() {
         };
 
         const img = new Image();
+        if (!item.poster.startsWith('data:')) {
+          img.crossOrigin = 'anonymous';
+        }
         img.onload = () => {
           uploadImage(img);
         };

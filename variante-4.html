@@ -1,0 +1,3972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JPZ Ventures | Ownership positions in sport (Design 04)</title>
+  <meta name="description" content="JPZ Ventures is a founder-led private investment firm taking ownership positions across Sports Assets and Venture & Technology.">
+
+  <!-- Fonts: Space Grotesk (Headlines/Display), Space Mono (HUD/Tech labels), Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- GSAP & ScrollTrigger Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* =============================================================
+       JPZ VENTURES — DESIGN 04 (AVANT-GARDE TECHNICAL RADICAL SYSTEM)
+       Monochromatic deep black-green foundation with razor hairlines,
+       Space Grotesk displays, Space Mono typography, and neon green accents.
+       ============================================================= */
+    :root {
+      --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Space Mono', 'SF Mono', Consolas, monospace;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Deep Monochromatic Foundation */
+      --black-void: #060908;
+      --black-surface: #0c110f;
+      --black-card: #121917;
+      --black-card-hover: #18221f;
+
+      --white-pure: #ffffff;
+      --white-dim: rgba(255, 255, 255, 0.72);
+      --white-muted: rgba(255, 255, 255, 0.45);
+
+      /* JPZ Signature Green Luminous Accents */
+      --green-logo: #65896c;
+      --green-glow: #78a880;
+      --green-neon: #a2e89b;
+      --green-tag-bg: rgba(101, 137, 108, 0.16);
+      --green-border: rgba(101, 137, 108, 0.35);
+
+      /* Razor Hairlines */
+      --grid-line: rgba(255, 255, 255, 0.1);
+      --grid-line-strong: rgba(255, 255, 255, 0.2);
+
+      --container-width: 1320px;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-behavior: smooth;
+      background-color: var(--black-void);
+      color: var(--white-pure);
+      font-family: var(--font-body);
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--black-void);
+      color: var(--white-pure);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Subtle Grid Overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    /* Standard Container */
+    .container {
+      width: 100%;
+      max-width: var(--container-width);
+      padding: 0 32px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Typography Standards */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      text-transform: none;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      font-weight: 500;
+      color: var(--white-pure);
+    }
+
+    /* Technical Corner Plus Markers */
+    .corner-plus {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--white-muted);
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+    .corner-tl { top: 10px; left: 12px; }
+    .corner-tr { top: 10px; right: 12px; }
+    .corner-bl { bottom: 10px; left: 12px; }
+    .corner-br { bottom: 10px; right: 12px; }
+
+    /* HUD Badge / Tag */
+    .hud-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: var(--green-tag-bg);
+      border: 1px solid var(--green-border);
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--green-neon);
+      box-shadow: 0 0 8px var(--green-neon);
+      display: inline-block;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.85); }
+    }
+
+    /* Buttons (Design 04 Technical System) */
+    .btn-21 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      user-select: none;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      text-align: center;
+    }
+
+    .btn-21-white {
+      background-color: var(--white-pure);
+      color: var(--black-void);
+      font-weight: 700;
+    }
+
+    .btn-21-white:hover {
+      background-color: var(--green-neon);
+      color: var(--black-void);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(162, 232, 155, 0.3);
+    }
+
+    .btn-21-outline {
+      background: transparent;
+      border: 1px solid var(--grid-line-strong);
+      color: var(--white-pure);
+    }
+
+    .btn-21-outline:hover {
+      border-color: var(--green-glow);
+      color: var(--green-neon);
+      background: rgba(101, 137, 108, 0.12);
+      transform: translateY(-2px);
+    }
+
+    /* =============================================================
+       1. NAVIGATION HEADER (Technical HUD Header Bar)
+       ============================================================= */
+    .hero-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 99999;
+      background: rgba(6, 9, 8, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--grid-line);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 1 !important;
+      transition: var(--transition);
+      pointer-events: auto;
+    }
+
+    .nav-brand img {
+      height: 48px;
+      max-height: 52px;
+      width: auto;
+      display: block;
+      opacity: 1;
+      filter: brightness(1.15) contrast(1.1);
+      transition: transform 0.25s ease;
+    }
+
+    .nav-brand:hover img {
+      transform: scale(1.03);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      font-weight: 500;
+      opacity: 1;
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.2s ease;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--green-neon);
+      transition: width 0.25s ease;
+    }
+
+    .nav-menu a:hover {
+      color: var(--green-neon);
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    .nav-contact-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--green-neon);
+      color: #060908;
+      border: 1px solid var(--green-neon);
+      border-radius: 2px;
+      font-weight: 700;
+      opacity: 1 !important;
+      box-shadow: 0 4px 16px rgba(162, 232, 155, 0.35);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .nav-contact-btn:hover {
+      background: #ffffff;
+      border-color: #ffffff;
+      color: #060908;
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.45);
+      transform: translateY(-1px);
+    }
+
+    section[id] {
+      scroll-margin-top: 90px;
+    }
+
+    /* =============================================================
+       1. HERO SECTION (Edge-to-Edge with Pixel Trail & Technical HUD)
+       ============================================================= */
+    .hero-section-fullwidth {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 160px 40px 80px;
+      background-color: var(--black-void);
+      border-bottom: 1px solid var(--grid-line);
+      overflow: hidden;
+    }
+
+    .hero-bg-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      z-index: 0;
+      filter: contrast(1.06) brightness(0.92) saturate(1.05);
+      display: block;
+    }
+
+    .hero-pixel-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-noise-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+      background-size: 4px 4px;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .hero-shade-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(6, 9, 8, 0.3) 0%,
+        rgba(6, 9, 8, 0.08) 35%,
+        rgba(6, 9, 8, 0.45) 75%,
+        rgba(6, 9, 8, 0.82) 100%
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 960px;
+      margin: 0 auto 0 0;
+    }
+
+    .hero-title {
+      font-size: clamp(40px, 6.5vw, 84px);
+      font-weight: 500;
+      line-height: 0.98;
+      letter-spacing: -0.035em;
+      color: var(--white-pure);
+      margin-bottom: 24px;
+    }
+
+    .hero-desc {
+      font-size: clamp(17px, 1.6vw, 22px);
+      color: var(--white-dim);
+      line-height: 1.5;
+      max-width: 680px;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background-color: var(--white-pure);
+      color: var(--black-void);
+      font-weight: 700;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .btn-hero-primary:hover {
+      background-color: var(--green-neon);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(162, 232, 155, 0.35);
+    }
+
+    .hero-text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--white-pure);
+      padding: 15px 24px;
+      border: 1px solid var(--grid-line-strong);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .hero-text-link:hover {
+      border-color: var(--green-glow);
+      color: var(--green-neon);
+      background: rgba(101, 137, 108, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .hero-text-link .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .hero-text-link:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* =============================================================
+       2. ABOUT & NUMBERS SECTION (Dark Technical Slate Surface)
+       ============================================================= */
+    .section-about {
+      padding: 130px 0 110px;
+      background-color: var(--black-surface);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 64px;
+      align-items: flex-start;
+      margin-bottom: 56px;
+    }
+
+    .about-left-title {
+      font-size: clamp(32px, 3.8vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      color: var(--white-pure);
+    }
+
+    .about-right-lead {
+      font-size: clamp(17px, 1.4vw, 20px);
+      color: var(--white-dim);
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 0;
+    }
+
+    .about-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      border-top: 1px solid var(--grid-line);
+      padding-top: 36px;
+    }
+
+    .stat-box-num {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 3.6vw, 48px);
+      font-weight: 600;
+      color: var(--white-pure);
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-box-num span {
+      color: var(--green-neon);
+      font-family: var(--font-mono);
+      font-weight: 400;
+      font-size: 0.65em;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+
+    .stat-box-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green-glow);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .stat-box-desc {
+      font-size: 0.8125rem;
+      color: var(--white-muted);
+      line-height: 1.5;
+    }
+
+    /* Partner Ticker Bar (Centered & evenly distributed like Design 01) */
+    .partner-ticker {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 24px 0;
+      border-top: 1px solid var(--grid-line);
+      border-bottom: 1px solid var(--grid-line);
+      margin-top: 48px;
+      width: 100%;
+    }
+
+    .partner-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--white-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    .partner-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--green-neon);
+      box-shadow: 0 0 8px var(--green-neon);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 991px) {
+      .partner-ticker {
+        justify-content: center;
+        gap: 16px 28px;
+      }
+    }
+
+    /* =============================================================
+       3. PROGRAMS / INVESTMENT FOCUS (Alternating Technical Bento Cards)
+       ============================================================= */
+    .section-programs {
+      padding: 130px 0;
+      background-color: var(--black-void);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+    }
+
+    .section-header-center {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto 72px;
+    }
+
+    .section-header-center .hud-tag {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: var(--white-pure);
+    }
+
+    .section-subtitle {
+      font-size: clamp(16px, 1.25vw, 19px);
+      color: var(--white-dim);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .program-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .program-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--black-surface);
+      border: 1px solid var(--grid-line);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .program-row:hover {
+      border-color: var(--green-glow);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+    }
+
+    .program-img-box {
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      background-color: var(--black-card);
+    }
+
+    .program-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: contrast(1.05) brightness(0.96);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      display: block;
+    }
+
+    .program-row:hover .program-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: contrast(1.05) brightness(0.96);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      display: block;
+    }
+
+    .program-content-box {
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      border-left: 1px solid var(--grid-line);
+    }
+
+    .program-row:nth-child(2) .program-content-box {
+      border-left: none;
+      border-right: 1px solid var(--grid-line);
+    }
+
+    .program-index-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .program-title {
+      font-size: clamp(28px, 2.8vw, 40px);
+      line-height: 1.15;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--white-pure);
+    }
+
+    .program-lead {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      color: var(--white-pure);
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+    }
+
+    .program-desc {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--white-dim);
+      margin-bottom: 28px;
+    }
+
+    .program-criteria {
+      list-style: none;
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 1px solid var(--grid-line);
+      padding-top: 20px;
+    }
+
+    .program-criteria li {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--white-dim);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .program-criteria li::before {
+      content: '—';
+      color: var(--green-neon);
+      font-weight: 700;
+    }
+
+    /* =============================================================
+       4. DIVIDING BANNER IMAGE (Contained Razor Frame with Pixel Trail)
+       ============================================================= */
+    .section-divider-contained {
+      padding: 60px 0;
+      background-color: var(--black-surface);
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .divider-banner-card {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      overflow: hidden;
+      border: 1px solid var(--grid-line);
+      background-color: var(--black-card);
+    }
+
+    .divider-banner-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: contrast(1.05) brightness(0.92);
+      display: block;
+    }
+
+    .divider-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 9, 8, 0.1) 0%, rgba(6, 9, 8, 0.3) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .divider-pixel-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* =============================================================
+       5. BENTO 2x2 GRID (Our Approach // Technical Radicals)
+       ============================================================= */
+    .section-bento {
+      padding: 130px 0;
+      background-color: var(--black-void);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .bento-card {
+      border: 1px solid var(--grid-line);
+      background-color: var(--black-surface);
+      position: relative;
+      overflow: hidden;
+      min-height: 380px;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 44px;
+    }
+
+    .bento-card:hover {
+      border-color: var(--green-glow);
+      background-color: var(--black-card-hover);
+      transform: translateY(-3px);
+    }
+
+    .bento-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.05) brightness(0.85);
+      z-index: 0;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bento-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .bento-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 9, 8, 0.08) 0%, rgba(6, 9, 8, 0.45) 55%, rgba(6, 9, 8, 0.78) 100%);
+      z-index: 1;
+    }
+
+    .bento-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .bento-card-title {
+      font-size: clamp(22px, 2.2vw, 30px);
+      line-height: 1.18;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--white-pure);
+    }
+
+    .bento-card-desc {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--white-dim);
+    }
+
+    /* Bento Solid Panels */
+    .bento-sage-1,
+    .bento-sage-2 {
+      justify-content: space-between;
+      background: var(--black-card);
+    }
+
+    .bento-sage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      border-bottom: 1px solid var(--grid-line);
+      padding-bottom: 18px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .bento-sage-num {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 4.5vw, 68px);
+      font-weight: 600;
+      color: var(--white-pure);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .bento-sage-1 .bento-sage-num {
+      color: var(--green-neon);
+    }
+
+    /* =============================================================
+       6. FOUNDER SECTION (Justin Zayat Bio, Real Photo & NBC Segment)
+       ============================================================= */
+    .section-roster {
+      padding: 130px 0;
+      background-color: var(--black-surface);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+    }
+
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .roster-card {
+      border: 1px solid var(--grid-line);
+      background-color: var(--black-card);
+      position: relative;
+      overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px 32px;
+      transition: var(--transition);
+    }
+
+    .roster-card:hover {
+      border-color: var(--green-glow);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .roster-card-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: contrast(1.15) brightness(0.45);
+      z-index: 0;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .roster-card:hover .roster-card-bg-img {
+      transform: scale(1.05);
+    }
+
+    .roster-pixel-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .roster-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 9, 8, 0.2) 0%, rgba(6, 9, 8, 0.95) 85%);
+      z-index: 1;
+    }
+
+    .roster-card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .roster-role {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .roster-name {
+      font-size: clamp(24px, 2.2vw, 30px);
+      line-height: 1.15;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--white-pure);
+    }
+
+    .roster-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--white-dim);
+    }
+
+    /* =============================================================
+       7. GALLERY / 3D CURVED RIBBON CAROUSEL (Real Assets)
+       ============================================================= */
+    .section-gallery {
+      padding: 130px 0 60px;
+      background-color: var(--black-void);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-ribbon-stage {
+      position: relative;
+      width: 100%;
+      height: 640px;
+      overflow: hidden;
+      background-color: var(--black-surface);
+      border-top: 1px solid var(--grid-line);
+      border-bottom: 1px solid var(--grid-line);
+      cursor: grab;
+      touch-action: pan-y;
+      isolation: isolate;
+      margin: 48px 0 0;
+    }
+
+    .gallery-ribbon-stage[data-dragging="true"],
+    .gallery-ribbon-stage[data-dragging="true"] * {
+      cursor: grabbing !important;
+    }
+
+    .gallery-ribbon-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .gallery-card-hit {
+      position: absolute;
+      display: block;
+      z-index: 2;
+      background: transparent;
+      text-decoration: none;
+      color: #ffffff;
+      will-change: transform;
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+
+    /* =============================================================
+       8. TESTIMONIAL / FOUNDER BIO SPOTLIGHT
+       ============================================================= */
+    .section-testimonial {
+      padding: 120px 0;
+      background-color: var(--black-surface);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+    }
+
+    .testimonial-card-split {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      border: 1px solid var(--grid-line);
+      background-color: var(--black-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-img-box {
+      position: relative;
+      min-height: 440px;
+      background-color: var(--black-void);
+      overflow: hidden;
+      border-right: 1px solid var(--grid-line);
+    }
+
+    .testimonial-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      filter: contrast(1.05) brightness(0.95);
+      display: block;
+    }
+
+    .testimonial-content-box {
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.35;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      color: var(--white-pure);
+      margin-bottom: 36px;
+    }
+
+    .testimonial-author-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--white-pure);
+      margin-bottom: 4px;
+    }
+
+    .testimonial-author-role {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+    }
+
+    /* =============================================================
+       9. FAQ / COLLABORATION PROFILES ACCORDION (Technical Matrix)
+       ============================================================= */
+    .section-faq {
+      padding: 130px 0;
+      background-color: var(--black-void);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+    }
+
+    .faq-list {
+      max-width: 900px;
+      margin: 48px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--black-surface);
+      border: 1px solid var(--grid-line);
+      border-radius: 2px;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .faq-item.active {
+      border-color: var(--green-glow);
+      background: var(--black-card);
+    }
+
+    .faq-header {
+      width: 100%;
+      padding: 24px 28px;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      text-align: left;
+      cursor: pointer;
+      user-select: none;
+      color: var(--white-pure);
+    }
+
+    .faq-question {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      color: var(--white-pure);
+    }
+
+    .faq-icon-btn {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--green-neon);
+      min-width: 24px;
+      text-align: center;
+      transition: transform 0.25s ease;
+      line-height: 1;
+    }
+
+    .faq-item.active .faq-icon-btn {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 28px 24px;
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--white-dim);
+      border-top: 1px solid var(--grid-line);
+      padding-top: 18px;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    /* =============================================================
+       10. BOTTOM CTA BANNER (Technical Radar Terminal)
+       ============================================================= */
+    .section-bottom-cta-contained {
+      padding: 100px 0;
+      background-color: var(--black-surface);
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .bottom-cta-card {
+      position: relative;
+      border: 1px solid var(--grid-line);
+      background-color: var(--black-card);
+      padding: 80px 64px;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .bottom-cta-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      opacity: 0.55;
+      filter: contrast(1.08) brightness(0.85);
+      z-index: 0;
+    }
+
+    .bottom-cta-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+    .bottom-cta-title {
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      color: var(--white-pure);
+      margin-bottom: 20px;
+    }
+
+    .bottom-cta-desc {
+      font-size: clamp(16px, 1.25vw, 19px);
+      color: var(--white-dim);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    /* =============================================================
+       11. FOOTER (Solid Void)
+       ============================================================= */
+    .footer-site-solid {
+      padding: 80px 0 40px;
+      background-color: var(--black-void);
+      border-top: 1px solid var(--grid-line);
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 64px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .footer-logo img {
+      height: 52px;
+      max-height: 56px;
+      width: auto;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: var(--white-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .footer-col-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col-links a {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--white-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-col-links a:hover {
+      color: var(--green-neon);
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-muted);
+      letter-spacing: 0.06em;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Floating switcher pill */
+    .variant-preview-pill {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: rgba(6, 9, 8, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      border: 1px solid var(--green-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #ffffff;
+    }
+
+    .variant-preview-pill a {
+      color: var(--green-neon);
+      text-decoration: underline;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 991px) {
+      .nav-menu {
+        display: none;
+      }
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .program-row {
+        grid-template-columns: 1fr;
+      }
+      .program-img-box {
+        min-height: 360px;
+      }
+      .program-content-box {
+        border-left: none !important;
+        border-right: none !important;
+        border-top: 1px solid var(--grid-line);
+        padding: 40px 28px;
+      }
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .roster-grid {
+        grid-template-columns: 1fr;
+      }
+      .testimonial-card-split {
+        grid-template-columns: 1fr;
+      }
+      .testimonial-img-box {
+        min-height: 320px;
+        border-right: none;
+        border-bottom: 1px solid var(--grid-line);
+      }
+      .testimonial-content-box {
+        padding: 40px 28px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-stats-row {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .hero-section-fullwidth {
+        padding: 140px 24px 60px;
+      }
+      .gallery-ribbon-stage {
+        height: 440px;
+      }
+      .divider-banner-card {
+        height: 360px;
+      }
+      .bottom-cta-card {
+        padding: 48px 28px;
+      }
+      .footer-links-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cleared Photography Empty Technical Frames */
+    .cleared-photo-placeholder {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 460px;
+      background: radial-gradient(circle at center, rgba(162, 232, 155, 0.03) 0%, rgba(6, 9, 8, 0.98) 75%),
+                  linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+      border: 1px solid var(--grid-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .placeholder-technical-inner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .placeholder-tag {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green-glow);
+      background: rgba(101, 137, 108, 0.12);
+      border: 1px solid var(--green-border);
+      padding: 6px 14px;
+      border-radius: 2px;
+    }
+
+    .placeholder-caption {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* Stats Attribution Block (Spacious & Distributed Technical Metric Cards) */
+    .stats-container-block {
+      border-top: 1px solid var(--grid-line);
+      padding-top: 48px;
+      margin-top: 0;
+      width: 100%;
+    }
+
+    .stats-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .stats-attribution-heading {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    .stats-attribution-heading::before {
+      content: '//';
+      color: var(--white-muted);
+    }
+
+    .stats-period-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--white-muted);
+      border: 1px solid var(--grid-line);
+      padding: 4px 10px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .stats-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .stat-metric-card {
+      position: relative;
+      background-color: var(--black-card);
+      border: 1px solid var(--grid-line);
+      border-radius: 2px;
+      padding: 40px 32px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .stat-metric-card:hover {
+      border-color: var(--green-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    .stat-metric-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .stat-metric-index {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      color: var(--white-muted);
+      text-transform: uppercase;
+    }
+
+    .stat-metric-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green-border);
+      transition: var(--transition);
+    }
+
+    .stat-metric-card:hover .stat-metric-dot {
+      background: var(--green-neon);
+      box-shadow: 0 0 8px var(--green-glow);
+    }
+
+    .stat-box-num {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 3.8vw, 56px);
+      font-weight: 600;
+      color: var(--white-pure);
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-box-num span {
+      color: var(--green-neon);
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 0.55em;
+      vertical-align: super;
+      margin-left: 4px;
+    }
+
+    .stat-box-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--green-glow);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .stat-box-desc {
+      font-size: 0.875rem;
+      color: var(--white-muted);
+      line-height: 1.55;
+    }
+
+    .stat-legal-disclaimer {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--white-muted);
+      letter-spacing: 0.04em;
+      margin-top: 36px;
+      line-height: 1.6;
+      padding: 14px 20px;
+      background: rgba(6, 9, 8, 0.6);
+      border: 1px solid var(--grid-line);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stat-legal-disclaimer::before {
+      content: '// NOTE:';
+      color: var(--green-glow);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 991px) {
+      .stats-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    /* Press Strip Section */
+    .section-press {
+      padding: 60px 0;
+      background: var(--black-surface);
+      border-top: 1px solid var(--grid-line);
+      border-bottom: 1px solid var(--grid-line);
+      position: relative;
+    }
+
+    .press-strip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .press-strip-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .press-strip-item {
+      border: 1px solid var(--grid-line);
+      background: var(--black-card);
+      padding: 24px 20px;
+      position: relative;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .press-strip-item:hover {
+      border-color: var(--green-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .press-outlet-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white-pure);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .press-coverage-desc {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-dim);
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+    }
+
+    /* Founder Section Editorial Layout */
+    .founder-editorial-split {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 56px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    .founder-bio-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .founder-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .founder-hero-name {
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--white-pure);
+      margin: 4px 0 12px;
+    }
+
+    .founder-bio-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--white-dim);
+      font-weight: 300;
+    }
+
+    .founder-flagged-block {
+      padding: 16px 20px;
+      border: 1px dashed var(--green-border);
+      background: rgba(101, 137, 108, 0.08);
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--green-neon);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .founder-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    
+    /* Founder Section Media Carousel */
+    .founder-carousel-widget {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .founder-carousel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--black-card);
+      border: 1px solid var(--grid-line);
+      border-radius: 2px;
+    }
+
+    .founder-carousel-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .founder-tab-pill {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--white-muted);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .founder-tab-pill .status-dot {
+      background: var(--white-muted);
+    }
+
+    .founder-tab-pill:hover {
+      color: var(--white-pure);
+      border-color: var(--grid-line);
+    }
+
+    .founder-tab-pill.active {
+      color: var(--green-neon);
+      border-color: var(--green-border);
+      background: rgba(101, 137, 108, 0.12);
+    }
+
+    .founder-tab-pill.active .status-dot {
+      background: var(--green-neon);
+      box-shadow: 0 0 8px var(--green-glow);
+    }
+
+    .founder-carousel-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .founder-carousel-counter {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .founder-carousel-counter #founderSlideIndex {
+      color: var(--green-neon);
+      font-weight: 600;
+    }
+
+    .founder-nav-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--grid-line);
+      color: var(--white-pure);
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .founder-nav-btn:hover {
+      border-color: var(--green-glow);
+      background: rgba(162, 232, 155, 0.12);
+      color: var(--green-neon);
+    }
+
+    .founder-carousel-viewport {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .founder-carousel-track {
+      position: relative;
+      width: 100%;
+    }
+
+    .founder-card-slide {
+      display: none;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .founder-card-slide.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .founder-media-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .founder-photo-card {
+      border: 1px solid var(--grid-line);
+      background: var(--black-card);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .founder-photo-card:hover {
+      border-color: var(--green-glow);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .founder-real-photo {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+      filter: contrast(1.05) brightness(0.95);
+    }
+
+    .founder-photo-caption-bar {
+      padding: 14px 20px;
+      background: rgba(6, 9, 8, 0.95);
+      border-top: 1px solid var(--grid-line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-dim);
+      letter-spacing: 0.05em;
+    }
+
+    .founder-nbc-card {
+      border: 1px solid var(--grid-line);
+      background: var(--black-card);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .founder-nbc-card:hover {
+      border-color: var(--green-glow);
+    }
+
+    .nbc-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nbc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-neon);
+      background: var(--green-tag-bg);
+      border: 1px solid var(--green-border);
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .nbc-meta {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--white-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .nbc-video-container {
+      position: relative;
+      width: 100%;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid var(--grid-line);
+      background: #000000;
+    }
+
+    .nbc-video-player {
+      width: 100%;
+      height: 220px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .nbc-card-caption {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--white-muted);
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 991px) {
+      .press-strip-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .founder-editorial-split {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .press-strip-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header (Fixed HUD Bar - Highest z-index on page) -->
+  <header class="hero-nav">
+    <a href="#" class="nav-brand" aria-label="JPZ Ventures">
+      <img src="assets/MainLogo-Light.png" alt="JPZ Ventures Logo">
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="#investment-focus">Investment focus</a></li>
+      <li><a href="#our-approach">Our approach</a></li>
+      <li><a href="#founder">Founder</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <a href="#contact" class="nav-contact-btn">
+      Start a conversation
+    </a>
+  </header>
+
+  <!-- =============================================================
+       1. HERO SECTION (FULL-WIDTH EDGE-TO-EDGE LIKE REFERENCE)
+       ============================================================= -->
+  <section class="hero-section-fullwidth" id="hero" data-pixel-src="assets/img/horse-race.jpg">
+    <!-- Hero Photography Background (Aerial Sports Shadow & Form) -->
+    <img class="hero-bg-photo" src="assets/img/horse-race.jpg" alt="JPZ Ventures Ownership Positions in Sport">
+    
+    <!-- Hero Pixel Canvas Overlay -->
+    <canvas class="hero-pixel-canvas"></canvas>
+
+    <!-- Film Grain Noise Effect Overlay -->
+    <div class="hero-noise-overlay"></div>
+    
+    <!-- Contrast Shade Overlay -->
+    <div class="hero-shade-overlay"></div>
+
+    <!-- Technical Corner Plus Markers -->
+    <div class="corner-plus corner-tl">+</div>
+    <div class="corner-plus corner-tr">+</div>
+
+    <!-- Hero Content (Bottom-Left Anchored) -->
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Ownership positions<br>in sport.
+      </h1>
+
+      <p class="hero-desc">
+        JPZ Ventures takes ownership positions across Sports Assets and Venture &amp; Technology.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#contact" class="btn-hero-primary">
+          Start a conversation
+        </a>
+        <a href="#investment-focus" class="hero-text-link">
+          See Our Focus Areas <span class="arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- =============================================================
+         2. ABOUT & NUMBERS SECTION (Dark Technical Slate Surface)
+         ============================================================= -->
+    <section class="section-about" id="about">
+      <div class="container">
+        
+        <div class="about-grid">
+          <!-- Left Column -->
+          <div>
+            <div class="hud-tag"><span class="status-dot"></span> 01 / Overview</div>
+            <h2 class="about-left-title">
+              Two sides of sport.<br>One ownership platform.
+            </h2>
+          </div>
+
+          <!-- Right Column Lead -->
+          <div>
+            <p class="about-right-lead">
+              JPZ Ventures is a founder-led private investment firm taking ownership positions across Sports Assets and Venture &amp; Technology. Relationships create the opening, operating experience informs the questions, and underwriting determines whether capital moves.
+            </p>
+          </div>
+        </div>
+
+        <!-- Full-Width Stats Attribution Block -->
+        <div class="stats-container-block">
+          <div class="stats-header-bar">
+            <div class="stats-attribution-heading">
+              Founder’s operating record at Zayat Stables, 2007 to 2020.
+            </div>
+            <span class="stats-period-tag">2007 &mdash; 2020</span>
+          </div>
+
+          <div class="stats-cards-grid">
+            <!-- Stat Card 01 -->
+            <div class="stat-metric-card">
+              <div class="corner-plus corner-tl">+</div>
+              <div class="corner-plus corner-tr">+</div>
+              <div class="stat-metric-card-top">
+                <span class="stat-metric-index">01 // TRANSACTION VOLUME</span>
+                <span class="stat-metric-dot"></span>
+              </div>
+              <div>
+                <div class="stat-box-num">$350M<span>+</span></div>
+                <div class="stat-box-label">Assets transacted</div>
+                <div class="stat-box-desc">At auction and private sale</div>
+              </div>
+            </div>
+
+            <!-- Stat Card 02 -->
+            <div class="stat-metric-card">
+              <div class="corner-plus corner-tl">+</div>
+              <div class="corner-plus corner-tr">+</div>
+              <div class="stat-metric-card-top">
+                <span class="stat-metric-index">02 // P&amp;L RESPONSIBILITY</span>
+                <span class="stat-metric-dot"></span>
+              </div>
+              <div>
+                <div class="stat-box-num">9 <span>years</span></div>
+                <div class="stat-box-label">Full P&amp;L responsibility</div>
+                <div class="stat-box-desc">Racing &amp; Stallion Manager (2011–2020)</div>
+              </div>
+            </div>
+
+            <!-- Stat Card 03 -->
+            <div class="stat-metric-card">
+              <div class="corner-plus corner-tl">+</div>
+              <div class="corner-plus corner-tr">+</div>
+              <div class="stat-metric-card-top">
+                <span class="stat-metric-index">03 // OPERATIONAL SCALE</span>
+                <span class="stat-metric-dot"></span>
+              </div>
+              <div>
+                <div class="stat-box-num">100<span>+</span></div>
+                <div class="stat-box-label">People in the operation</div>
+                <div class="stat-box-desc">Across multiple U.S. states</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-legal-disclaimer">
+            Historical operating experience at Zayat Stables; these figures do not represent JPZ Ventures’ assets under management or investment performance.
+          </div>
+        </div>
+
+        <!-- Horizontal Sub-bar / Info Ticker -->
+        <div class="partner-ticker">
+          <div class="partner-pill"><span class="dot"></span> Sports Assets</div>
+          <div class="partner-pill"><span class="dot"></span> Venture &amp; Technology</div>
+          <div class="partner-pill"><span class="dot"></span> New York</div>
+          <div class="partner-pill"><span class="dot"></span> Est. 2026</div>
+          <div class="partner-pill"><span class="dot"></span> Direct Ownership</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+         PRESS STRIP / SELECTED COVERAGE BEYOND FORBES
+         ============================================================= -->
+    <section class="section-press" id="press">
+      <div class="container">
+        <div class="press-strip-header">
+          <div class="hud-tag"><span class="status-dot"></span> Selected Coverage &amp; Recognition</div>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--white-muted); letter-spacing: 0.08em; text-transform: uppercase;">Broadcast · Print · Digital</span>
+        </div>
+
+        <div class="press-strip-grid">
+          <!-- Forbes -->
+          <div class="press-strip-item">
+            <div class="press-outlet-title">Forbes</div>
+            <div class="press-coverage-desc">Forbes 30 Under 30, Sports, 2017</div>
+          </div>
+
+          <!-- NBC -->
+          <div class="press-strip-item">
+            <div class="press-outlet-title">NBC News / NBC Sports</div>
+            <div class="press-coverage-desc">Feature Coverage: Triple Crown Campaign &amp; Bloodstock Operations</div>
+          </div>
+
+          <!-- Sports Business Journal -->
+          <div class="press-strip-item">
+            <div class="press-outlet-title">Sports Business Journal</div>
+            <div class="press-coverage-desc">Emerging Sports Assets &amp; Team Formation-Stage Governance</div>
+          </div>
+
+          <!-- Bloomberg -->
+          <div class="press-strip-item">
+            <div class="press-outlet-title">Bloomberg</div>
+            <div class="press-coverage-desc">Private Asset Transactions &amp; Next-Generation Sports Technology</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         3. PROGRAMS / INVESTMENT FOCUS (Alternating Cards)
+         ============================================================= -->
+    <section class="section-programs" id="investment-focus">
+      <div class="container">
+        
+        <div class="section-header-center">
+          <div class="hud-tag"><span class="status-dot"></span> 01 / Investment focus</div>
+          <h2 class="section-title">Two sides of sport.<br>One ownership platform.</h2>
+          <p class="section-subtitle">
+            We operate across direct physical sports franchises and high-upside technology companies transforming the category.
+          </p>
+        </div>
+
+        <div class="program-rows">
+          
+          <!-- Program 1: Sports Assets -->
+          <div class="program-row">
+            <div class="corner-plus corner-tl">+</div>
+            <div class="corner-plus corner-tr">+</div>
+            <div class="corner-plus corner-bl">+</div>
+            <div class="corner-plus corner-br">+</div>
+
+            <div class="program-img-box">
+              <img src="assets/img/basketball-dunk.jpg" alt="Sports Assets - Direct Ownership" loading="lazy">
+            </div>
+
+            <div class="program-content-box">
+              <div class="program-index-tag">01 · Direct ownership</div>
+              <h3 class="program-title">Sports Assets</h3>
+              <p class="program-lead">An early position in what comes next.</p>
+              <p class="program-desc">
+                We invest directly in emerging teams and leagues, often at formation, when entry price, governance rights, and operating influence can still be shaped.
+              </p>
+
+              <ul class="program-criteria">
+                <li>Emerging teams &amp; leagues</li>
+                <li>Formation-stage entry</li>
+                <li>Governance &amp; operating rights</li>
+              </ul>
+
+              <div>
+                <a href="#contact" class="btn-21 btn-21-white">
+                  Start a conversation
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Program 2: Venture & Technology -->
+          <div class="program-row">
+            <div class="corner-plus corner-tl">+</div>
+            <div class="corner-plus corner-tr">+</div>
+            <div class="corner-plus corner-bl">+</div>
+            <div class="corner-plus corner-br">+</div>
+
+            <div class="program-content-box">
+              <div class="program-index-tag">02 · Specialist access &amp; co-investment</div>
+              <h3 class="program-title">Venture &amp; Technology</h3>
+              <p class="program-lead">Sport is the entry point. The market can be bigger.</p>
+              <p class="program-desc">
+                We invest through specialist sports technology managers, co-investment rights, and direct company positions in businesses that can expand beyond sport.
+              </p>
+
+              <ul class="program-criteria">
+                <li>Specialist sports technology managers</li>
+                <li>Co-investment &amp; direct positions</li>
+                <li>Markets beyond sport</li>
+              </ul>
+
+              <div>
+                <a href="#contact" class="btn-21 btn-21-white">
+                  Start a conversation
+                </a>
+              </div>
+            </div>
+
+            <div class="program-img-box">
+              <img src="assets/img/sprinter-start.jpg" alt="Venture &amp; Technology - Athletic Biometrics &amp; Telemetry" loading="lazy">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+       4. DIVIDING BANNER IMAGE (FULL WIDTH)
+       ============================================================= -->
+    <section class="section-divider-contained">
+      <div class="divider-banner-card" data-pixel-src="assets/img/ice-hockey.jpg">
+        <div class="corner-plus corner-tl">+</div>
+        <div class="corner-plus corner-tr">+</div>
+        <div class="corner-plus corner-bl">+</div>
+        <div class="corner-plus corner-br">+</div>
+        <img class="divider-banner-bg" src="assets/img/ice-hockey.jpg" alt="High-Performance Sports Operations" loading="lazy">
+        <canvas class="divider-pixel-canvas"></canvas>
+        <div class="divider-banner-overlay"></div>
+      </div>
+    </section>
+
+    <!-- =============================================================
+       5. BENTO 2x2 GRID (Our Approach in Ink & Sage)
+       ============================================================= -->
+    <section class="section-bento" id="our-approach">
+      <div class="container">
+        
+        <div style="margin-bottom: 24px;">
+          <div class="hud-tag"><span class="status-dot"></span> 02 / Our approach</div>
+          <h2 class="section-title">Access brings it to the desk.<br><span style="color: var(--green-neon);">Evidence decides.</span></h2>
+          <p class="section-subtitle" style="margin-top: 10px;">
+            Relationships create the opening. Operating experience informs the questions. Underwriting determines whether capital moves.
+          </p>
+        </div>
+
+        <div class="bento-grid">
+          
+          <!-- Bento 1: Step 01 Card (Background Image with Shadow Form) -->
+          <div class="bento-card" style="background: var(--black-surface); justify-content: space-between;">
+            <div class="corner-plus corner-tl">+</div>
+            <div class="corner-plus corner-tr">+</div>
+            <img src="assets/img/football-quarterback.jpg" alt="Relationships that source opportunity" loading="lazy">
+            <div class="bento-card-overlay"></div>
+            <div class="bento-content" style="width: 100%;">
+              <div class="bento-sage-header">
+                <span class="hud-tag" style="margin-bottom: 0;">Step 01 // Network</span>
+                <span style="font-family: var(--font-mono); font-size: 1.2rem; color: var(--green-neon);">01</span>
+              </div>
+              <h3 class="bento-card-title">Relationships that source opportunity.</h3>
+              <p class="bento-card-desc">
+                Our network spans owners, league management, athletes, operators, specialist investors, family offices, and strategic partners. It brings opportunities that do not always reach a broad process.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bento 2: Solid Technical Panel Card -->
+          <div class="bento-card bento-sage-1">
+            <div class="corner-plus corner-tl">+</div>
+            <div class="corner-plus corner-tr">+</div>
+            <div class="bento-sage-header">
+              <span class="hud-tag" style="margin-bottom: 0;">Rigorous Underwriting</span>
+              <span style="font-family: var(--font-mono); font-size: 1.4rem; color: var(--green-neon);">↗</span>
+            </div>
+            <div>
+              <div class="bento-sage-num">$350M+</div>
+              <div style="font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; margin-top: 4px; color: var(--white-pure);">Evidence behind the position</div>
+              <p style="font-size: 0.875rem; margin-top: 6px; color: var(--white-dim);">Committed capital, governance, counterparties &amp; exit rights.</p>
+            </div>
+          </div>
+
+          <!-- Bento 3: Step 03 Card (Post-Entry Value) -->
+          <div class="bento-card" style="background: var(--black-surface); justify-content: space-between;">
+            <div class="corner-plus corner-tl">+</div>
+            <div class="corner-plus corner-tr">+</div>
+            <div class="bento-sage-header">
+              <span class="hud-tag" style="margin-bottom: 0;">Step 03 // Involvement</span>
+              <span style="font-family: var(--font-mono); font-size: 1.2rem; color: var(--green-neon);">03</span>
+            </div>
+            <div>
+              <h3 class="bento-card-title">A contribution after entry.</h3>
+              <p class="bento-card-desc">
+                Commercial revenue, technology choices, and operating decisions shape an investment after closing. Justin’s experience in those decisions informs where JPZ can be useful.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bento 4: Execution Criteria Frame (Background Image with Shadow Form) -->
+          <div class="bento-card" style="background: var(--black-card); justify-content: space-between;">
+            <div class="corner-plus corner-tl">+</div>
+            <div class="corner-plus corner-tr">+</div>
+            <img src="assets/img/baseball-pitcher.jpg" alt="Evidence &amp; Long-Term Execution" loading="lazy">
+            <div class="bento-card-overlay"></div>
+            <div class="bento-content" style="width: 100%;">
+              <div class="bento-sage-header">
+                <span class="hud-tag" style="margin-bottom: 0;">Criteria &amp; Governance</span>
+                <span style="font-family: var(--font-mono); font-size: 1.2rem; color: var(--green-neon);">&bull;</span>
+              </div>
+              <h3 class="bento-card-title">Evidence &amp; Long-Term Execution.</h3>
+              <p class="bento-card-desc">
+                For sports assets, we examine committed capital, distribution, governance, counterparties, and exit rights. For venture and technology, we evaluate the business alongside specialists to ensure expansion beyond sport.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+       6. FOUNDER SECTION (Justin Zayat Bio, Real Photo & NBC Segment)
+       ============================================================= -->
+    <section class="section-roster" id="founder">
+      <div class="container">
+        
+        <div class="section-header-center">
+          <div class="hud-tag"><span class="status-dot"></span> Founder</div>
+          <h2 class="section-title">An operator’s perspective<br>on ownership.</h2>
+          <p class="section-subtitle">
+            Justin Zayat brings deep operational experience in asset transactions, commercial revenue, and live sports operations.
+          </p>
+        </div>
+
+        <!-- Editorial Split: Justin Bio + Reserved Space for Real Photo & NBC Segment -->
+        <div class="founder-editorial-split">
+          
+          <!-- Left Column: Bio & Title from 01 -->
+          <div class="founder-bio-column">
+            <div class="founder-badge-row">
+              <span class="hud-tag">Founder &amp; Managing Partner</span>
+              <span class="hud-tag" style="color: var(--white-pure); border-color: var(--grid-line-strong);">Forbes 30 Under 30, Sports, 2017</span>
+            </div>
+
+            <h3 class="founder-hero-name">Justin Zayat</h3>
+
+            <p class="founder-bio-text">
+              Justin founded JPZ Ventures in July 2026, bringing experience in asset transactions, commercial revenue, and technology purchasing inside a live sports operation.
+            </p>
+
+            <p class="founder-bio-text">
+              He spent thirteen years at Zayat Stables, from 2007 to 2020, including nine years as Racing &amp; Stallion Manager, from 2011 to 2020, with full P&amp;L responsibility.
+            </p>
+
+            <p class="founder-bio-text">
+              He built sponsorship and partnership revenue around assets that owned no media rights and evaluated technology against real operating decisions. Those experiences shape how JPZ assesses ownership today.
+            </p>
+
+            <!-- [FLAGGED: AWAITING FINAL FOUNDER SENTENCE FROM USER] -->
+            <div class="founder-flagged-block">
+              <em>[Pending: Final founder sentence to be provided by user]</em>
+            </div>
+
+            <div class="founder-actions-row">
+              <a href="mailto:justin@jpzventures.com" class="btn-21 btn-21-white">
+                Start a conversation · justin@jpzventures.com
+              </a>
+              <a href="https://www.linkedin.com/in/justinzayat" target="_blank" rel="noopener noreferrer" class="btn-21 btn-21-outline">
+                LinkedIn Profile &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Carousel with Portrait & NBC Segment Cards -->
+          <div class="founder-media-column">
+            <div class="founder-carousel-widget" id="founderMediaCarousel">
+              
+              <!-- Carousel Header Navigation Bar -->
+              <div class="founder-carousel-header">
+                <div class="founder-carousel-tabs">
+                  <button type="button" class="founder-tab-pill active" data-slide="0">
+                    <span class="status-dot"></span> 01 / Portrait
+                  </button>
+                  <button type="button" class="founder-tab-pill" data-slide="1">
+                    <span class="status-dot"></span> 02 / NBC Broadcast
+                  </button>
+                </div>
+                
+                <div class="founder-carousel-controls">
+                  <span class="founder-carousel-counter">
+                    <span id="founderSlideIndex">01</span> / 02
+                  </span>
+                  <button type="button" class="founder-nav-btn" id="founderPrevBtn" aria-label="Previous card">&larr;</button>
+                  <button type="button" class="founder-nav-btn" id="founderNextBtn" aria-label="Next card">&rarr;</button>
+                </div>
+              </div>
+
+              <!-- Carousel Viewport & Cards -->
+              <div class="founder-carousel-viewport">
+                <div class="founder-carousel-track" id="founderTrack">
+                  
+                  <!-- Card 01: Real Photo of Justin Zayat -->
+                  <div class="founder-card-slide active" data-slide-index="0">
+                    <div class="founder-photo-card">
+                      <div class="corner-plus corner-tl">+</div>
+                      <div class="corner-plus corner-tr">+</div>
+                      <div class="corner-plus corner-bl">+</div>
+                      <div class="corner-plus corner-br">+</div>
+                      <img src="assets/justin-zayat.webp" alt="Justin Zayat, Founder &amp; Managing Partner" class="founder-real-photo">
+                      <div class="founder-photo-caption-bar">
+                        <span style="font-weight: 600; color: var(--white-pure);">Justin Zayat</span>
+                        <span style="color: var(--green-neon);">Founder &amp; Managing Partner</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 02: NBC Segment Broadcast Video Player -->
+                  <div class="founder-card-slide" data-slide-index="1">
+                    <div class="founder-nbc-card">
+                      <div class="corner-plus corner-tl">+</div>
+                      <div class="corner-plus corner-tr">+</div>
+                      <div class="corner-plus corner-bl">+</div>
+                      <div class="corner-plus corner-br">+</div>
+                      <div class="nbc-card-header">
+                        <span class="nbc-badge">NBC News / NBC Sports</span>
+                        <span class="nbc-meta">Archival Broadcast Segment</span>
+                      </div>
+                      <div class="nbc-video-container">
+                        <video controls poster="assets/justin-zayat.webp" class="nbc-video-player" preload="metadata">
+                          <source src="assets/gallery-video-1.mp4" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                      <div class="nbc-card-caption">
+                        NBC Feature Coverage: Triple Crown Campaign &amp; Bloodstock Operations
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Attributed Operating Record bound to Justin -->
+        <div class="stats-container-block">
+          <div class="stats-header-bar">
+            <div class="stats-attribution-heading">
+              Founder’s operating record at Zayat Stables, 2007 to 2020.
+            </div>
+            <span class="stats-period-tag">2007 &mdash; 2020</span>
+          </div>
+
+          <div class="stats-cards-grid">
+            <!-- Stat Card 01 -->
+            <div class="stat-metric-card">
+              <div class="corner-plus corner-tl">+</div>
+              <div class="corner-plus corner-tr">+</div>
+              <div class="stat-metric-card-top">
+                <span class="stat-metric-index">01 // TRANSACTION VOLUME</span>
+                <span class="stat-metric-dot"></span>
+              </div>
+              <div>
+                <div class="stat-box-num">$350M<span>+</span></div>
+                <div class="stat-box-label">Assets transacted</div>
+                <div class="stat-box-desc">At auction and private sale</div>
+              </div>
+            </div>
+
+            <!-- Stat Card 02 -->
+            <div class="stat-metric-card">
+              <div class="corner-plus corner-tl">+</div>
+              <div class="corner-plus corner-tr">+</div>
+              <div class="stat-metric-card-top">
+                <span class="stat-metric-index">02 // P&amp;L RESPONSIBILITY</span>
+                <span class="stat-metric-dot"></span>
+              </div>
+              <div>
+                <div class="stat-box-num">9 <span>years</span></div>
+                <div class="stat-box-label">Full P&amp;L responsibility</div>
+                <div class="stat-box-desc">Racing &amp; Stallion Manager (2011–2020)</div>
+              </div>
+            </div>
+
+            <!-- Stat Card 03 -->
+            <div class="stat-metric-card">
+              <div class="corner-plus corner-tl">+</div>
+              <div class="corner-plus corner-tr">+</div>
+              <div class="stat-metric-card-top">
+                <span class="stat-metric-index">03 // OPERATIONAL SCALE</span>
+                <span class="stat-metric-dot"></span>
+              </div>
+              <div>
+                <div class="stat-box-num">100<span>+</span></div>
+                <div class="stat-box-label">People in the operation</div>
+                <div class="stat-box-desc">Across multiple U.S. states</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-legal-disclaimer">
+            Historical operating experience at Zayat Stables; these figures do not represent JPZ Ventures’ assets under management or investment performance.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+       7. GALLERY / 3D CURVED RIBBON CAROUSEL (Real Assets)
+       ============================================================= -->
+    <section class="section-gallery" id="gallery">
+      <div class="container">
+        
+        <div class="section-header-center">
+          <div class="hud-tag"><span class="status-dot"></span> 03 / Gallery</div>
+          <h2 class="section-title">Real assets. Real conviction.</h2>
+          <p class="section-subtitle">
+            A visual overview of the high-performance domains and dynamic assets in our investment scope.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Full-Width 3D Curved Ribbon Stage (Technical Dark Void Background) -->
+      <div class="gallery-ribbon-stage" id="galleryRibbonStage" role="region" aria-label="Real Assets. Scroll or drag to browse.">
+        <canvas class="gallery-ribbon-canvas" id="galleryRibbonCanvas" aria-hidden="true"></canvas>
+      </div>
+    </section>
+
+    <!-- =============================================================
+       8. TESTIMONIAL / FOUNDER BIO SPOTLIGHT
+       ============================================================= -->
+    <section class="section-testimonial">
+      <div class="container">
+        
+        <div class="testimonial-card-split">
+          <div class="corner-plus corner-tl">+</div>
+          <div class="corner-plus corner-tr">+</div>
+          <div class="corner-plus corner-bl">+</div>
+          <div class="corner-plus corner-br">+</div>
+
+          <!-- Left Column: Founder Portrait Image -->
+          <div class="testimonial-img-box">
+            <img src="assets/justin-zayat.webp" alt="Justin Zayat - Founder &amp; Managing Partner" loading="lazy">
+          </div>
+
+          <!-- Right Column: Content Box -->
+          <div class="testimonial-content-box">
+            <div>
+              <div class="hud-tag" style="margin-bottom: 24px;"><span class="status-dot"></span> Executive Spotlight</div>
+              <p class="testimonial-quote">
+                “Justin founded JPZ Ventures in July 2026, bringing experience in asset transactions, commercial revenue, and technology purchasing inside a live sports operation. He built sponsorship and partnership revenue around assets that owned no media rights and evaluated technology against real operating decisions.”
+              </p>
+            </div>
+            <div style="margin-top: 32px; border-top: 1px solid var(--grid-line); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+              <div>
+                <div class="testimonial-author-name">Justin Zayat</div>
+                <div class="testimonial-author-role">Founder &amp; Managing Partner &bull; Forbes 30 Under 30, Sports, 2017</div>
+              </div>
+              <a href="mailto:justin@jpzventures.com" class="btn-21 btn-21-outline">
+                Contact Justin &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+       9. FAQ / COLLABORATION PROFILES ACCORDION (Interactive)
+       ============================================================= -->
+    <section class="section-faq" id="faq">
+      <div class="container">
+        
+        <div class="section-header-center">
+          <div class="hud-tag"><span class="status-dot"></span> FAQ</div>
+          <h2 class="section-title">Share an opportunity.</h2>
+          <p class="section-subtitle">
+            If you are building a sports asset, developing technology with a market beyond sport, or bringing capabilities that can strengthen an ownership position, let’s talk.
+          </p>
+        </div>
+
+        <div class="faq-list" role="region" aria-label="Collaboration Profiles FAQ">
+          
+          <!-- Accordion 1 (Active by default) -->
+          <div class="faq-item active">
+            <button class="faq-header" type="button" aria-expanded="true">
+              <span class="faq-question">1. Founders &amp; operators</span>
+              <span class="faq-icon-btn">+</span>
+            </button>
+            <div class="faq-answer">
+              Bring the business, the ownership opportunity, and the decisions ahead. We evaluate early formation-stage entry and governance rights.
+            </div>
+          </div>
+
+          <!-- Accordion 2 -->
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false">
+              <span class="faq-question">2. Family offices &amp; private investors</span>
+              <span class="faq-icon-btn">+</span>
+            </button>
+            <div class="faq-answer">
+              Explore JPZ’s approach to evaluating ownership positions across sports assets and venture &amp; technology.
+            </div>
+          </div>
+
+          <!-- Accordion 3 -->
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false">
+              <span class="faq-question">3. Regional &amp; strategic partners</span>
+              <span class="faq-icon-btn">+</span>
+            </button>
+            <div class="faq-answer">
+              Connect opportunity access with markets, venues, commercial relationships, and local execution.
+            </div>
+          </div>
+
+          <!-- Accordion 4 -->
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false">
+              <span class="faq-question">4. Investment Criteria &amp; Diligence</span>
+              <span class="faq-icon-btn">+</span>
+            </button>
+            <div class="faq-answer">
+              For sports assets, we examine committed capital, distribution, governance, counterparties, and exit rights. For venture and technology, we evaluate the business alongside specialists.
+              <!-- [FLAGGED: AWAITING EXACT DILIGENCE TESTS FROM USER] -->
+              <div class="founder-flagged-block" style="margin-top: 14px;">
+                <em>[Pending: Exact diligence tests to be inserted here upon receipt]</em>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+       10. BOTTOM CTA BANNER (STANDARDIZED CONTAINER WIDTH)
+       ============================================================= -->
+    <section class="section-bottom-cta-contained" id="contact">
+      <div class="container">
+        <div class="bottom-cta-card">
+          <img src="assets/img/athlete-shadow-2.jpg" alt="Start a Conversation" class="bottom-cta-bg-img">
+          <div class="corner-plus corner-tl">+</div>
+          <div class="corner-plus corner-tr">+</div>
+          <div class="corner-plus corner-bl">+</div>
+          <div class="corner-plus corner-br">+</div>
+
+          <div class="bottom-cta-content">
+            <div class="hud-tag" style="margin-bottom: 20px;"><span class="status-dot"></span> Direct Communication</div>
+            <h2 class="bottom-cta-title">
+              One conversation.<br>That's where it begins.
+            </h2>
+            <p class="bottom-cta-desc">
+              Connect directly with Justin Zayat to discuss active opportunities across Sports Assets and Venture &amp; Technology.
+            </p>
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <a href="mailto:justin@jpzventures.com" class="btn-21 btn-21-white" style="padding: 16px 36px;">
+                Start a conversation · justin@jpzventures.com
+              </a>
+              <a href="https://www.linkedin.com/in/justinzayat" target="_blank" rel="noopener noreferrer" class="btn-21 btn-21-outline" style="padding: 16px 28px;">
+                LinkedIn Profile &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =============================================================
+       11. FOOTER (SOLID VOID)
+       ============================================================= -->
+  <footer class="footer-site-solid">
+    <div class="container">
+      
+      <div class="footer-grid">
+        <div>
+          <!-- White Logo on Solid Ink Footer -->
+          <a href="#" class="footer-logo">
+            <img src="assets/MainLogo-Light.png" alt="JPZ Ventures">
+          </a>
+          <p class="footer-tagline">
+            Ownership positions in sport.<br>
+            Sports Assets · Venture &amp; Technology · New York · Est. 2026
+          </p>
+        </div>
+
+        <div class="footer-links-cols">
+          <div>
+            <div class="footer-col-title">Navigation</div>
+            <ul class="footer-col-links">
+              <li><a href="#hero">Overview</a></li>
+              <li><a href="#investment-focus">Investment focus</a></li>
+              <li><a href="#our-approach">Our approach</a></li>
+              <li><a href="#founder">Founder</a></li>
+              <li><a href="#press">Selected Coverage</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Contact &amp; Coverage</div>
+            <ul class="footer-col-links">
+              <li><a href="mailto:justin@jpzventures.com">justin@jpzventures.com</a></li>
+              <li><a href="https://www.linkedin.com/in/justinzayat" target="_blank" rel="noopener noreferrer">LinkedIn Profile &rarr;</a></li>
+              <li><a href="https://www.forbes.com/profile/justin-zayat/" target="_blank" rel="noopener noreferrer">Forbes 30 Under 30, Sports, 2017</a></li>
+              <li><a href="#contact">Start a conversation</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 JPZ Ventures. All rights reserved. Historical operating experience at Zayat Stables does not represent assets under management or investment performance.
+        </div>
+        <div>
+          New York, NY
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Floating Switcher Pill (Designs 01, 02, 03, 04) -->
+  <div class="variant-preview-pill">
+    <span>Designs:</span>
+    <a href="index.html">Design 01</a>
+    <span>|</span>
+    <a href="variante-2.html">Design 02</a>
+    <span>|</span>
+    <a href="variante-3.html">Design 03</a>
+    <span>|</span>
+    <span style="font-weight: 700; color: #ffffff;">Design 04 &bull;</span>
+  </div>
+
+  <!-- =============================================================
+       INTERACTIVE JAVASCRIPT & GSAP ANIMATIONS
+       ============================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // FAQ Accordion functionality: Toggle on click with ARIA attributes
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        const header = item.querySelector('.faq-header');
+        if (!header) return;
+        
+        header.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          
+          // Close other items
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+              const otherBtn = otherItem.querySelector('.faq-header');
+              if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+            }
+          });
+          
+          // Toggle current item
+          if (isActive) {
+            item.classList.remove('active');
+            header.setAttribute('aria-expanded', 'false');
+          } else {
+            item.classList.add('active');
+            header.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      // Ensure all elements are immediately visible
+      
+    // Founder Media Carousel Functionality
+    const founderCarousel = document.getElementById('founderMediaCarousel');
+    if (founderCarousel) {
+      const slides = founderCarousel.querySelectorAll('.founder-card-slide');
+      const tabs = founderCarousel.querySelectorAll('.founder-tab-pill');
+      const prevBtn = document.getElementById('founderPrevBtn');
+      const nextBtn = document.getElementById('founderNextBtn');
+      const indexEl = document.getElementById('founderSlideIndex');
+      let currentIndex = 0;
+
+      function goToSlide(index) {
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        currentIndex = index;
+
+        slides.forEach((slide, idx) => {
+          if (idx === currentIndex) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+            // Pause video if moving away
+            const vid = slide.querySelector('video');
+            if (vid) vid.pause();
+          }
+        });
+
+        tabs.forEach((tab, idx) => {
+          tab.classList.toggle('active', idx === currentIndex);
+        });
+
+        if (indexEl) {
+          indexEl.textContent = `0${currentIndex + 1}`;
+        }
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetIndex = parseInt(tab.getAttribute('data-slide'), 10);
+          goToSlide(targetIndex);
+        });
+      });
+
+      if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+    }
+
+      const elementsToReveal = document.querySelectorAll(
+        '.faq-item, .bento-card, .roster-card, .section-title, .about-left-title, .bottom-cta-title, .section-header-center, .program-img-box, .bottom-cta-card, .about-stats-row > div'
+      );
+      elementsToReveal.forEach(el => {
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+      });
+
+      // GSAP Animations with Safe Visibility Fallback
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hero Load Sequence
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        heroTl
+          .from('.hero-title', { y: 20, opacity: 0, duration: 0.6 })
+          .from('.hero-desc', { y: 15, opacity: 0, duration: 0.5 }, '-=0.4')
+          .from('.hero-cta-group > *', { y: 12, opacity: 0, stagger: 0.08, duration: 0.5 }, '-=0.4');
+
+        // 2. Smooth reveal on scroll without initial invisible state
+        elementsToReveal.forEach(el => {
+          gsap.fromTo(el, 
+            { opacity: 0.45, y: 18 }, 
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 95%',
+                toggleActions: 'play none none none',
+                once: true
+              }
+            }
+          );
+        });
+
+        window.addEventListener('load', () => {
+          ScrollTrigger.refresh();
+          elementsToReveal.forEach(el => el.style.opacity = '1');
+        });
+
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+          elementsToReveal.forEach(el => {
+            el.style.opacity = '1';
+            el.style.visibility = 'visible';
+          });
+        }, 400);
+      }
+    });
+  </script>
+
+  <!-- =============================================================
+       PIXEL CURSOR TRAIL REVEAL EFFECT (Design 04 Neon Technical Palette)
+       ============================================================= -->
+  <script>
+    (function initPixelTrails() {
+      function hash2D(x, y, seed = 1) {
+        let r = Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263) + Math.imul(seed | 0, 1274126177);
+        r = Math.imul(r ^ (r >>> 13), 1103515245);
+        r ^= r >>> 16;
+        return (r >>> 0) / 4294967296;
+      }
+
+      function clamp(val, min, max) {
+        return Math.min(max, Math.max(min, val));
+      }
+
+      class PixelTrailElement {
+        constructor(el, customConfig = {}) {
+          this.el = el;
+          this.canvas = el.querySelector('canvas');
+          if (!this.canvas) return;
+          this.ctx = this.canvas.getContext('2d');
+
+          const imgEl = el.querySelector('img');
+          this.imgSrc = el.getAttribute('data-pixel-src') || (imgEl ? imgEl.getAttribute('src') : '');
+
+          const isBanner = el.classList.contains('divider-banner-card') || el.classList.contains('hero-section-fullwidth');
+
+          this.config = Object.assign({
+            columns: isBanner ? 32 : 20,
+            brush: isBanner ? 1.25 : 1.35,
+            fade: isBanner ? 0.38 : 0.42,
+            zoom: 1.06,
+            whiteBlocks: '#a2e89b',
+            inkBlocks: '#060908'
+          }, customConfig);
+
+          this.width = 0;
+          this.height = 0;
+          this.dpr = 1;
+          this.blockSize = 0;
+          this.cols = this.config.columns;
+          this.rows = 0;
+          this.grid = new Float32Array();
+
+          this.lastX = -10000;
+          this.lastY = -10000;
+          this.isHovering = false;
+          this.hasActiveCells = false;
+
+          this.offscreen = document.createElement('canvas');
+          this.offCtx = this.offscreen.getContext('2d');
+          this.img = new Image();
+          this.imageReady = false;
+
+          this.init();
+        }
+
+        init() {
+          this.loadImage();
+          this.resize();
+
+          window.addEventListener('resize', () => this.resize());
+
+          const onEnter = (e) => {
+            this.isHovering = true;
+            const rect = this.el.getBoundingClientRect();
+            this.lastX = e.clientX - rect.left;
+            this.lastY = e.clientY - rect.top;
+            this.addSplat(this.lastX, this.lastY, 1.0);
+          };
+
+          const onMove = (e) => {
+            const rect = this.el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const dx = x - this.lastX;
+            const dy = y - this.lastY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > this.blockSize * 0.4) {
+              const steps = Math.min(Math.floor(dist / (this.blockSize * 0.4)), 10);
+              for (let i = 1; i <= steps; i++) {
+                const interpX = this.lastX + (dx * (i / steps));
+                const interpY = this.lastY + (dy * (i / steps));
+                this.addSplat(interpX, interpY, 0.9);
+              }
+            } else {
+              this.addSplat(x, y, 0.9);
+            }
+
+            this.lastX = x;
+            this.lastY = y;
+          };
+
+          const onLeave = () => {
+            this.isHovering = false;
+            this.lastX = -10000;
+            this.lastY = -10000;
+          };
+
+          this.el.addEventListener('mouseenter', onEnter, { passive: true });
+          this.el.addEventListener('mousemove', onMove, { passive: true });
+          this.el.addEventListener('mouseleave', onLeave, { passive: true });
+        }
+
+        loadImage() {
+          if (!this.imgSrc) return;
+          this.img.crossOrigin = 'anonymous';
+          this.img.onload = () => {
+            this.imageReady = true;
+            this.prepareOffscreen();
+          };
+          this.img.src = this.imgSrc;
+        }
+
+        prepareOffscreen() {
+          if (!this.imageReady || this.cols <= 0 || this.rows <= 0) return;
+          this.offscreen.width = this.cols;
+          this.offscreen.height = this.rows;
+
+          const imgAspect = this.img.naturalWidth / this.img.naturalHeight;
+          const targetAspect = this.cols / this.rows;
+
+          let sx, sy, sWidth, sHeight;
+          if (imgAspect > targetAspect) {
+            sHeight = this.img.naturalHeight;
+            sWidth = sHeight * targetAspect;
+            sx = (this.img.naturalWidth - sWidth) / 2;
+            sy = 0;
+          } else {
+            sWidth = this.img.naturalWidth;
+            sHeight = sWidth / targetAspect;
+            sx = 0;
+            sy = (this.img.naturalHeight - sHeight) / 2;
+          }
+
+          this.offCtx.clearRect(0, 0, this.cols, this.rows);
+          this.offCtx.drawImage(this.img, sx, sy, sWidth, sHeight, 0, 0, this.cols, this.rows);
+        }
+
+        resize() {
+          const rect = this.el.getBoundingClientRect();
+          this.width = rect.width;
+          this.height = rect.height;
+          if (this.width <= 0 || this.height <= 0) return;
+
+          this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+          this.canvas.width = Math.floor(this.width * this.dpr);
+          this.canvas.height = Math.floor(this.height * this.dpr);
+
+          this.blockSize = this.width / this.config.columns;
+          this.cols = this.config.columns;
+          this.rows = Math.ceil(this.height / this.blockSize);
+
+          this.grid = new Float32Array(this.cols * this.rows);
+          this.prepareOffscreen();
+        }
+
+        addSplat(px, py, intensity = 1.0) {
+          if (this.cols <= 0 || this.rows <= 0 || this.blockSize <= 0) return;
+
+          const cx = Math.floor(px / this.blockSize);
+          const cy = Math.floor(py / this.blockSize);
+          const radius = Math.max(1, Math.round(this.config.brush));
+
+          let activated = false;
+
+          for (let dy = -radius; dy <= radius; dy++) {
+            for (let dx = -radius; dx <= radius; dx++) {
+              const gx = cx + dx;
+              const gy = cy + dy;
+
+              if (gx < 0 || gx >= this.cols || gy < 0 || gy >= this.rows) continue;
+
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist <= radius) {
+                const falloff = 1 - (dist / (radius + 0.5));
+                const jitter = (hash2D(gx, gy, 77) - 0.5) * 0.35;
+                const weight = clamp(falloff * intensity + jitter, 0.1, 1.0);
+
+                const idx = gy * this.cols + gx;
+                this.grid[idx] = Math.max(this.grid[idx], weight);
+                activated = true;
+              }
+            }
+          }
+
+          if (activated) this.hasActiveCells = true;
+        }
+
+        updateAndRender(dt) {
+          if (!this.hasActiveCells) return;
+
+          let anyActive = false;
+          const decay = this.config.fade * dt * 2.2;
+
+          for (let i = 0; i < this.grid.length; i++) {
+            if (this.grid[i] > 0.005) {
+              this.grid[i] = Math.max(0, this.grid[i] - decay);
+              if (this.grid[i] > 0.005) anyActive = true;
+            } else {
+              this.grid[i] = 0;
+            }
+          }
+
+          this.hasActiveCells = anyActive;
+          this.render();
+        }
+
+        render() {
+          const ctx = this.ctx;
+          const dpr = this.dpr;
+          const cols = this.cols;
+          const rows = this.rows;
+          const bs = this.blockSize;
+
+          ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+          let offData = null;
+          try {
+            if (this.imageReady && this.offCtx) {
+              offData = this.offCtx.getImageData(0, 0, cols, rows).data;
+            }
+          } catch(e) {}
+
+          for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+              const idx = y * cols + x;
+              const val = this.grid[idx];
+              if (val <= 0.005) continue;
+
+              const px = x * bs * dpr;
+              const py = y * bs * dpr;
+              const pw = Math.ceil(bs * dpr) + 1;
+              const ph = Math.ceil(bs * dpr) + 1;
+
+              const hash = hash2D(x, y, 42);
+
+              if (offData && hash < 0.65) {
+                const pIdx = idx * 4;
+                const r = offData[pIdx];
+                const g = offData[pIdx + 1];
+                const b = offData[pIdx + 2];
+                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${clamp(val * 0.95, 0, 1)})`;
+              } else if (hash < 0.85) {
+                ctx.fillStyle = `rgba(162, 232, 155, ${clamp(val * 0.65, 0, 0.85)})`;
+              } else {
+                ctx.fillStyle = `rgba(6, 9, 8, ${clamp(val * 0.9, 0, 1)})`;
+              }
+
+              ctx.fillRect(px, py, pw, ph);
+            }
+          }
+        }
+      }
+
+      function start() {
+        const elements = document.querySelectorAll('.hero-section-fullwidth, .divider-banner-card, .roster-card');
+        const instances = [];
+
+        elements.forEach(el => {
+          instances.push(new PixelTrailElement(el));
+        });
+
+        let lastTime = performance.now();
+
+        function loop(time) {
+          const dt = Math.min((time - lastTime) / 1000, 0.1);
+          lastTime = time;
+
+          for (let i = 0; i < instances.length; i++) {
+            instances[i].updateAndRender(dt);
+          }
+
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+      } else {
+        start();
+      }
+    })();
+  </script>
+
+  <!-- Embedded High-Resolution Gallery Image Assets (Zero CORS / Instant Offline Load) -->
+  <script src="gallery-assets.js"></script>
+
+  <!-- =============================================================
+       CURVED 3D RIBBON CAROUSEL ENGINE (Real Assets Gallery)
+       ============================================================= -->
+  <script>
+    (function initCurvedRibbonGallery() {
+      const stage = document.getElementById('galleryRibbonStage');
+      const canvas = document.getElementById('galleryRibbonCanvas');
+      if (!stage || !canvas) return;
+
+      const gl = canvas.getContext('webgl2', {
+        alpha: true,
+        antialias: true,
+        premultipliedAlpha: true,
+        powerPreference: 'high-performance'
+      }) || canvas.getContext('webgl', {
+        alpha: true,
+        antialias: true,
+        premultipliedAlpha: true,
+        powerPreference: 'high-performance'
+      });
+      if (!gl) return;
+
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      gl.disable(gl.DEPTH_TEST);
+
+      const galleryData = window.JPZ_GALLERY_IMAGES || {};
+
+      const items = [
+        {
+          id: "asset-scope-equestrian",
+          title: "Thoroughbred Racing",
+          poster: galleryData["horse-race.jpg"] || "assets/img/horse-race.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-basketball",
+          title: "Pro Basketball Franchises",
+          poster: galleryData["basketball-dunk.jpg"] || "assets/img/basketball-dunk.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-football",
+          title: "Gridiron Football Assets",
+          poster: galleryData["football-quarterback.jpg"] || "assets/img/football-quarterback.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-jumping",
+          title: "Show Jumping & Bloodstock",
+          poster: galleryData["equestrian-jumping.jpg"] || "assets/img/equestrian-jumping.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-tennis",
+          title: "Championship Tennis",
+          poster: galleryData["tennis.jpg"] || "assets/img/tennis.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-hockey",
+          title: "Ice Hockey & Winter Sports",
+          poster: galleryData["ice-hockey.jpg"] || "assets/img/ice-hockey.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-track",
+          title: "Track & Field Speed",
+          poster: galleryData["sprinter-start.jpg"] || "assets/img/sprinter-start.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-baseball",
+          title: "Professional Baseball",
+          poster: galleryData["baseball-batter.jpg"] || "assets/img/baseball-batter.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-golf",
+          title: "Championship Golf",
+          poster: galleryData["golf.jpg"] || "assets/img/golf.jpg",
+          aspect: 16 / 10
+        },
+        {
+          id: "asset-scope-technology",
+          title: "Sports Scope & Technology",
+          poster: galleryData["sports-balls.jpg"] || "assets/img/sports-balls.jpg",
+          aspect: 16 / 10
+        }
+      ];
+
+      // 1. Shaders (Trimmed cleanly to avoid #extension preprocessor errors)
+      const cardVS = `precision highp float;
+attribute vec2 a_position;
+attribute vec2 a_uv;
+
+uniform vec2 u_center;
+uniform vec2 u_res;
+uniform vec2 u_half;
+uniform float u_cameraZ;
+uniform float u_sheetD;
+uniform float u_sheetT;
+uniform float u_sheetC;
+uniform float u_hover;
+uniform float u_dent;
+uniform float u_door;
+
+varying vec2 vUv;
+varying vec3 vFlat;
+
+const float PI = 3.141592653589793;
+const float SHEET_BANK = -0.16;
+const float SHEET_SHIFT = -0.2;
+const float SHEET_DIAG = 0.03;
+
+float shape(float q) {
+    float bowl = 1.0 - q * q;
+    float ess = sin(PI * q);
+    return mix(bowl, ess, u_sheetC) * exp(-q * q);
+}
+
+float slope(float q) {
+    float g = exp(-q * q);
+    float bowl = -2.0 * q * (2.0 - q * q);
+    float ess = PI * cos(PI * q) - 2.0 * q * sin(PI * q);
+    return mix(bowl, ess, u_sheetC) * g;
+}
+
+float dome(vec2 uv) {
+    vec2 q = uv * 2.0 - 1.0;
+    return (1.0 - q.x * q.x) * (1.0 - q.y * q.y);
+}
+
+float ramp(float s) {
+    s = clamp(s, -1.0, 1.0);
+    return s * (1.5 - 0.5 * s * s);
+}
+
+void main() {
+    vUv = a_uv;
+    vec3 local = vec3(a_position * u_res, 0.0);
+    local.z -= u_hover * u_dent * u_res.y * dome(a_uv);
+    vec3 w = vec3(u_center + local.xy, local.z);
+    vFlat = vec3(u_center + local.xy, 0.0);
+
+    if (u_sheetD > 0.0001) {
+        float q = w.x / max(u_half.x, 0.0001) * u_sheetT + SHEET_SHIFT;
+        float roll = SHEET_BANK * slope(q) / PI * u_sheetC;
+        float sr = sin(roll);
+        float cr = cos(roll);
+        w.yz = vec2(w.y * cr - w.z * sr, w.y * sr + w.z * cr);
+        w.z += -u_sheetD * shape(q);
+        w.y += SHEET_DIAG * w.x;
+        w.z += u_half.x * u_door * ramp(w.x / max(u_half.x, 0.0001));
+    }
+
+    float perspective = u_cameraZ / max(0.01, u_cameraZ - w.z);
+    gl_Position = vec4(
+        w.x / u_half.x * perspective,
+        w.y / u_half.y * perspective,
+        clamp((u_cameraZ - w.z) / 100.0, 0.0, 1.0),
+        1.0
+    );
+}`;
+
+      const cardFS = `precision highp float;
+
+uniform sampler2D u_texture;
+uniform sampler2D u_labelTexture;
+uniform vec2 u_res;
+uniform vec2 u_half;
+uniform vec3 u_titleColor;
+uniform vec4 u_labelRect;
+uniform vec4 u_arrowRect;
+uniform float u_cameraZ;
+uniform float u_sheetD;
+uniform float u_sheetT;
+uniform float u_sheetC;
+uniform float u_hover;
+uniform float u_dent;
+uniform float u_door;
+uniform float u_corner;
+uniform float u_arrowHover;
+
+varying vec2 vUv;
+varying vec3 vFlat;
+
+const float PI = 3.141592653589793;
+const float SHEET_BANK = -0.16;
+const float SHEET_SHIFT = -0.2;
+
+float shape(float q) {
+    float bowl = 1.0 - q * q;
+    float ess = sin(PI * q);
+    return mix(bowl, ess, u_sheetC) * exp(-q * q);
+}
+
+float slope(float q) {
+    float g = exp(-q * q);
+    float bowl = -2.0 * q * (2.0 - q * q);
+    float ess = PI * cos(PI * q) - 2.0 * q * sin(PI * q);
+    return mix(bowl, ess, u_sheetC) * g;
+}
+
+float dome(vec2 uv) {
+    vec2 q = uv * 2.0 - 1.0;
+    return (1.0 - q.x * q.x) * (1.0 - q.y * q.y);
+}
+
+float rampSlope(float s) {
+    s = min(abs(s), 1.0);
+    return 1.5 * (1.0 - s * s);
+}
+
+float roundedBox(vec2 p, vec2 mid, float radius) {
+    vec2 q = abs(p - mid) - (mid - radius);
+    return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
+}
+
+float segmentDistance(vec2 p, vec2 a, vec2 b) {
+    vec2 pa = p - a;
+    vec2 ba = b - a;
+    float h = clamp(dot(pa, ba) / max(dot(ba, ba), 0.0001), 0.0, 1.0);
+    return length(pa - ba * h);
+}
+
+float arrowMark(vec2 p, float centerX, float aa) {
+    p.x -= centerX;
+    float d = segmentDistance(p, vec2(-0.38, 0.0), vec2(0.36, 0.0));
+    d = min(d, segmentDistance(p, vec2(0.08, -0.27), vec2(0.36, 0.0)));
+    d = min(d, segmentDistance(p, vec2(0.08, 0.27), vec2(0.36, 0.0)));
+    return 1.0 - smoothstep(0.055, 0.055 + aa, d);
+}
+
+float insideUnit(vec2 uv) {
+    return step(0.0, uv.x) * step(0.0, uv.y) * step(uv.x, 1.0) * step(uv.y, 1.0);
+}
+
+void main() {
+    vec4 tex = texture2D(u_texture, vUv);
+
+    if (u_sheetD > 0.0001) {
+        float q = vFlat.x / max(u_half.x, 0.0001) * u_sheetT + SHEET_SHIFT;
+        float z = -u_sheetD * shape(q);
+        float depth = clamp((u_sheetD - z) / (2.0 * u_sheetD), 0.0, 1.0);
+        depth += (u_hover * u_dent * u_res.y * dome(vUv)) / (2.0 * u_sheetD);
+        depth = clamp(depth, 0.0, 1.0);
+        tex.rgb = mix(tex.rgb, vec3(0.06), 0.65 * depth);
+
+        float dzdx = -u_sheetD * slope(q) * u_sheetT / max(u_half.x, 0.0001);
+        dzdx += u_door * rampSlope(vFlat.x / max(u_half.x, 0.0001));
+        float dzdy = 0.0;
+        if (u_hover > 0.0001) {
+            vec2 hq = vUv * 2.0 - 1.0;
+            float a = u_hover * u_dent;
+            dzdx += 4.0 * a * u_res.y * hq.x * (1.0 - hq.y * hq.y) / max(u_res.x, 0.0001);
+            dzdy += 4.0 * a * hq.y * (1.0 - hq.x * hq.x);
+        }
+        vec3 normal = normalize(vec3(-dzdx, -dzdy, 1.0));
+        float roll = SHEET_BANK * slope(q) / PI * u_sheetC;
+        normal.yz = vec2(normal.y * cos(roll) - normal.z * sin(roll), normal.y * sin(roll) + normal.z * cos(roll));
+        vec3 lightDir = normalize(vec3(-0.4, 0.5, 1.0));
+        float diffuse = dot(normal, lightDir) * 0.5 + 0.5;
+        tex.rgb *= 1.0 - 0.1 * (1.0 - diffuse);
+        vec3 point = vFlat + vec3(0.0, 0.0, z - u_hover * u_dent * u_res.y * dome(vUv));
+        vec3 viewDir = normalize(vec3(0.0, 0.0, u_cameraZ) - point);
+        vec3 halfway = normalize(lightDir + viewDir);
+        tex.rgb += pow(max(dot(normal, halfway), 0.0), 36.0) * 0.28;
+    }
+
+    // Bottom subtle shade for text readability
+    float g = 1.0 - smoothstep(0.0, 0.45, vUv.y);
+    tex.rgb = mix(tex.rgb, vec3(0.0), 0.65 * g * g);
+
+    // Title Label
+    vec2 labelUv = (vUv - u_labelRect.xy) / max(u_labelRect.zw, vec2(0.0001));
+    float labelAlpha = texture2D(u_labelTexture, clamp(labelUv, 0.0, 1.0)).a * insideUnit(labelUv);
+    tex.rgb = mix(tex.rgb, u_titleColor, labelAlpha);
+
+    // Pill Button with Sliding Arrow
+    vec2 arrowUv = (vUv - u_arrowRect.xy) / max(u_arrowRect.zw, vec2(0.0001));
+    float arrowInside = insideUnit(arrowUv);
+    vec2 arrowP = (arrowUv - 0.5) * 2.0;
+    float arrowAA = 0.04;
+    float pill = (1.0 - smoothstep(0.92, 0.92 + arrowAA, length(arrowP))) * arrowInside;
+    tex.rgb = mix(tex.rgb, vec3(0.0), pill);
+    float outgoing = arrowMark(arrowP, u_arrowHover * 2.6, arrowAA);
+    float incoming = arrowMark(arrowP, (u_arrowHover - 1.0) * 2.6, arrowAA);
+    tex.rgb = mix(tex.rgb, vec3(1.0), max(outgoing, incoming) * pill);
+
+    // Outer Rounded Box
+    vec2 size = vec2(u_res.x / max(u_res.y, 0.0001), 1.0);
+    vec2 mid = size * 0.5;
+    float radius = min(u_corner, min(mid.x, mid.y));
+    float d = roundedBox(vUv * size, mid, radius);
+    float aa = 0.002;
+    float alpha = 1.0 - smoothstep(-aa, aa, d);
+
+    gl_FragColor = vec4(tex.rgb, alpha);
+}`;
+
+      function compileShader(src, type) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src.trim());
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.error("Shader compile error:", gl.getShaderInfoLog(s));
+        }
+        return s;
+      }
+
+      function buildProgram(vsSrc, fsSrc) {
+        const p = gl.createProgram();
+        gl.attachShader(p, compileShader(vsSrc, gl.VERTEX_SHADER));
+        gl.attachShader(p, compileShader(fsSrc, gl.FRAGMENT_SHADER));
+        gl.linkProgram(p);
+        if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+          console.error("Program link error:", gl.getProgramInfoLog(p));
+        }
+        return p;
+      }
+
+      const cardProg = buildProgram(cardVS, cardFS);
+
+      // Subdivided Mesh (24x24)
+      const verts = [];
+      const indices = [];
+      const SUBDIV = 24;
+      for (let y = 0; y <= SUBDIV; y++) {
+        for (let x = 0; x <= SUBDIV; x++) {
+          const u = x / SUBDIV;
+          const v = y / SUBDIV;
+          verts.push(u - 0.5, v - 0.5, u, v);
+        }
+      }
+      for (let y = 0; y < SUBDIV; y++) {
+        for (let x = 0; x < SUBDIV; x++) {
+          const r = y * (SUBDIV + 1) + x;
+          const i = r + 1;
+          const a = r + (SUBDIV + 1);
+          const o = a + 1;
+          indices.push(r, i, o, r, o, a);
+        }
+      }
+      const vbo = gl.createBuffer();
+      const ibo = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+
+      // Procedural Texture Fallback
+      function createCardTexture(title, index) {
+        const c = document.createElement('canvas');
+        c.width = 800;
+        c.height = 500;
+        const ctx = c.getContext('2d');
+
+        // Background Void
+        const hues = [
+          ['#12241a', '#060908'],
+          ['#0d1a24', '#060908'],
+          ['#241812', '#060908'],
+          ['#1c2014', '#060908'],
+          ['#10221c', '#060908'],
+          ['#1c1424', '#060908']
+        ];
+        const pair = hues[index % hues.length];
+        const grad = ctx.createLinearGradient(0, 0, 800, 500);
+        grad.addColorStop(0, pair[0]);
+        grad.addColorStop(1, pair[1]);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 800, 500);
+
+        // Subtle Technical Grid
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+        ctx.lineWidth = 1;
+        for (let x = 40; x < 800; x += 40) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 500); ctx.stroke();
+        }
+        for (let y = 40; y < 500; y += 40) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(800, y); ctx.stroke();
+        }
+
+        // Inner Border & Corner Plus Markers
+        ctx.strokeStyle = 'rgba(101, 137, 108, 0.4)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(20, 20, 760, 460);
+
+        ctx.font = '600 18px "Space Mono", monospace';
+        ctx.fillStyle = '#a2e89b';
+        ctx.fillText('+', 24, 38);
+        ctx.fillText('+', 764, 38);
+        ctx.fillText('+', 24, 474);
+        ctx.fillText('+', 764, 474);
+
+        // Card Title
+        ctx.font = '700 28px "Space Grotesk", sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(title, 48, 100);
+
+        const tex = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        return tex;
+      }
+
+      function createLabel(text) {
+        const c = document.createElement('canvas');
+        const ctx = c.getContext('2d');
+        const font = '600 22px "Plus Jakarta Sans", Inter, -apple-system, sans-serif';
+        ctx.font = font;
+        const metrics = ctx.measureText(text);
+        const w = Math.ceil(metrics.width + 16);
+        const h = 36;
+        c.width = w;
+        c.height = h;
+        ctx.font = font;
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(text, 4, h * 0.5);
+
+        const tex = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        return { texture: tex, width: w, height: h };
+      }
+
+      const cardObjects = items.map((item, i) => {
+        const obj = {
+          ...item,
+          texture: createCardTexture(item.title, i),
+          label: createLabel(item.title),
+          hover: 0,
+          hoverTarget: 0
+        };
+
+        const uploadImage = (source) => {
+          try {
+            gl.bindTexture(gl.TEXTURE_2D, obj.texture);
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          } catch (err) {
+            console.warn('Image upload to WebGL texture error:', err);
+          }
+        };
+
+        if (item.poster) {
+          const img = new Image();
+          if (!item.poster.startsWith('data:')) {
+            img.crossOrigin = 'anonymous';
+          }
+          img.onload = () => {
+            uploadImage(img);
+          };
+          img.src = item.poster;
+
+          if (img.complete && img.naturalWidth > 0) {
+            uploadImage(img);
+          }
+        }
+
+        // Hit element for interactions
+        const hit = document.createElement('a');
+        hit.className = 'gallery-card-hit';
+        hit.href = '#start-a-conversation';
+        hit.setAttribute('aria-label', item.title);
+        hit.addEventListener('mouseenter', () => { obj.hoverTarget = 1.0; });
+        hit.addEventListener('mouseleave', () => { obj.hoverTarget = 0.0; });
+        stage.appendChild(hit);
+        obj.hitEl = hit;
+
+        return obj;
+      });
+
+      const FOV = 53.4;
+      const CAM_Z = 41.18;
+      const physics = { current: 0, target: 0, pending: 0, burst: 0 };
+      let width = 0, height = 0, period = 1;
+      let layoutCards = [];
+
+      function resize() {
+        const rect = stage.getBoundingClientRect();
+        width = rect.width || window.innerWidth;
+        height = rect.height || 640;
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+
+        // Scaled to give generous vertical margins and prevent clipping
+        const cardH = Math.min(height * 0.58, 350);
+        let x = 0;
+        const gap = 36;
+
+        layoutCards = cardObjects.map((card, i) => {
+          const w = cardH * card.aspect;
+          const h = cardH;
+          const y = (height - h) / 2;
+          const res = { card, x, y, w, h, index: i };
+          x += w + gap;
+          return res;
+        });
+
+        period = Math.max(1, x);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Dragging
+      let isDown = false, isDragging = false, startX = 0, lastX = 0, dragV = 0, lastDragTime = 0;
+      stage.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0) return;
+        isDown = true;
+        isDragging = false;
+        startX = e.clientX;
+        lastX = e.clientX;
+        dragV = 0;
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!isDown) return;
+        const dx = e.clientX - startX;
+        if (!isDragging && Math.abs(dx) > 6) {
+          isDragging = true;
+          stage.dataset.dragging = 'true';
+        }
+        if (isDragging) {
+          e.preventDefault();
+          const delta = (lastX - e.clientX) * 1.5;
+          dragV = delta;
+          lastX = e.clientX;
+          lastDragTime = e.timeStamp;
+          physics.pending += delta;
+        }
+      });
+
+      const stopDrag = (e) => {
+        if (!isDown) return;
+        isDown = false;
+        if (isDragging) {
+          isDragging = false;
+          delete stage.dataset.dragging;
+          if (e.timeStamp - lastDragTime < 100) {
+            physics.burst += dragV * 10;
+          }
+        }
+      };
+      window.addEventListener('pointerup', stopDrag);
+      window.addEventListener('pointercancel', stopDrag);
+
+      // Touch
+      let touchLastX = 0;
+      stage.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches[0]) touchLastX = e.touches[0].clientX;
+      }, { passive: true });
+
+      stage.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) {
+          const x = e.touches[0].clientX;
+          const delta = (touchLastX - x) * 2.2;
+          touchLastX = x;
+          physics.pending += delta;
+        }
+      }, { passive: true });
+
+      // Keyboard
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') physics.pending += 120;
+        if (e.key === 'ArrowLeft') physics.pending -= 120;
+      });
+
+      function wrapPos(min, max, val) {
+        const r = max - min;
+        return r ? ((val - min) % r + r) % r + min : min;
+      }
+
+      function loop() {
+        if (document.hidden) {
+          requestAnimationFrame(loop);
+          return;
+        }
+
+        try {
+          // Continuous gentle auto-drift when not user-dragging
+          if (!isDragging) {
+            physics.pending += 0.85;
+          }
+
+          // Physics
+          if (Math.abs(physics.burst) > 0.05) {
+            const decay = physics.burst * 0.22;
+            physics.pending += decay;
+            physics.burst -= decay;
+          } else {
+            physics.burst = 0;
+          }
+
+          physics.target += physics.pending;
+          physics.pending = 0;
+          physics.current += (physics.target - physics.current) * 0.12;
+
+          cardObjects.forEach(c => {
+            c.hover += (c.hoverTarget - c.hover) * 0.14;
+          });
+
+          // WebGL Render on Clean White Background
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          gl.clearColor(1.0, 1.0, 1.0, 0.0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+
+          const radFov = (FOV * Math.PI) / 180;
+          const halfH = Math.tan(radFov / 2) * CAM_Z;
+          const halfW = halfH * (width / height);
+          const sheetD = halfW * 0.2;
+
+          // Draw Cards
+          gl.useProgram(cardProg);
+          gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+
+          const aPosition = gl.getAttribLocation(cardProg, 'a_position');
+          const aUv = gl.getAttribLocation(cardProg, 'a_uv');
+          gl.enableVertexAttribArray(aPosition);
+          gl.enableVertexAttribArray(aUv);
+          gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 16, 0);
+          gl.vertexAttribPointer(aUv, 2, gl.FLOAT, false, 16, 8);
+
+          gl.uniform2f(gl.getUniformLocation(cardProg, 'u_half'), halfW, halfH);
+          gl.uniform1f(gl.getUniformLocation(cardProg, 'u_cameraZ'), CAM_Z);
+          gl.uniform1f(gl.getUniformLocation(cardProg, 'u_sheetD'), sheetD);
+          gl.uniform1f(gl.getUniformLocation(cardProg, 'u_sheetT'), 1.15);
+          gl.uniform1f(gl.getUniformLocation(cardProg, 'u_sheetC'), 1.0);
+          gl.uniform1f(gl.getUniformLocation(cardProg, 'u_door'), -0.12);
+          gl.uniform1f(gl.getUniformLocation(cardProg, 'u_dent'), 0.12);
+          gl.uniform3f(gl.getUniformLocation(cardProg, 'u_titleColor'), 1.0, 1.0, 1.0);
+
+          gl.uniform1i(gl.getUniformLocation(cardProg, 'u_texture'), 0);
+          gl.uniform1i(gl.getUniformLocation(cardProg, 'u_labelTexture'), 1);
+
+          const visible = layoutCards.map((item) => {
+            const r = item.x + item.w;
+            const cycleX = item.x - wrapPos(-(period - r), r, physics.current);
+            return { ...item, cycleX, cycleY: item.y };
+          }).filter(it => it.cycleX + it.w > -width * 0.4 && it.cycleX < width * 1.4)
+            .sort((a, b) => Math.abs(b.cycleX - width / 2) - Math.abs(a.cycleX - width / 2));
+
+          for (const it of visible) {
+            const cx = it.cycleX + it.w / 2;
+            const cy = it.cycleY + it.h / 2;
+
+            const glCenterX = ((cx - width / 2) / (width / 2)) * halfW;
+            const glCenterY = ((height / 2 - cy) / (height / 2)) * halfH;
+            const glResW = (it.w / width) * halfW * 2;
+            const glResH = (it.h / height) * halfH * 2;
+
+            gl.uniform2f(gl.getUniformLocation(cardProg, 'u_center'), glCenterX, glCenterY);
+            gl.uniform2f(gl.getUniformLocation(cardProg, 'u_res'), glResW, glResH);
+
+            const hVal = it.card.hover;
+            gl.uniform1f(gl.getUniformLocation(cardProg, 'u_hover'), hVal);
+            gl.uniform1f(gl.getUniformLocation(cardProg, 'u_arrowHover'), hVal);
+            gl.uniform1f(gl.getUniformLocation(cardProg, 'u_corner'), 26 / it.h);
+
+            const pad = 24;
+            const btn = 36;
+            gl.uniform4f(
+              gl.getUniformLocation(cardProg, 'u_labelRect'),
+              pad / it.w,
+              16 / it.h,
+              it.card.label.width / it.w,
+              it.card.label.height / it.h
+            );
+
+            gl.uniform4f(
+              gl.getUniformLocation(cardProg, 'u_arrowRect'),
+              (it.w - pad - btn) / it.w,
+              16 / it.h,
+              btn / it.w,
+              btn / it.h
+            );
+
+            gl.activeTexture(gl.TEXTURE0);
+            gl.bindTexture(gl.TEXTURE_2D, it.card.texture);
+
+            gl.activeTexture(gl.TEXTURE1);
+            gl.bindTexture(gl.TEXTURE_2D, it.card.label.texture);
+
+            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+
+            // Position DOM hit target
+            if (it.card.hitEl) {
+              it.card.hitEl.style.width = `${it.w}px`;
+              it.card.hitEl.style.height = `${it.h}px`;
+              it.card.hitEl.style.transform = `translate3d(${it.cycleX}px, ${it.cycleY}px, 0px)`;
+            }
+          }
+        } catch (err) {
+          console.error("Ribbon carousel render error:", err);
+        }
+
+        requestAnimationFrame(loop);
+      }
+
+      requestAnimationFrame(loop);
+    })();
+  </script>
+
+</body>
+</html>
