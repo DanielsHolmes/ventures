@@ -3512,12 +3512,12 @@
       const gl = canvas.getContext('webgl2', {
         alpha: true,
         antialias: true,
-        premultipliedAlpha: true,
+        premultipliedAlpha: false,
         powerPreference: 'high-performance'
       }) || canvas.getContext('webgl', {
         alpha: true,
         antialias: true,
-        premultipliedAlpha: true,
+        premultipliedAlpha: false,
         powerPreference: 'high-performance'
       });
       if (!gl) return;
@@ -3790,12 +3790,18 @@ void main() {
     float incoming = arrowMark(arrowP, (u_arrowHover - 1.0) * 2.6, arrowAA);
     tex.rgb = mix(tex.rgb, vec3(1.0), max(outgoing, incoming) * pill);
 
-    // Outer Rounded Box
+    // Outer Rounded Box with Black Border
     vec2 size = vec2(u_res.x / max(u_res.y, 0.0001), 1.0);
     vec2 mid = size * 0.5;
     float radius = min(u_corner, min(mid.x, mid.y));
     float d = roundedBox(vUv * size, mid, radius);
     float aa = 0.002;
+
+    // Crisp Black Border on Outer Rim of Card
+    float bw = 0.008;
+    float border = smoothstep(-bw - aa, -bw, d);
+    tex.rgb = mix(tex.rgb, vec3(0.0, 0.0, 0.0), border);
+
     float alpha = 1.0 - smoothstep(-aa, aa, d);
 
     gl_FragColor = vec4(tex.rgb, alpha);
@@ -4122,9 +4128,9 @@ void main() {
             c.hover += (c.hoverTarget - c.hover) * 0.14;
           });
 
-          // WebGL Render on Clean White Background
+          // WebGL Render on Dark Background
           gl.viewport(0, 0, canvas.width, canvas.height);
-          gl.clearColor(1.0, 1.0, 1.0, 0.0);
+          gl.clearColor(0.0, 0.0, 0.0, 0.0);
           gl.clear(gl.COLOR_BUFFER_BIT);
 
           const radFov = (FOV * Math.PI) / 180;
